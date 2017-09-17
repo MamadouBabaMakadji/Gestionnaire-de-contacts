@@ -53,10 +53,10 @@ public class ContactService
 		return (cdao = new ContactDAO()).deleteContact(c,a,p);
 	}
 	
-	public List<Contact> searchContact(String searchName)
-	{
+	public List<Contact> searchContact(String searchName) {
 		 return (cdao = new ContactDAO()).searchContact(searchName);
 	}
+	
 	/*public Contact searchContact(String id){
 		return (cdao.search(id));
 	}*/
