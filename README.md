@@ -1,2 +1,2 @@
 # Gestionnaire-de-contacts
-Applciation JEE pour la gestion des contacts
+Application JEE pour la gestion des contacts
