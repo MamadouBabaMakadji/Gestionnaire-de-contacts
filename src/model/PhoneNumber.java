@@ -1,13 +1,49 @@
 package model;
 
 public class PhoneNumber {
-	private int id;
+	private long id;
 	private String phoneKind;
 	private String phoneNumber;
 	private Contact contact;
+
+	public PhoneNumber(long id, String phoneKind, String phoneNumber) {
+		super();
+		this.id = id;
+		this.phoneKind = phoneKind;
+		this.phoneNumber = phoneNumber;
+	}
+	public PhoneNumber() {
+	}
 	
-	
-	public int getId() {
+
+	public PhoneNumber(long id, String phoneNumber) {
+		super();
+		this.id = id;
+		this.phoneNumber = phoneNumber;
+	}
+	public PhoneNumber(String phoneKind, String phoneNumber) {
+		super();
+		this.phoneKind = phoneKind;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setPhoneKind(String phoneKind) {
+		this.phoneKind = phoneKind;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+
+	public long getId() {
 		return id;
 	}
 
@@ -22,26 +58,5 @@ public class PhoneNumber {
 	public Contact getContact() {
 		return contact;
 	}
-	
-	public PhoneNumber(int id,String phoneNumber)  {
-		this.id = id;
-		this.phoneNumber = phoneNumber;
-	}
-	/*
-	public PhoneNumber(int phoneNumber, String kindPhone) 
-	{
-		this.phoneKind = (kindPhone != null? kindPhone:null );
-		this.phoneNumber = phoneNumber;
-	}
-	
-	
-	public PhoneNumber() {
-		this(-1,null);
-	}
-	*/
-	
-	
-	
-	
 
 }

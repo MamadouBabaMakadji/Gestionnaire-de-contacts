@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SuppContactForm extends ActionForm{
 	
 	private static final long serialVersionUID = 1L;
-	private int identifiant;
+	private long identifiant;
 	private String nom;
 	private String prenom;
 	private String mail;
@@ -17,7 +17,7 @@ public class SuppContactForm extends ActionForm{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public int getIdentifiant() {
+	public long getIdentifiant() {
 		return identifiant;
 	}
 
