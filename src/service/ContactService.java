@@ -14,8 +14,10 @@ public class ContactService
 	}
 
 	public boolean createContact(Contact c) throws Exception{
-		return (cdao = new ContactDAO()).insert_contact(c);
+		return (cdao = new ContactDAO()).insertContact(c);
 	}
+	
+	
 //	public boolean ajoutAdress(Adress a)
 //	{
 //		return (cdao = new ContactDAO()).ajouterAdress(a);

@@ -11,8 +11,8 @@ public class Group {
 	public Group() {
 	}
 
-	public Group(String name) {
-		this.groupName = name;
+	public Group(String groupName) {
+		this.groupName = groupName;
 	}
 
 	public long getGroup_ID() {

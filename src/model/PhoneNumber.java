@@ -6,8 +6,6 @@ public class PhoneNumber {
 	private Contact contact;
 
 	public PhoneNumber() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public PhoneNumber(String phoneNumber) {

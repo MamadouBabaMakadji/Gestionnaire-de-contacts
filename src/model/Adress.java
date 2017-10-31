@@ -9,8 +9,6 @@ public class Adress {
 	private Contact contact;
 
 	public Adress() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Adress(String street, String city, String zip, String country) {

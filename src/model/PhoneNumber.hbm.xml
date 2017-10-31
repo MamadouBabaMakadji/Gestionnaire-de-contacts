@@ -6,9 +6,12 @@
 		<id name="phone_ID" type="long" column="phone_ID">
 			<generator class="increment" />
 		</id>
+		
 		<property name="phoneNumber">
 			<column name="phonenumber"></column>
 		</property>
+		
+		
 		<!-- Un numéro de téléphone appartient forcement à un contact -->
 		<many-to-one name="contact" column="contact_ID" class="Contact"></many-to-one>
 	</class>
