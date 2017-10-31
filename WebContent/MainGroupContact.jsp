@@ -47,11 +47,11 @@
 			try
 			{	
 				ContactService cs = new ContactService();
-				List<GroupeContact> gp = cs.getNameGroup();
-				for(GroupeContact var : gp)
-				{
-					out.print("<tr><td>"+var.getGroupName()+"</td><td><a href='deleteGroup.jsp?id="+var.getGroupId()+"'>Supprimer</a></td><td><a href='GroupContact.jsp?id="+var.getGroupId()+"&name="+var.getGroupName()+"'+>Afficher le Groupe</a></td></tr>");
-				}
+				List<Group> gp ;//= cs.getNameGroup();
+// 				for(Group var : gp)
+// 				{
+// 					out.print("<tr><td>"+var.getGroupName()+"</td><td><a href='deleteGroup.jsp?id="+var.getGroupId()+"'>Supprimer</a></td><td><a href='GroupContact.jsp?id="+var.getGroupId()+"&name="+var.getGroupName()+"'+>Afficher le Groupe</a></td></tr>");
+// 				}
 			}			
 			catch(Exception e){
 				e.printStackTrace();

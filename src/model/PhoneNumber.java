@@ -1,62 +1,42 @@
 package model;
 
 public class PhoneNumber {
-	private long id;
-	private String phoneKind;
+	private long phone_ID;
 	private String phoneNumber;
 	private Contact contact;
 
-	public PhoneNumber(long id, String phoneKind, String phoneNumber) {
-		super();
-		this.id = id;
-		this.phoneKind = phoneKind;
-		this.phoneNumber = phoneNumber;
-	}
 	public PhoneNumber() {
-	}
-	
-
-	public PhoneNumber(long id, String phoneNumber) {
 		super();
-		this.id = id;
-		this.phoneNumber = phoneNumber;
+		// TODO Auto-generated constructor stub
 	}
-	public PhoneNumber(String phoneKind, String phoneNumber) {
+
+	public PhoneNumber(String phoneNumber) {
 		super();
-		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public long getPhone_ID() {
+		return phone_ID;
 	}
 
-	public void setPhoneKind(String phoneKind) {
-		this.phoneKind = phoneKind;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public void setContact(Contact contact) {
-		this.contact = contact;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public String getPhoneKind() {
-		return phoneKind;
+	public void setPhone_ID(long phone_ID) {
+		this.phone_ID = phone_ID;
 	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public Contact getContact() {
 		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 
 }

@@ -32,25 +32,25 @@ public class ServletEditContact extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		try{
-			contact = new Contact(request.getParameter("nom"),request.getParameter("prenom"), 
-					request.getParameter("mail"));
-			ContactService cs = new ContactService();
-			if(cs.editContact(contact))
-			{
-				//Redirection vers une bonne page
-				System.out.println("Contact " +contact.getNom()+ " a bien été modfier");
-				RequestDispatcher rd=request.getRequestDispatcher("FormEditContact.jsp");
-				rd.forward(request,response);
-			}
-			else
-			{
-				//redirection vers une autre page pour indiquer que l'insertion n'a pas pu se faire
-				System.out.println("Insertion non effectue");
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+//		try{
+//			contact = new Contact(request.getParameter("nom"),request.getParameter("prenom"), 
+//					request.getParameter("mail"));
+//			ContactService cs = new ContactService();
+//			if(cs.editContact(contact))
+//			{
+//				//Redirection vers une bonne page
+//				System.out.println("Contact " +contact.getNom()+ " a bien été modfier");
+//				RequestDispatcher rd=request.getRequestDispatcher("FormEditContact.jsp");
+//				rd.forward(request,response);
+//			}
+//			else
+//			{
+//				//redirection vers une autre page pour indiquer que l'insertion n'a pas pu se faire
+//				System.out.println("Insertion non effectue");
+//			}
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
 	}
 	
 	

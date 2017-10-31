@@ -41,22 +41,22 @@ public class ServletDelContact extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		try{
-			idContact = request.getParameter("id");
-			
-			ContactService cs = new ContactService();
-			if(cs.deleteContact(idContact)){
-				
-				//Redirection vers une bonne page
-				System.out.println("Suppression effectué");
-			}
-			else{
-				//redirection vers une autre page pour indiquer que l'insertion n'a pas pu se faire
-				System.out.println("Suppression non effectué");
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+//		try{
+//			idContact = request.getParameter("id");
+//			
+//			ContactService cs = new ContactService();
+//			if(cs.deleteContact(idContact)){
+//				
+//				//Redirection vers une bonne page
+//				System.out.println("Suppression effectué");
+//			}
+//			else{
+//				//redirection vers une autre page pour indiquer que l'insertion n'a pas pu se faire
+//				System.out.println("Suppression non effectué");
+//			}
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
 		
 		
 	}

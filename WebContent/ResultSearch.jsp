@@ -40,7 +40,7 @@
 			for(Contact c : listContact)
 			{
 				out.print("<tr><td>"+c.getNom()+"</td><td>"+c.getPrenom()
-						+"</td><td>"+c.getMail()+"</td><td>"+c.getTel()
+						+"</td><td>"+c.getMail()+"</td><td>"
 						+"</td><td>"+c.getAdress().getCity()+"</td><td>"+c.getAdress().getStreet()
 						+"</td><td>"+c.getAdress().getZip()+"</td><td>"+c.getAdress().getCountry());
 			}

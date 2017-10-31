@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="model">
+	<class name="Contact" table="contact">
+		<id name="contact_ID" type="long" column="contact_ID">
+			<generator class="increment" />
+		</id>
+		<property name="nom">
+			<column name="nom"></column>
+		</property>
+		<property name="prenom">
+			<column name="prenom"></column>
+		</property>
+		<property name="mail">
+			<column name="mail"></column>
+		</property>
+		<!-- Un contact a obligatoirement une adresse -->
+		<many-to-one name="adress" column="adress_ID" unique="true"
+			not-null="false" cascade="all" />
+		<!-- Un contact possède un ou plusieurs numéros -->
+		<set name="phones" inverse="true" cascade="all">
+			<key column="contact_ID"></key>
+			<one-to-many class="PhoneNumber" />
+		</set>
+		<!-- Un contact appartient à 0,1 ou plusieurs groupes -->
+		<set name="groups" table="contact_group" cascade="all">
+			<key column="contact_ID"></key>
+			<many-to-many class="Group" column="group_ID"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

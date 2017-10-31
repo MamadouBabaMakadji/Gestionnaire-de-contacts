@@ -49,14 +49,14 @@
 			{
 				ContactService cs = new ContactService();
 				
-				List<Contact> listContact = cs.afficheContactDuGroup(request.getParameter("id"));
-				for(Contact c : listContact)
-				{
-					out.print("<tr><td>"+c.getNom()+"</td><td>"+c.getPrenom()
-							+"</td><td>"+c.getMail()+"</td><td>"+c.getTel()
-							+"</td><td>"+c.getAdress().getCity()+"</td><td>"+c.getAdress().getStreet()
-							+"</td><td>"+c.getAdress().getZip()+"</td><td>"+c.getAdress().getCountry());
-				}
+// 				List<Contact> listContact = cs.afficheContactDuGroup(request.getParameter("id"));
+// 				for(Contact c : listContact)
+// 				{
+// 					out.print("<tr><td>"+c.getNom()+"</td><td>"+c.getPrenom()
+// 							+"</td><td>"+c.getMail()+"</td><td>"+c.getTel()
+// 							+"</td><td>"+c.getAdress().getCity()+"</td><td>"+c.getAdress().getStreet()
+// 							+"</td><td>"+c.getAdress().getZip()+"</td><td>"+c.getAdress().getCountry());
+// 				}
 				
 			}catch(Exception e)
 			{
