@@ -17,9 +17,6 @@ public class ContactService
 		return (cdao = new ContactDAO()).insertContact(contact);
 	}
 //	public boolean ajoutAdress(Adress adress) throws Exception
-//	{
-//		return (cdao = new ContactDAO()).addAdress(adress);
-//	}
 //	
 //	public boolean ajoutPhoneNumber(PhoneNumber phone) throws Exception{
 //		return (cdao = new ContactDAO()).addPhone(phone);

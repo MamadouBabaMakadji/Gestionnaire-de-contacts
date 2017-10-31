@@ -1,5 +1,6 @@
 package DAO;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import model.Contact;
@@ -16,13 +17,15 @@ public class ContactDAO {
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			long id = (long) session.save(object);
+			/*long id = (long) session.save(object);*/
+			session.save(object);
 			session.getTransaction().commit();
-			System.out.println("Fin enregistrement, ID = " + id);
+			
+			/*System.out.println("Fin enregistrement, ID = " + id);*/
 			session.close();
 			result = true;
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+		} catch (HibernateException e) {
+			e.printStackTrace();
 		}
 
 		return result;
