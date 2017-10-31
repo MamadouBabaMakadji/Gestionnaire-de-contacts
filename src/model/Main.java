@@ -7,31 +7,32 @@ import service.ContactService;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		Adress adress = new Adress("80 rue mbm", "Auber", "55121", "Mali");
-		PhoneNumber phone = new PhoneNumber("7555550202");
+		Contact contact = new Contact("Makadji", "Mamadou Baba", "mbm@hb.net");
+		Adress adress = new Adress("80 rue mbm", "Djelibougou", "99000", "Mali");
+		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
-		Contact contact = new Contact("Makadji", "Mamadou", "mbm@hb.net");
-		Group group = new Group("Miage");
+		Group group1 = new Group("MIAGE");
 		Group group2 = new Group("TMT");
 
-		// Contact
-		Set<PhoneNumber> listPhone = new HashSet<PhoneNumber>();
-		Set<Group> groups = new HashSet<Group>();
-		contact.setAdress(adress);
-		phone.setContact(contact);
+		// PHONE
+		Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
+		phone1.setContact(contact);
 		phone2.setContact(contact);
-		listPhone.add(phone);
-		listPhone.add(phone2);
-		contact.setPhones(listPhone);
-		groups.add(group);
+		phones.add(phone1);
+		phones.add(phone2);
+
+		// GROUP
+		Set<Contact> contacts = new HashSet<Contact>();
+		Set<Group> groups = new HashSet<Group>();
+		contacts.add(contact);
+		group1.setContacts(contacts);
+		group2.setContacts(contacts);
+		groups.add(group1);
 		groups.add(group2);
 
-		// Group
-		Set<Contact> contacts = new HashSet<Contact>();
-		contacts.add(contact);
-		group.setContacts(contacts);
-		group2.setContacts(contacts);
-
+		// CONTACT
+		contact.setAdress(adress);
+		contact.setPhones(phones);
 		contact.setGroups(groups);
 
 		// Ajout contact

@@ -2,17 +2,17 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="model">
-	<class name="Group" table="group">
+	<class name="Group" table="groupe">
 		<id name="group_ID" type="long" column="group_ID">
-			<generator class="increment"/>
+			<generator class="increment" />
 		</id>
 		<property name="groupName">
 			<column name="groupName"></column>
 		</property>
-		<!-- Un goupe possède 1 ou plusieurs contact -->
-		<set name="contacts" table="contact_group" inverse="true" cascade="all">
+		<!-- Un groupe possède 1 ou plusieurs contact -->
+		<set name="contacts" table="contact_group" inverse="true">
 			<key column="group_ID"></key>
-			<many-to-many column="contact_ID" class="Contact"></many-to-many>
+			<many-to-many column="contact_ID" class="Contact" fetch="select"></many-to-many>
 		</set>
 	</class>
 </hibernate-mapping>

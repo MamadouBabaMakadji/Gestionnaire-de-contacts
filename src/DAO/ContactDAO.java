@@ -11,7 +11,7 @@ public class ContactDAO {
 	public ContactDAO() {
 	}
 
-	public boolean insert_DB(Object object) throws Exception {
+	public boolean insertDB(Object object) throws Exception {
 		boolean result = false;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
@@ -28,10 +28,10 @@ public class ContactDAO {
 		return result;
 	}
 
-	public boolean insert_contact(Contact contact) throws Exception {
-		return insert_DB(contact);
+	public boolean insertContact(Contact contact) throws Exception {
+		return insertDB(contact);
 	}
-
+	
 	// public boolean ajouter(Contact contact) {
 	// boolean result = false;
 	// try {

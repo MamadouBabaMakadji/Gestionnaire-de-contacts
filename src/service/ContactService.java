@@ -13,18 +13,22 @@ public class ContactService
 		
 	}
 
-	public boolean createContact(Contact c) throws Exception{
-		return (cdao = new ContactDAO()).insert_contact(c);
+	public boolean createContact(Contact contact) throws Exception{
+		return (cdao = new ContactDAO()).insertContact(contact);
 	}
-//	public boolean ajoutAdress(Adress a)
+//	public boolean ajoutAdress(Adress adress) throws Exception
 //	{
-//		return (cdao = new ContactDAO()).ajouterAdress(a);
+//		return (cdao = new ContactDAO()).addAdress(adress);
 //	}
 //	
-//	public boolean ajoutPhoneNumber(PhoneNumber p){
-//		return (cdao = new ContactDAO()).ajouterPhone(p);
+//	public boolean ajoutPhoneNumber(PhoneNumber phone) throws Exception{
+//		return (cdao = new ContactDAO()).addPhone(phone);
 //	}
 //	
+//	public boolean addGroup(Group group) throws Exception{
+//		return (cdao = new ContactDAO()).addGroup(group);
+//	}
+	
 //	public boolean deleteContact(String id){
 //		return (cdao = new ContactDAO()).delete(id);
 //	}
