@@ -21,7 +21,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <title><bean:message key="FormNewContact.nouveau.contact" /></title>
 </head>
-	<body>
+	<body onload="noDisplay()">
 	
 	<ul class="nav nav-pills">
 	  <li role="presentation" class="active"><a href="Main.jsp"><bean:message key="main.page.accueil" /></a></li>
@@ -31,7 +31,19 @@
 	<br/>
 	<br/>
 	<br/>
-	
+	<script type="text/javascript">
+	function addTel(){
+		var x = document.getElementById('tel2');
+	    if (x.style.visibility === 'hidden') {
+	        x.style.visibility = 'visible';
+	    } else {
+	        x.style.visibility = 'hidden';
+	    }
+	}
+	function noDisplay(){
+		document.getElementById('tel2').style.visibility = 'hidden';
+	}
+	</script>
 	<h2>
 	<center><bean:message key="FormNewContact.nouveau.contact" /></center>
 	<br>
@@ -53,10 +65,12 @@
 				</tr>
 				<tr>
 				<td><bean:message key="tel" /></td><td><br/><html:text property="tel"/><br/><br/></td>
-				<td><bean:message key="pays" /></td><td><br/><html:text property="pays"/><br/><br/></td>
+				<td><input type="button" onclick="addTel()" class="btn btn-primary" value="+" /></td>
+				<td><br/><html:text property="tel2" styleId="tel2"/><br/><br/></td>
 				</tr>
 				<tr>
 				<td><bean:message key="group" /></td><td><br/><html:text property="group" /><br/><br/></td>
+				<td><bean:message key="pays" /></td><td><br/><html:text property="pays"/><br/><br/></td>
 				</tr>
 				<tr>
 				<td>  </td>
