@@ -80,4 +80,36 @@ public class ContactDAOTest {
 		}
 	}
 	
+	// Test Search contacts
+	@Test
+	public void getContactsByLastname(){
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Long> contacts = new HashSet<Long>();
+		
+		contacts = contactDAO.getContacts("");
+	}
+	
+	@Test
+	public void getContactsByFirstname(){
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Long> contacts = new HashSet<Long>();
+		
+		contacts = contactDAO.getContacts("");
+	}
+	
+	@Test
+	public void getContactsByCountry(){
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Long> contacts = new HashSet<Long>();
+		
+		contacts = contactDAO.getContacts("");
+	}
+	
+	@Test
+	public void getContactsByCity(){
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Long> contacts = new HashSet<Long>();
+		
+		contacts = contactDAO.getContacts("");
+	}
 }

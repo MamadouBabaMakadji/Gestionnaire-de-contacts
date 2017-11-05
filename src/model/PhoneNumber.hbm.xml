@@ -7,12 +7,12 @@
 			<generator class="increment" />
 		</id>
 		
-		<property name="phoneNumber" lazy="false">
+		<property name="phoneNumber" lazy="true">
 			<column name="phonenumber"></column>
 		</property>
 		
 		
 		<!-- Un numéro de téléphone appartient forcement à un contact -->
-		<many-to-one name="contact" column="contact_ID" class="Contact" lazy="false"></many-to-one>
+		<many-to-one name="contact" column="contact_ID" class="Contact"></many-to-one>
 	</class>
 </hibernate-mapping>

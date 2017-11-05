@@ -1,5 +1,7 @@
 package service;
 
+import java.util.Set;
+
 import DAO.ContactDAO;
 import model.Contact;
 
@@ -20,4 +22,8 @@ public class ContactService
 		return(cdao = new ContactDAO()).getContact(id);
 	}
 	
+	
+	public Set<Long> contacts(String keywords){
+		return (cdao = new ContactDAO()).getContacts(keywords);
+	}
 }
