@@ -13,7 +13,6 @@ public class Contact {
 	private Set<Group> groups = new HashSet<Group>();
 
 	public Contact() {
-
 	}
 
 	public Contact(String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones) {

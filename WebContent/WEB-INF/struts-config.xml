@@ -16,14 +16,14 @@
 	</form-beans>
 	
 	
-	
 	<global-exceptions>
-		<exception type="DAO.ContactDAO.ajouter" key="erreur.application" path="erreur.jsp">
+		<exception type="DAO.ContactDAO.ajouter" key="erreur.application" path="/erreur.jsp">
 		</exception>
-		<exception type="java.sql.SQLException" key="erreur.application" path="erreur.jsp">
+		<exception type="javax.servlet.ServletException" key="erreur.application" path="/erreur.jsp" />
+		<exception type="java.sql.SQLException" key="erreur.application" path="/erreur.jsp">
 		</exception>
-		<exception type="java.lang.Exception" key="erreur.application" handler="Exception.GestionExceptionHandler">
-		</exception>
+<!-- 		<exception type="java.lang.Exception" key="erreur.application" handler="Exception.GestionExceptionHandler" path="erreur.jsp"> -->
+<!-- 		</exception> -->
 	</global-exceptions>
 	
 	<global-forwards>

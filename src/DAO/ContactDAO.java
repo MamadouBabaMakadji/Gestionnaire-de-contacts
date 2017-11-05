@@ -1,11 +1,14 @@
 package DAO;
 
+
+import java.sql.SQLException;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import model.Contact;
 import util.HibernateUtil;
+import util.SessionSingleton;
 
 
 public class ContactDAO {
@@ -18,11 +21,8 @@ public class ContactDAO {
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			/*long id = (long) session.save(object);*/
 			session.save(object);
 			session.getTransaction().commit();
-			
-			/*System.out.println("Fin enregistrement, ID = " + id);*/
 			session.close();
 			result = true;
 		} catch (HibernateException e) {
@@ -42,6 +42,41 @@ public class ContactDAO {
 		List list = query.list();
 		
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> executerRequete(String requete) throws SQLException {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		List<Object[]> result = session.createQuery(requete).list();
+		session.getTransaction().commit();
+		session.close();
+		return result;
+	}
+
+	public Session getSession() {
+		Session session = SessionSingleton.getInstance();
+		return session;
+	}
+
+	public Contact getContact(long contact_ID) {
+		Session session = getSession();
+		Contact contact = (Contact) session.load(Contact.class, contact_ID);
+		return contact;
+	}
+
+	public boolean saveUpdate(Session session, Contact contact) {
+		boolean result = false;
+		try {
+			session.beginTransaction();
+			session.saveOrUpdate(contact);
+			session.getTransaction().commit();
+			result = true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 	// public boolean ajouter(Contact contact) {

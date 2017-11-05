@@ -6,7 +6,6 @@
 /hibernate.cfg.xml
 /model/
 /org/
+/DAO/
 /service/
-/servlet/
-/test/
 /util/
