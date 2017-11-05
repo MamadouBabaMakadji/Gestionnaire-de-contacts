@@ -1,8 +1,9 @@
 package DAO;
 
+import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
-
 import model.Contact;
 import util.HibernateUtil;
 
@@ -33,6 +34,14 @@ public class ContactDAO {
 
 	public boolean insertContact(Contact contact) throws Exception {
 		return insertDB(contact);
+	}
+	
+	public void search(String keywords){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Query query = session.createQuery(keywords.toLowerCase().toString());
+		List list = query.list();
+		
+		
 	}
 
 	// public boolean ajouter(Contact contact) {

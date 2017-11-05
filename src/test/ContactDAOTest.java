@@ -21,10 +21,10 @@ public class ContactDAOTest {
 	public void insertDBTest() {
 		boolean result = false;
 		
+		Contact contact = new Contact("Michel", "Baba", "mbm@hb.net");
 		Adress adress = new Adress("80 rue mbm", "Auber", "55121", "Mali");
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
-		Contact contact = new Contact("Michel", "Baba", "mbm@hb.net");
 		Group group1 = new Group("Miage");
 		Group group2 = new Group("TOTO");
 		
@@ -34,17 +34,14 @@ public class ContactDAOTest {
 		phone1.setContact(contact); phone2.setContact(contact);
 		contact.getPhones().add(phone1); contact.getPhones().add(phone2);
 		
-/*		Set<Group> groups = new HashSet<Group>();
+		Set<Group> groups = new HashSet<Group>();
 		groups.add(group1); groups.add(group2);
-		contact.setGroups(groups);*/
+		contact.setGroups(groups);
 		
-		group1.getContacts().add(contact);	
-		group2.getContacts().add(contact);	
-		contact.getGroups().add(group2);
+/*		group1.getContacts().add(contact);
 		contact.getGroups().add(group1);
-		
-		
-		
+		group2.getContacts().add(contact);
+		contact.getGroups().add(group2);*/
 
 		// Test ajout contact
 		ContactDAO contactDAO = new ContactDAO();
