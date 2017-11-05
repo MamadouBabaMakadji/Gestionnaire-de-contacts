@@ -7,29 +7,29 @@
 			<generator class="increment" />
 		</id>
 		
-		<property name="nom">
+		<property name="nom" lazy="false">
 			<column name="nom"></column>
 		</property>
 		
-		<property name="prenom">
+		<property name="prenom" lazy="false">
 			<column name="prenom"></column>
 		</property>
 		
-		<property name="mail">
+		<property name="mail" lazy="false">
 			<column name="mail"></column>
 		</property>
 		
 		<!-- Un contact peut avoir une adress -->
-		<many-to-one name="adress" column="adress_ID" unique="true" not-null="false" cascade="all" />
+		<many-to-one name="adress" column="adress_ID" unique="true" not-null="false" cascade="all" lazy="false"/>
 		
 		<!-- Un contact possède 0, 1 ou n numéros -->
-		<set name="phones" inverse="true" cascade="all">
+		<set name="phones" inverse="true" cascade="all" lazy="false">
 			<key column="contact_ID"></key>
 			<one-to-many class="PhoneNumber" />
 		</set>
 		
 		<!-- Un contact appartient à 0, 1 ou n groupes -->
-		<set name="groups" table="contact_group" cascade="all">
+		<set name="groups" table="contact_group" cascade="all" lazy="false">
 			<key column="contact_ID" not-null="true"></key>
 			<many-to-many class="Group" column="group_ID"></many-to-many>
 		</set>

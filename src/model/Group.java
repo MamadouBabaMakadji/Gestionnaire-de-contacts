@@ -61,4 +61,11 @@ public class Group {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Group {groupName=" + groupName + "}";
+	}
+	
+	
+
 }

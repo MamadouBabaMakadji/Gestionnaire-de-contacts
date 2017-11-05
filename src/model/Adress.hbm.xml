@@ -6,16 +6,16 @@
 		<id name="adress_ID" type="long" column="adress_ID">
 			<generator class="increment" />
 		</id>
-		<property name="street">
+		<property name="street" lazy="false">
 			<column name="street"></column>
 		</property>
-		<property name="city">
+		<property name="city" lazy="false">
 			<column name="city"></column>
 		</property>
-		<property name="zip">
+		<property name="zip" lazy="false">
 			<column name="zip"></column>
 		</property>
-		<property name="country">
+		<property name="country" lazy="false">
 			<column name="country"></column>
 		</property>
 		<!-- un contact a une adresse unique -->

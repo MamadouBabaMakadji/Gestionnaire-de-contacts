@@ -109,4 +109,12 @@ public class Contact {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Contact {contact_ID=" + getContact_ID() + ", nom=" + getNom() + ", prenom=" + getPrenom() + ", mail=" + getMail()
+				+ ", address={" +adress.getCity()+ ", " +adress.getCountry()+ ", " +adress.getStreet()+ ", " +adress.getZip()+"}";
+	}
+
+	
+	
 }

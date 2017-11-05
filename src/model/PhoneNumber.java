@@ -37,4 +37,37 @@ public class PhoneNumber {
 		this.contact = contact;
 	}
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PhoneNumber other = (PhoneNumber) obj;
+		if (phone_ID != other.phone_ID)
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (phone_ID ^ (phone_ID >>> 32));
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "PhoneNumber {phoneNumber=" + phoneNumber + ", contact=" + contact + "}";
+	}
+
+	
+	
+	
+	
+
 }
