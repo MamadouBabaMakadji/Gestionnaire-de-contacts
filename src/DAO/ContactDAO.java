@@ -2,11 +2,14 @@ package DAO;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import model.Contact;
@@ -16,11 +19,23 @@ import util.SessionSingleton;
 
 public class ContactDAO {
 	
-	// TODO: refaire la méthode getContact(long id) avec du HQL
+	// TODO: refaire la méthode getContact(long id) avec du criteria
 
 	public ContactDAO() {
 	}
+	
+	public Session getSession() {
+		Session session = SessionSingleton.getInstance();
+		return session;
+	}
 
+	
+	/**
+	 * Insert an object in database
+	 * @param object
+	 * @return a boolean if instructions have finished without errors
+	 * @throws HibernateException
+	 */
 	public boolean insertDB(Object object) throws Exception {
 		boolean result = false;
 		if(object==null) return result;
@@ -51,10 +66,7 @@ public class ContactDAO {
 		return result;
 	}
 
-	public Session getSession() {
-		Session session = SessionSingleton.getInstance();
-		return session;
-	}
+
 
 	/**
 	 * Get a contact with session.get()
@@ -95,10 +107,31 @@ public class ContactDAO {
 	 * @param keywords
 	 * @return contacts : a set of Contact
 	 */
-	public Set<Long> getContacts(String keywords) {
-		Set<Long> contacts = new HashSet<Long>();
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		
+	public Set<Contact> getContacts(String search) {
+		Set<Contact> contacts = null;
+		try {
+			String[] words = search.split(" ");
+			List<String> setKeyWords = new ArrayList<String>(Arrays.asList(words));
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			
+			// Build query
+			StringBuilder sb = new StringBuilder();
+			sb.append("select c from Contact as c join c.groups as g where c.nom in (:keyWords) or c.prenom in (:keyWords) or c.adress.country in (:keyWords)");
+			sb.append(" or c.adress.city in (:keyWords) or g.groupName in (:keyWords)");
+			
+			// Execute query
+			Query query = session.createQuery(sb.toString());
+			query.setParameterList("keyWords", setKeyWords);
+			List<Contact> list = (List<Contact>) query.list();
+			contacts = new HashSet<>(list);
+			session.close();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return contacts;
 	}
 	

@@ -23,7 +23,7 @@ public class ContactService
 	}
 	
 	
-	public Set<Long> contacts(String keywords){
+	public Set<Contact> contacts(String keywords){
 		return (cdao = new ContactDAO()).getContacts(keywords);
 	}
 }

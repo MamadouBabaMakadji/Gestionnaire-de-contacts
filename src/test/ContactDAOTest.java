@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertSame;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Ignore;
@@ -63,7 +64,7 @@ public class ContactDAOTest {
 
 
 	// Get contact
-	//@Ignore 
+	@Ignore
 	@Test
 	public void getContact() {
 		ContactDAO contactDAO = new ContactDAO();
@@ -82,34 +83,45 @@ public class ContactDAOTest {
 	
 	// Test Search contacts
 	@Test
-	public void getContactsByLastname(){
+	public void getContactsByName(){
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Long> contacts = new HashSet<Long>();
-		
-		contacts = contactDAO.getContacts("");
+		Set<Contact> contacts = contactDAO.getContacts("Baba");
+		System.out.println("toto il va péter");
+		for(Contact c : contacts){
+			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
+		}
 	}
 	
-	@Test
-	public void getContactsByFirstname(){
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Long> contacts = new HashSet<Long>();
-		
-		contacts = contactDAO.getContacts("");
-	}
 	
 	@Test
 	public void getContactsByCountry(){
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Long> contacts = new HashSet<Long>();
-		
-		contacts = contactDAO.getContacts("");
+		Set<Contact> contacts = contactDAO.getContacts("France Mali");
+		System.out.println("toto il va péter");
+		for(Contact c : contacts){
+			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
+		}
 	}
+	
 	
 	@Test
 	public void getContactsByCity(){
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Long> contacts = new HashSet<Long>();
-		
-		contacts = contactDAO.getContacts("");
+		Set<Contact> contacts = contactDAO.getContacts("Auber Neuilly");
+		System.out.println("toto il va péter");
+		for(Contact c : contacts){
+			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
+		}
 	}
+	
+	@Test
+	public void getContactsByGroupName(){
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Contact> contacts = contactDAO.getContacts("Miage");
+		System.out.println("toto il va péter");
+		for(Contact c : contacts){
+			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
+		}
+	}
+	
 }
