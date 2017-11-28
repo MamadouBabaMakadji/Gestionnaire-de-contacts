@@ -60,7 +60,7 @@ public class ContactDAOTest {
 		
 	
 	// Add contact w multiples phones & groups
-	@Ignore @Test
+	@Test
 	public void insertDBContactWPhonesGroupsTest() {
 		boolean result = false;
 
@@ -69,7 +69,7 @@ public class ContactDAOTest {
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
 		Group group1 = new Group("Miage");
-		Group group2 = new Group("Toto");
+		Group group2 = new Group("Nanterre");
 
 		// Contact
 		contact.setAdress(adress);
