@@ -17,7 +17,7 @@ import model.PhoneNumber;
 
 public class ContactDAOTest {
 
-
+	// ****************** Create ************
 	// Add contact w multiples phones
 	@Ignore @Test
 	public void insertDBTest() {
@@ -62,7 +62,7 @@ public class ContactDAOTest {
 		assertSame(true, result);
 	}
 
-
+	// ****************** Read ************
 	// Get contact
 	@Ignore
 	@Test
@@ -92,7 +92,6 @@ public class ContactDAOTest {
 		}
 	}
 	
-	
 	@Test
 	public void getContactsByCountry(){
 		ContactDAO contactDAO = new ContactDAO();
@@ -102,7 +101,6 @@ public class ContactDAOTest {
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
 		}
 	}
-	
 	
 	@Test
 	public void getContactsByCity(){
