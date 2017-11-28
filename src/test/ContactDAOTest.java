@@ -60,7 +60,7 @@ public class ContactDAOTest {
 		
 	
 	// Add contact w multiples phones & groups
-	@Test
+	@Ignore @Test
 	public void insertDBContactWPhonesGroupsTest() {
 		boolean result = false;
 
@@ -103,12 +103,35 @@ public class ContactDAOTest {
 	}
 
 	
+	// Add contact w multiples phones & groups
+	@Test
+	public void insertDBGroup() {
+		boolean result = false;
+
+		Group group1 = new Group("TOTO");
+
+		// Test add group
+		ContactDAO contactDAO = new ContactDAO();
+		try {
+			result = contactDAO.insertDB(group1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (result) {
+			System.out.println("OK");
+		} else {
+			System.out.println("Echec");
+		}
+
+		assertSame(true, result);
+	}
+	
 	
 	// ************************* Read ************************
 	
 	// Get contact
-	@Ignore
-	@Test
+	@Ignore @Test
 	public void getContact() {
 		ContactDAO contactDAO = new ContactDAO();
 		Contact contact = contactDAO.getContact(1);
@@ -126,9 +149,9 @@ public class ContactDAOTest {
 	
 	// Test Search contacts
 	@Ignore @Test
-	public void getContactsByName(){
+	public void searchContactsByName(){
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.getContacts("Baba");
+		Set<Contact> contacts = contactDAO.searchContacts("Baba");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -136,9 +159,9 @@ public class ContactDAOTest {
 	}
 	
 	@Ignore @Test
-	public void getContactsByCountry(){
+	public void searchContactsByCountry(){
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.getContacts("France Mali");
+		Set<Contact> contacts = contactDAO.searchContacts("France Mali");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -146,9 +169,9 @@ public class ContactDAOTest {
 	}
 	
 	@Ignore @Test
-	public void getContactsByCity(){
+	public void searchContactsByCity(){
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.getContacts("Auber Neuilly");
+		Set<Contact> contacts = contactDAO.searchContacts("Auber Neuilly");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -156,12 +179,23 @@ public class ContactDAOTest {
 	}
 	
 	@Ignore @Test
-	public void getContactsByGroupName(){
+	public void searchContactsByGroupName(){
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.getContacts("Miage");
+		Set<Contact> contacts = contactDAO.searchContacts("Miage");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
+		}
+	}
+	
+	
+	@Test
+	public void getGroups() {
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Group> groups = contactDAO.getGroups();
+				
+		for(Group group : groups){
+			System.out.println(group.toString());
 		}
 	}
 	
