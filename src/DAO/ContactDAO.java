@@ -97,6 +97,8 @@ public class ContactDAO {
 		session.close();
 		return new HashSet<Group>(listGroups);
 	}
+	
+	/*public Set<Contact> getContactByGroupId(long groupId)*/
 
 	/**
 	 * Seach a Contact by : firstname, lastname, country, group name
