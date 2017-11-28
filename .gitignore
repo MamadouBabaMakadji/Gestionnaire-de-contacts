@@ -23,5 +23,7 @@ hs_err_pid*
 
 
 
-#Folder build class
+#Other
 build/
+.settings
+.project

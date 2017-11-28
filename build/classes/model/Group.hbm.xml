@@ -7,16 +7,17 @@
 			<generator class="increment" />
 		</id>
 		<!-- <version name="version" access="field" column="version"/> -->
-				
+
 		<property name="groupName">
 			<column name="groupName"></column>
 		</property>
-		
+
 		<!-- Un groupe possède 0, 1 ou n contact(s) -->
-		<set name="contacts" table="contact_group" inverse="true" cascade="all" lazy="true">
+		<set name="contacts" table="contact_group" inverse="true" cascade="all"
+			lazy="true">
 			<key column="group_ID"></key>
 			<many-to-many column="contact_ID" class="Contact"></many-to-many>
 		</set>
-		
+
 	</class>
 </hibernate-mapping>

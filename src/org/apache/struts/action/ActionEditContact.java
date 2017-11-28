@@ -1,6 +1,7 @@
 package org.apache.struts.action;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,11 @@ public class ActionEditContact extends Action {
 			ContactDAO cdao = new ContactDAO();
 			Contact contact = cdao.getContact((long) ncf.getIdentifiant());
 			Adress adress = contact.getAdress();
-			PhoneNumber phone = new PhoneNumber(ncf.getTel());
-			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
+			Set<PhoneNumber> phones = contact.getPhones();
+			Iterator<PhoneNumber> iter = phones.iterator();
+			PhoneNumber phone = iter.next();
+			PhoneNumber phone2;
+
 			Set<Group> groups = new HashSet<Group>();
 			// ADRESS
 			adress.setStreet(ncf.getAdress());
@@ -33,12 +37,18 @@ public class ActionEditContact extends Action {
 			adress.setCountry(ncf.getPays());
 			adress.setContact(contact);
 			// PHONE
-			phone.setContact(contact);
-			phones.add(phone);
-			if (ncf.getTel2() != "") {
-				PhoneNumber phone2 = new PhoneNumber(ncf.getTel2());
+			if (!"".equals(ncf.getTel2())) {
+				phone2 = new PhoneNumber();
+				phone2.setPhoneNumber(ncf.getTel2());
 				phone2.setContact(contact);
+				phone.setPhoneNumber(ncf.getTel());
+				phones.clear();
+				phones.add(phone);
 				phones.add(phone2);
+			} else {
+				phone.setPhoneNumber(ncf.getTel());
+				phones.clear();
+				phones.add(phone);
 			}
 			// GROUP
 			if (ncf.getGroup() != "") {

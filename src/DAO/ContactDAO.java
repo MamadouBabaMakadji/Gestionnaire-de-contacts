@@ -23,7 +23,7 @@ public class ContactDAO {
 	public ContactDAO() {
 	}
 
-	//****************************** Create ********************************
+	// ****************************** Create ********************************
 	/**
 	 * Insert an object in database
 	 * 
@@ -50,8 +50,6 @@ public class ContactDAO {
 		return result;
 	}
 
-	
-	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executerRequete(String requete) throws SQLException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -63,8 +61,7 @@ public class ContactDAO {
 		return result;
 	}
 
-	//****************************** Read ********************************
-	
+	// ****************************** Read ********************************
 	/**
 	 * Get a contact with session.get()
 	 * 
@@ -74,8 +71,7 @@ public class ContactDAO {
 	public Contact getContact(long contact_ID) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Contact contact = (Contact) session.createCriteria(Contact.class)
-											.add(Restrictions
-											.like("contact_ID", contact_ID)).uniqueResult();
+				.add(Restrictions.like("contact_ID", contact_ID)).uniqueResult();
 		session.close();
 		return contact;
 	}
@@ -90,8 +86,10 @@ public class ContactDAO {
 
 	/**
 	 * Get a set of all groups
+	 * 
 	 * @return an hashset of all groups
 	 */
+
 	public Set<Group> getGroups() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		@SuppressWarnings("unchecked")
@@ -99,7 +97,7 @@ public class ContactDAO {
 		session.close();
 		return new HashSet<Group>(listGroups);
 	}
-	
+
 	/**
 	 * Seach a Contact by : firstname, lastname, country, group name
 	 * 
@@ -133,10 +131,9 @@ public class ContactDAO {
 		}
 		return contacts;
 	}
-	
-	
-	//****************************** Update ********************************
-	
+
+	// ****************************** Update ********************************
+
 	/**
 	 * Save and update an object
 	 * 
@@ -158,15 +155,15 @@ public class ContactDAO {
 		}
 		return result;
 	}
-	
-	
-	//****************************** Delete ********************************
-		
-	public boolean deleteContact(Contact contact) {
+
+	// ****************************** Delete ********************************
+
+	public boolean deleteContact(long contact_ID) {
 		boolean result = false;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
+			Contact contact = (Contact) session.load(Contact.class, contact_ID);
 			session.delete(contact);
 			session.getTransaction().commit();
 			result = true;
@@ -177,5 +174,5 @@ public class ContactDAO {
 		}
 		return result;
 	}
-	
+
 }

@@ -4,14 +4,18 @@
 <hibernate-mapping package="model">
 	<class name="Contact" table="contact">
 
-<!-- 		<cache usage="read-write"/> -->
-		
+		<!-- <cache usage="read-write"/> -->
+
+		<!-- <cache usage="read-write"/> -->
+
 		<id name="contact_ID" type="long" column="contact_ID">
 			<generator class="increment" />
 		</id>
 
-<!-- 		<version name="version" access="field" column="version"/> -->
-		
+		<!-- <version name="version" access="field" column="version"/> -->
+
+		<!-- <version name="version" access="field" column="version"/> -->
+
 		<property name="nom" lazy="true">
 			<column name="nom"></column>
 		</property>
@@ -25,7 +29,8 @@
 		</property>
 
 		<!-- Un contact peut avoir une adress -->
-		<many-to-one name="adress" column="adress_ID" unique="true"	not-null="false" cascade="all" />
+		<many-to-one name="adress" column="adress_ID" unique="true"
+			not-null="false" cascade="all" />
 
 		<!-- Un contact possède 0, 1 ou n numéros -->
 		<set name="phones" inverse="true" cascade="all">

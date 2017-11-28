@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.ContactDAO;
-import model.Contact;
 
 public class ActionSuppContact extends Action {
 	@Override
@@ -13,10 +12,8 @@ public class ActionSuppContact extends Action {
 		SuppContactForm ncf = (SuppContactForm) form;
 		if (ncf.getNom() != null && ncf.getPrenom() != null && ncf.getMail().length() > 5) {
 			long contact_ID = (long) ncf.getIdentifiant();
-			System.out.println("Je suis dans l'action ID = " + contact_ID);
 			ContactDAO cdao = new ContactDAO();
-			Contact contact = cdao.getContact(contact_ID);
-			if (cdao.deleteContact(contact))
+			if (cdao.deleteContact(contact_ID))
 				return mapping.findForward("SuppOK");
 			return mapping.findForward("EchecSupp");
 		} else {
