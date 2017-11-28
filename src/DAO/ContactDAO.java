@@ -22,7 +22,8 @@ public class ContactDAO {
 	public ContactDAO() {
 	}
 
-	//****************************** Code to Create ********************************
+	// ****************************** Code to Create
+	// ********************************
 	/**
 	 * Insert an object in database
 	 * 
@@ -60,7 +61,8 @@ public class ContactDAO {
 		return result;
 	}
 
-	//****************************** Code to Create ********************************
+	// ****************************** Code to Create
+	// ********************************
 	/**
 	 * Get a contact with session.get()
 	 * 
@@ -71,7 +73,6 @@ public class ContactDAO {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Contact contact = (Contact) session.createCriteria(Contact.class)
 				.add(Restrictions.like("contact_ID", contact_ID)).uniqueResult();
-		session.close();
 		return contact;
 	}
 
@@ -104,11 +105,12 @@ public class ContactDAO {
 		return result;
 	}
 
-	public boolean deleteContact(Contact contact) {
+	public boolean deleteContact(long contact_ID) {
 		boolean result = false;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
+			Contact contact = (Contact) session.load(Contact.class, contact_ID);
 			session.delete(contact);
 			session.getTransaction().commit();
 			result = true;
@@ -120,8 +122,6 @@ public class ContactDAO {
 		return result;
 	}
 
-	
-	//
 	/**
 	 * Seach a Contact by : firstname, lastname, city, country, group name
 	 * 
@@ -156,6 +156,5 @@ public class ContactDAO {
 		}
 		return contacts;
 	}
-	
-	
+
 }

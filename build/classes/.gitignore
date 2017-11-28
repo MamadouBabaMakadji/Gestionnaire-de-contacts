@@ -1,8 +1,2 @@
-/model/
-/DAO/
-<<<<<<< HEAD
 /org/
-=======
-/test/
-/model/
->>>>>>> bddcf2cd2ce2cf5d5f7ad1ba7c5b451ee566a05c
+/DAO/

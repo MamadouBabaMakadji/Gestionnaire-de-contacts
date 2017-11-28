@@ -32,10 +32,10 @@
 		<property name="hibernate.format_sql">true</property>
 
 		<!-- Pemet d'utiliser le cache de second niveau dans le projet -->
-		<property name="cache.use_second_level_cache">true</property>
-		<property name="hibernate.cache.provider_class">
-			org.hibernate.cache.EhCacheProvider
-		</property>
+		<!-- <property name="cache.use_second_level_cache">true</property> -->
+		<!-- <property name="hibernate.cache.provider_class"> -->
+		<!-- org.hibernate.cache.EhCacheProvider -->
+		<!-- </property> -->
 
 		<!-- liens vers les fichiers de mapping, indiquez le chemin à partir de 
 			src -->
