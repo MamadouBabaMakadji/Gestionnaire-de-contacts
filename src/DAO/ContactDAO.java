@@ -72,7 +72,6 @@ public class ContactDAO {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Contact contact = (Contact) session.createCriteria(Contact.class)
 				.add(Restrictions.like("contact_ID", contact_ID)).uniqueResult();
-		session.close();
 		return contact;
 	}
 
@@ -80,7 +79,7 @@ public class ContactDAO {
 	public List<Contact> getAllContact() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Contact> results = session.createCriteria(Contact.class).setCacheable(true).list();
-		session.close();
+//		session.close();
 		return results;
 	}
 
@@ -149,7 +148,7 @@ public class ContactDAO {
 			session.merge(contact);
 			session.getTransaction().commit();
 			result = true;
-			session.close();
+//			session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			e.getMessage();

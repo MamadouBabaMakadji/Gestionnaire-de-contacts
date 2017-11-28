@@ -28,7 +28,6 @@ public class ActionEditContact extends Action {
 			Iterator<PhoneNumber> iter = phones.iterator();
 			PhoneNumber phone = iter.next();
 			PhoneNumber phone2;
-
 			Set<Group> groups = new HashSet<Group>();
 			// ADRESS
 			adress.setStreet(ncf.getAdress());
@@ -37,7 +36,25 @@ public class ActionEditContact extends Action {
 			adress.setCountry(ncf.getPays());
 			adress.setContact(contact);
 			// PHONE
+			Object[] objectPhone = phones.toArray();
 			if (!"".equals(ncf.getTel2())) {
+				System.out.println("Taille --> " + objectPhone.length);
+				if (objectPhone.length > 1) {
+					if (!(((PhoneNumber) objectPhone[1]).getPhoneNumber()).equals(ncf.getTel2())) {
+						phone2 = (PhoneNumber) objectPhone[1];
+						phone2.setPhoneNumber(ncf.getTel2());
+						phone2.setContact(contact);
+						phone.setPhoneNumber(ncf.getTel());
+						phones.clear();
+						phones.add(phone);
+						phones.add(phone2);
+					} else {
+						phone.setPhoneNumber(ncf.getTel());
+						phones.clear();
+						phones.add(phone);
+					}
+				}
+			} else {
 				phone2 = new PhoneNumber();
 				phone2.setPhoneNumber(ncf.getTel2());
 				phone2.setContact(contact);
@@ -45,10 +62,6 @@ public class ActionEditContact extends Action {
 				phones.clear();
 				phones.add(phone);
 				phones.add(phone2);
-			} else {
-				phone.setPhoneNumber(ncf.getTel());
-				phones.clear();
-				phones.add(phone);
 			}
 			// GROUP
 			if (ncf.getGroup() != "") {

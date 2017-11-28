@@ -18,9 +18,7 @@ public class ActionNewContact extends Action {
 			HttpServletResponse response) throws Exception {
 
 		NewContactForm ncf = (NewContactForm) form;
-
 		if (ncf.getNom() != null && ncf.getPrenom() != null && ncf.getMail().length() > 5) {
-
 			Contact contact = new Contact(ncf.getNom(), ncf.getPrenom(), ncf.getMail());
 			Adress adress = new Adress(ncf.getAdresse(), ncf.getVille(), ncf.getCode_postal(), ncf.getPays());
 			PhoneNumber phone = new PhoneNumber(ncf.getTel());
@@ -30,8 +28,9 @@ public class ActionNewContact extends Action {
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone.setContact(contact);
 			phones.add(phone);
-			if(ncf.getTel2() != ""){
-				PhoneNumber phone2 = new PhoneNumber(ncf.getTel2());
+			if (!"".equals(ncf.getTel2())) {
+				PhoneNumber phone2 = new PhoneNumber();
+				phone2.setPhoneNumber(ncf.getTel2());
 				phone2.setContact(contact);
 				phones.add(phone2);
 			}
