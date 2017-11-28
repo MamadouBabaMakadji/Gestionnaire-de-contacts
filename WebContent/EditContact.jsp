@@ -31,25 +31,23 @@
 		long contact_ID = Long.parseLong(id);
 		Contact contact = cdao.getContact(contact_ID);
 		Adress contact_adress = contact.getAdress();
-		Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
-		Set<Group> groups = new HashSet<Group>();
-		phones = contact.getPhones();
-		groups = contact.getGroups();
+		Set<PhoneNumber> phones = contact.getPhones();
+		Set<Group> groups = contact.getGroups();
 		Iterator<PhoneNumber> iterPhone = phones.iterator();
-		if(!groups.isEmpty()){
+		if (!groups.isEmpty()) {
 			Iterator<Group> iterGroup = groups.iterator();
 			Group groupe = iterGroup.next();
 			String group = groupe.getGroupName();
 			request.setAttribute("group", group);
 		}
-		
+
 		PhoneNumber phone = iterPhone.next();
-		if(iterPhone.hasNext()){
+		if (iterPhone.hasNext()) {
 			PhoneNumber phone2 = iterPhone.next();
 			String tel2 = phone2.getPhoneNumber();
 			request.setAttribute("tel2", tel2);
 		}
-		
+
 		String nom = contact.getNom();
 		String prenom = contact.getPrenom();
 		String mail = contact.getMail();

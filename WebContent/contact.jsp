@@ -1,7 +1,7 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="org.hibernate.HibernateException"%>
-<%-- <%@page import="org.hamcrest.core.IsInstanceOf"%> --%>
 <%@page import="java.util.*"%>
 <%@page import="model.*"%>
 <%@page import="service.*"%>
@@ -50,18 +50,23 @@
 			<%
 				try {
 					ContactDAO dao = new ContactDAO();
-					List<Object[]> contacts = new ArrayList<Object[]>();
-					contacts = dao.executerRequete("from Contact, Adress, PhoneNumber");
-					Iterator<Object[]> iter = contacts.iterator();
+					List<Contact> contacts = new ArrayList<Contact>();
+					contacts = dao.getAllContact();
+					Iterator<Contact> iter = contacts.iterator();
 					while (iter.hasNext()) {
-						Object[] objects = iter.next();
-						Contact contact = (Contact) objects[0];
-						Adress adress = (Adress) objects[1];
-						PhoneNumber phone = (PhoneNumber) objects[2];
+						Contact contact = iter.next();
+						Adress adress = contact.getAdress();
+						Set<PhoneNumber> phones = contact.getPhones();
 						out.print("<tr><td>" + contact.getNom() + "</td><td>" + contact.getPrenom() + "</td><td>"
-								+ contact.getMail() + "</td><td>" + phone.getPhoneNumber() + "</td><td>" + adress.getCity()
-								+ "</td><td>" + adress.getStreet() + "</td><td>" + adress.getZip() + "</td><td>"
-								+ adress.getCountry() + "</td></tr>");
+								+ contact.getMail() + "</td><td>");
+						Object[] phoneObjects = phones.toArray();
+						for (int i = 0; i < phoneObjects.length; i++) {
+							PhoneNumber phone = (PhoneNumber) phoneObjects[i];
+							out.print("\n" + phone.getPhoneNumber() + "\n");
+						}
+
+						out.print("</td><td>" + adress.getCity() + "</td><td>" + adress.getStreet() + "</td><td>"
+								+ adress.getZip() + "</td><td>" + adress.getCountry() + "</td></tr>");
 					}
 				} catch (Exception e) {
 					throw new Exception(e.getMessage());

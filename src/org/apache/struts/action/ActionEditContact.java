@@ -47,6 +47,7 @@ public class ActionEditContact extends Action {
 				contacts.add(contact);
 				group.setContacts(contacts);
 				groups.add(group);
+				contact.setGroups(groups);
 			}
 			// Modifications
 			contact.setNom(ncf.getNom());
@@ -54,8 +55,7 @@ public class ActionEditContact extends Action {
 			contact.setMail(ncf.getMail());
 			contact.setAdress(adress);
 			contact.setPhones(phones);
-			contact.setGroups(groups);
-			if (cdao.saveUpdate(cdao.getSession(), contact))
+			if (cdao.saveUpdate(contact))
 				return mapping.findForward("EditOK");
 			return mapping.findForward("EchecEdit");
 		} else {

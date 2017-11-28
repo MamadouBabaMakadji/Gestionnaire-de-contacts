@@ -24,14 +24,21 @@
 			sont crees, sinon elles sont MAJ, la valeur =create i.e. creation à chaque 
 			lancement -->
 		<property name="hbm2ddl.auto">update</property>
-		
+
 		<!-- Le SQL généré est affiché sur la console -->
 		<property name="hibernate.show_sql">true</property>
-		
+
 		<!-- Pretty format le SQL généré -->
 		<property name="hibernate.format_sql">true</property>
 
-		<!-- liens vers les fichiers de mapping, indiquez le chemin à partir de src -->
+		<!-- Pemet d'utiliser le cache de second niveau dans le projet -->
+		<property name="cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.provider_class">
+			org.hibernate.cache.EhCacheProvider
+		</property>
+
+		<!-- liens vers les fichiers de mapping, indiquez le chemin à partir de 
+			src -->
 		<mapping resource="model/Contact.hbm.xml" />
 		<mapping resource="model/Adress.hbm.xml" />
 		<mapping resource="model/PhoneNumber.hbm.xml" />
