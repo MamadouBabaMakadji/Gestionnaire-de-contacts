@@ -16,7 +16,7 @@
 		<set name="contacts" table="contact_group" inverse="true" cascade="all"
 			lazy="true">
 			<key column="group_ID"></key>
-			<many-to-many column="contact_ID" class="Contact" fetch="select"></many-to-many>
+			<many-to-many column="contact_ID" class="Contact"></many-to-many>
 		</set>
 
 	</class>

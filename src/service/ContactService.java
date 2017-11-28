@@ -4,6 +4,7 @@ import java.util.Set;
 
 import DAO.ContactDAO;
 import model.Contact;
+import model.Group;
 
 public class ContactService 
 {
@@ -19,11 +20,14 @@ public class ContactService
 	}
 	
 	public Contact getContact(long id) {
-		return(cdao = new ContactDAO()).getContact(id);
+		return (cdao = new ContactDAO()).getContact(id);
 	}
 	
+	public Set<Group> getGroups() {
+		return (cdao = new ContactDAO()).getGroups();
+	}
 	
-	public Set<Contact> contacts(String keywords){
-		return (cdao = new ContactDAO()).getContacts(keywords);
+	public Set<Contact> seachContacts (String keywords){
+		return (cdao = new ContactDAO()).searchContacts(keywords);
 	}
 }
