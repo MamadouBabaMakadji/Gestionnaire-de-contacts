@@ -6,6 +6,7 @@
 		<id name="contact_ID" type="long" column="contact_ID">
 			<generator class="increment" />
 		</id>
+		<version name="version" access="field" column="version"/>
 		
 		<property name="nom" lazy="true">
 			<column name="nom"></column>

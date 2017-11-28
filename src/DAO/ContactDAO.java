@@ -30,6 +30,8 @@ public class ContactDAO {
 	}
 
 	
+	//****************************** Code to Create ********************************
+	
 	/**
 	 * Insert an object in database
 	 * @param object
@@ -67,7 +69,8 @@ public class ContactDAO {
 	}
 
 
-
+	//****************************** Code to Create ********************************
+	
 	/**
 	 * Get a contact with session.get()
 	 * @param contact_ID
@@ -101,6 +104,7 @@ public class ContactDAO {
 		return result;
 	}
 	
+	//
 	
 	/**
 	 * Seach a Contact by : firstname, lastname, city, country, group name
@@ -134,5 +138,7 @@ public class ContactDAO {
 		}
 		return contacts;
 	}
+	
+	
 	
 }
