@@ -112,8 +112,7 @@ public class ContactDAO {
 
 			// Build query
 			StringBuilder sb = new StringBuilder();
-			sb.append(
-					"select c from Contact as c join c.groups as g where c.nom in (:keyWords) or c.prenom in (:keyWords) or c.adress.country in (:keyWords)");
+			sb.append("select c from Contact as c join c.groups as g where c.nom in (:keyWords) or c.prenom in (:keyWords) or c.adress.country in (:keyWords)");
 			sb.append(" or g.groupName in (:keyWords)");
 
 			// Execute query
