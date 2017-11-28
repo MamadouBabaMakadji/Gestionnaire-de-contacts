@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class Contact {
 	private long contact_ID;
+	private int version;
 	private String nom;
 	private String prenom;
 	private String mail;

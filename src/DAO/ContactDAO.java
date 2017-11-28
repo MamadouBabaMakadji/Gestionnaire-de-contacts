@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -17,7 +15,6 @@ import org.hibernate.criterion.Restrictions;
 
 import model.Contact;
 import util.HibernateUtil;
-import util.SessionSingleton;
 
 
 public class ContactDAO {
@@ -25,6 +22,7 @@ public class ContactDAO {
 	public ContactDAO() {
 	}
 
+	//****************************** Code to Create ********************************
 	/**
 	 * Insert an object in database
 	 * 
@@ -62,6 +60,7 @@ public class ContactDAO {
 		return result;
 	}
 
+	//****************************** Code to Create ********************************
 	/**
 	 * Get a contact with session.get()
 	 * 
@@ -121,6 +120,8 @@ public class ContactDAO {
 		return result;
 	}
 
+	
+	//
 	/**
 	 * Seach a Contact by : firstname, lastname, city, country, group name
 	 * 
@@ -155,4 +156,6 @@ public class ContactDAO {
 		}
 		return contacts;
 	}
+	
+	
 }

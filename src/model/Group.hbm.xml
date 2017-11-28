@@ -6,7 +6,8 @@
 		<id name="group_ID" type="long" column="group_ID">
 			<generator class="increment" />
 		</id>
-		
+		<version name="version" access="field" column="version"/>
+				
 		<property name="groupName">
 			<column name="groupName"></column>
 		</property>
