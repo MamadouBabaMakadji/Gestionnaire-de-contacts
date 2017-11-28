@@ -22,7 +22,7 @@ public class ContactDAO {
 	public ContactDAO() {
 	}
 
-	//****************************** Code to Create ********************************
+	//****************************** Create ********************************
 	/**
 	 * Insert an object in database
 	 * 
@@ -49,6 +49,8 @@ public class ContactDAO {
 		return result;
 	}
 
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executerRequete(String requete) throws SQLException {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -60,7 +62,7 @@ public class ContactDAO {
 		return result;
 	}
 
-	//****************************** Code to Create ********************************
+	//****************************** Code to Read ********************************
 	/**
 	 * Get a contact with session.get()
 	 * 
@@ -156,6 +158,12 @@ public class ContactDAO {
 		}
 		return contacts;
 	}
+	
+	
+	//****************************** Update ********************************
+	
+	
+	//****************************** Delete ********************************
 	
 	
 }

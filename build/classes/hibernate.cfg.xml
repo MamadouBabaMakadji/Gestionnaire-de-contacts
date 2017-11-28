@@ -23,7 +23,7 @@
 		<!-- valeur = update i..e si les tables de la base n'existent pas elles 
 			sont crees, sinon elles sont MAJ, la valeur =create i.e. creation à chaque 
 			lancement -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 
 		<!-- Le SQL généré est affiché sur la console -->
 		<property name="hibernate.show_sql">true</property>
@@ -32,10 +32,10 @@
 		<property name="hibernate.format_sql">true</property>
 
 		<!-- Pemet d'utiliser le cache de second niveau dans le projet -->
-		<property name="cache.use_second_level_cache">true</property>
+<!-- 		<property name="cache.use_second_level_cache">true</property>
 		<property name="hibernate.cache.provider_class">
 			org.hibernate.cache.EhCacheProvider
-		</property>
+		</property> -->
 
 		<!-- liens vers les fichiers de mapping, indiquez le chemin à partir de 
 			src -->
