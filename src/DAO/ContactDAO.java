@@ -97,7 +97,30 @@ public class ContactDAO {
 		return new HashSet<Group>(listGroups);
 	}
 	
-	/*public Set<Contact> getContactByGroupId(long groupId)*/
+	public Set<Contact> getContactByGroupId(long groupId) {
+		Set<Contact> contacts = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+
+			// Build query
+			StringBuilder sb = new StringBuilder();
+			sb.append("select c from Contact as c join c.groups as g where g.group_ID = :groupId");
+
+			// Execute query
+			Query query = session.createQuery(sb.toString());
+			query.setParameter("groupId", groupId);
+			@SuppressWarnings("unchecked")
+			List<Contact> list = (List<Contact>) query.list();
+			contacts = new HashSet<>(list);
+			session.close();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return contacts;
+	}
 
 	/**
 	 * Seach a Contact by : firstname, lastname, country, group name

@@ -39,7 +39,7 @@
 		</set>
 
 		<!-- Un contact appartient à 0, 1 ou n groupes -->
-		<set name="groups" table="contact_group" cascade="save-update">
+		<set name="groups" table="contact_group" cascade="all">
 			<key column="contact_ID" not-null="true"></key>
 			<many-to-many column="group_ID" class="Group"></many-to-many>
 		</set>

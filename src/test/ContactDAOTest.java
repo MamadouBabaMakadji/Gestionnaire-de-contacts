@@ -19,11 +19,12 @@ public class ContactDAOTest {
 
 	// ************************* Create ************************
 	// Add contact w multiples phones
-	@Ignore @Test
+	//@Ignore 
+	@Test
 	public void insertDBContactWPhonesTest() {
 		boolean result = false;
 
-		Contact contact = new Contact("Michel", "Baba", "mbm@hb.net");
+		Contact contact = new Contact("toto", "baba", "mbm@hb.net");
 		Adress adress = new Adress("80 rue mbm", "Auber", "55121", "Mali");
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
@@ -60,11 +61,12 @@ public class ContactDAOTest {
 		
 	
 	// Add contact w multiples phones & groups
+	@Ignore 
 	@Test
 	public void insertDBContactWPhonesGroupsTest() {
 		boolean result = false;
 
-		Contact contact = new Contact("Michel", "Baba", "mbm@hb.net");
+		Contact contact = new Contact("oussema", "Baba", "mbm@hb.net");
 		Adress adress = new Adress("80 rue mbm", "Neuilly", "55121", "Mali");
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
@@ -85,7 +87,7 @@ public class ContactDAOTest {
 		group1.getContacts().add(contact);
 		group2.getContacts().add(contact);
 
-		// Test ajout contact
+		// Test add contact
 		ContactDAO contactDAO = new ContactDAO();
 		try {
 			result = contactDAO.insertDB(contact);
@@ -104,6 +106,7 @@ public class ContactDAOTest {
 
 	
 	// Add contact w multiples phones & groups
+	@Ignore
 	@Test
 	public void insertDBGroup() {
 		boolean result = false;
@@ -130,8 +133,9 @@ public class ContactDAOTest {
 	
 	// ************************* Read ************************
 	
-	// Get contact
-	@Ignore @Test
+	// Get a contact
+	@Ignore 
+	@Test
 	public void getContact() {
 		ContactDAO contactDAO = new ContactDAO();
 		Contact contact = contactDAO.getContact(1);
@@ -144,6 +148,32 @@ public class ContactDAOTest {
 		
 		for(Group group : contact.getGroups()){
 			System.out.println(group.toString());
+		}
+	}
+	
+	@Ignore 
+	@Test
+	public void getGroups() {
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Group> groups = contactDAO.getGroups();
+		for(Group group : groups){
+			System.out.println(group.toString());
+		}
+	}
+
+
+	// Get contact from an id of group
+	@Ignore
+	@Test
+	public void getContactsFromIdGroup() {
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Contact> contacts = contactDAO.getContactByGroupId(1);
+		for(Contact c : contacts){
+			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
+			
+			for(Group group : c.getGroups()) {
+				System.out.println(group.getGroupName());
+			}
 		}
 	}
 	
@@ -185,17 +215,6 @@ public class ContactDAOTest {
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
-		}
-	}
-	
-	
-	@Test
-	public void getGroups() {
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Group> groups = contactDAO.getGroups();
-				
-		for(Group group : groups){
-			System.out.println(group.toString());
 		}
 	}
 	
