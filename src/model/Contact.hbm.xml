@@ -9,7 +9,7 @@
 		<!-- <cache usage="read-write"/> -->
 
 		<id name="contact_ID" type="long" column="contact_ID">
-			<generator class="increment" />
+			<generator class="native" />
 		</id>
 
 		<!-- <version name="version" access="field" column="version"/> -->
@@ -33,8 +33,8 @@
 			not-null="false" cascade="all" />
 
 		<!-- Un contact possède 0, 1 ou n numéros -->
-		<set name="phones" inverse="true" cascade="all">
-			<key column="contact_ID"></key>
+		<set name="phones" inverse="true" cascade="all" table="phonenumber">
+			<key column="contact_ID" not-null="true"></key>
 			<one-to-many class="PhoneNumber" />
 		</set>
 

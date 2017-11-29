@@ -49,6 +49,37 @@ public class ContactDAO {
 		}
 		return result;
 	}
+	
+	/**
+	 * Insert objects in database
+	 * 
+	 * @param object
+	 * @return a boolean if instructions have finished without errors
+	 * @throws HibernateException
+	 */
+	public boolean insertDBObjects(List<Object> objects) throws Exception {
+		boolean result = false;
+		if (objects == null)
+			return result;
+		else {
+			try {
+				Session session = HibernateUtil.getSessionFactory().openSession();
+				session.beginTransaction();
+				
+				for(Object o : objects){
+					session.save(o);
+				}
+				
+				session.getTransaction().commit();
+				session.close();
+				result = true;
+			} catch (HibernateException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executerRequete(String requete) throws SQLException {

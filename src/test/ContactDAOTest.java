@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertSame;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ import model.PhoneNumber;
 public class ContactDAOTest {
 
 	// ************************* Create ************************
-	// Add contact w multiples phones
+	// Add contact w multiples phones and w multiples groups
 	//@Ignore 
 	@Test
 	public void insertDBContactWPhonesTest() {
@@ -26,26 +27,36 @@ public class ContactDAOTest {
 
 		Contact contact = new Contact("toto", "baba", "mbm@hb.net");
 		Adress adress = new Adress("80 rue mbm", "Auber", "55121", "Mali");
+		
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
-		Group group1 = new Group("Miage");
+		
+		Group group1 = new Group("Nanterre");
+		Group group2 = new Group("Rouen");
 
 		// Contact
 		contact.setAdress(adress);
 
-		phone1.setContact(contact); 
-		phone2.setContact(contact);
-		contact.getPhones().add(phone1); 
-		contact.getPhones().add(phone2);
+		Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
+		phone1.setContact(contact); phone2.setContact(contact);
+		phones.add(phone1);
+		phones.add(phone2);
+		contact.setPhones(phones);
 
 		Set<Group> groups = new HashSet<Group>();
 		groups.add(group1);
+		groups.add(group2);
 		contact.setGroups(groups);
 
+		List<Object> objects = new LinkedList<Object>();
+		objects.add(contact);
+		objects.add(phone1);
+		objects.add(phone2);
+		
 		// Test ajout contact
 		ContactDAO contactDAO = new ContactDAO();
 		try {
-			result = contactDAO.insertDB(contact);
+			result = contactDAO.insertDBObjects(objects);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +82,6 @@ public class ContactDAOTest {
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
 		Group group1 = new Group("Miage");
-		Group group2 = new Group("Nanterre");
 
 		// Contact
 		contact.setAdress(adress);
@@ -82,10 +92,8 @@ public class ContactDAOTest {
 		contact.getPhones().add(phone2);
 
 		contact.getGroups().add(group1);
-		contact.getGroups().add(group2);
 		
 		group1.getContacts().add(contact);
-		group2.getContacts().add(contact);
 
 		// Test add contact
 		ContactDAO contactDAO = new ContactDAO();
