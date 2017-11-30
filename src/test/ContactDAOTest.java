@@ -75,7 +75,7 @@ public class ContactDAOTest {
 		
 	
 	// Add contact w multiples phones & groups
-	//@Ignore 
+	@Ignore 
 	@Test
 	public void insertDBContactWPhonesGroupsTest() {
 		boolean result = false;
@@ -116,7 +116,7 @@ public class ContactDAOTest {
 	}
 
 	
-	// Add contact w multiples phones & groups
+	// Add a group
 	@Ignore
 	@Test
 	public void insertDBGroup() {
@@ -145,16 +145,16 @@ public class ContactDAOTest {
 	// ************************* Read ************************
 	
 	// Get a contact
-	@Ignore 
+	//@Ignore 
 	@Test
 	public void getContact() {
 		ContactDAO contactDAO = new ContactDAO();
 		Contact contact = contactDAO.getContact(1);
-		
+
 		System.out.println("Contact : " + contact.toString());
 		
 		for(PhoneNumber phoneNumber : contact.getPhones()){
-			System.out.println(phoneNumber.getPhoneNumber());
+			System.out.println(phoneNumber.toString());
 		}
 		
 		for(Group group : contact.getGroups()){
@@ -163,8 +163,29 @@ public class ContactDAOTest {
 	}
 	
 	
+	
+	// Get a contact by HQL
+	@Ignore 
+	@Test
+	public void getContactWHql() {
+		ContactDAO dao = new ContactDAO();
+		Contact contact = dao.getContactHQL(1);
+		
+		System.out.println("Contact : " + contact.getNom() + ", Id = " +contact.getContact_ID()+ ", City = " +contact.getAdress().getCity());
+		System.out.println("Contact : " + contact.toString());
+		
+		for(PhoneNumber phoneNumber : contact.getPhones()){
+			System.out.println(phoneNumber.getPhoneNumber());
+		}
+		
+		for(Group group : contact.getGroups()){
+			System.out.println("Id of group = " + group.getGroup_ID()+ ", Group name" +group.getGroupName());
+		}
+	}
+	
+	
 	// Test for get a group by an id
-	//@Ignore
+	@Ignore
 	@Test
 	public void getGroup() {
 		Group group = null;
@@ -192,7 +213,7 @@ public class ContactDAOTest {
 
 
 	// Get contact from an id of group
-	//@Ignore
+	@Ignore
 	@Test
 	public void getContactsFromIdGroup() {
 		ContactDAO contactDAO = new ContactDAO();

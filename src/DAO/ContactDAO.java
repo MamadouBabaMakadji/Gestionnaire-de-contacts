@@ -99,11 +99,44 @@ public class ContactDAO {
 	 * @return an object Contact
 	 */
 	public Contact getContact(long contact_ID) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Contact contact = (Contact) session.createCriteria(Contact.class)
-				.add(Restrictions.like("contact_ID", contact_ID)).uniqueResult();
+		Contact contact = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			contact = new Contact((Contact) session.createCriteria(Contact.class).add(Restrictions.like("contact_ID", contact_ID)).uniqueResult());
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
 		return contact;
 	}
+	
+	public Contact getContactHQL(long contactId) {
+		Contact contact = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+
+			// Build query
+			StringBuilder sb = new StringBuilder();
+			sb.append("select c from Contact as c left join  fetch c.groups as g");
+
+			// Execute query
+			Query query = session.createQuery(sb.toString());
+
+			@SuppressWarnings("unchecked")
+			List<Contact> list = (List<Contact>) query.list();
+			contact = list.get(1);
+			//session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return contact;
+	}
+	
+	
+	
 
 	@SuppressWarnings("unchecked")
 	public List<Contact> getAllContact() {

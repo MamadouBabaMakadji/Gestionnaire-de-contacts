@@ -16,21 +16,30 @@ public class Contact {
 	public Contact() {
 	}
 
-	public Contact(String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-		this.mail = mail;
-		this.adress = adress;
-		this.phones = phones;
-	}
-
+	
 	public Contact(String nom, String prenom, String mail) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
 	}
+	
+	
+	public Contact(String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones, Set<Group> groups) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+		this.adress = new Adress(adress.getStreet(), adress.getCity(), adress.getCountry(), adress.getZip());
+		this.phones.addAll(phones);
+		this.groups.addAll(groups);
+	}
+
+
+	public Contact(Contact c) {
+		this(c.prenom, c.nom, c.mail, c.adress, c.phones, c.groups);
+	}
+	
 
 	public long getContact_ID() {
 		return contact_ID;
@@ -112,8 +121,8 @@ public class Contact {
 
 	@Override
 	public String toString() {
-		return "Contact {contact_ID=" + getContact_ID() + ", nom=" + getNom() + ", prenom=" + getPrenom() + ", mail=" + getMail()
-				+ ", address={" +adress.getCity()+ ", " +adress.getCountry()+ ", " +adress.getStreet()+ ", " +adress.getZip()+"}";
+		return new String("Contact {contact_ID=" + this.getContact_ID() + ", nom=" + this.getNom() + ", prenom=" + this.getPrenom() + ", mail=" + this.getMail()
+				+ ", address={" + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +", version = " + this.version+ "}");
 	}
 
 	
