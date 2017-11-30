@@ -168,7 +168,7 @@ public class ContactDAOTest {
 	public void getAllContactTest() {
 		try {
 			ContactDAO dao = new ContactDAO();
-			List<Contact> contacts = dao.getAllContacts();
+			Set<Contact> contacts = dao.getAllContacts();
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString());
 				

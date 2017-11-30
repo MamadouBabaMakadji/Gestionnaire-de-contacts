@@ -145,7 +145,7 @@ public class ContactDAO {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked" })
-	public List<Contact> getAllContacts() {
+	public Set<Contact> getAllContacts() {
 		List<Contact> contacts = new LinkedList<Contact>();
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
@@ -161,7 +161,7 @@ public class ContactDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return contacts;
+		return new HashSet<Contact>(contacts);
 	}
 	
 

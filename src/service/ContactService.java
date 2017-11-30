@@ -24,7 +24,7 @@ public class ContactService
 		return (cdao = new ContactDAO()).getContact(id);
 	}
 	
-	public List<Contact> getAllContact() {
+	public Set<Contact> getAllContact() {
 		return (cdao = new ContactDAO()).getAllContacts();
 	} 
 	
