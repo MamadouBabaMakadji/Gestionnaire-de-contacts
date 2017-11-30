@@ -120,15 +120,45 @@ public class ContactDAO {
 	 * @return an hashset of all groups
 	 */
 
+	@SuppressWarnings("unchecked")
 	public Set<Group> getGroups() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		@SuppressWarnings("unchecked")
-		List<Group> listGroups = session.createCriteria(Group.class).list();
-		session.close();
+		List<Group> listGroups = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			listGroups = session.createCriteria(Group.class).list();
+			session.close();
+			
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new HashSet<Group>(listGroups);
 	}
 	
-	public Set<Contact> getContactByGroupId(long groupId) {
+	
+	
+	/**
+	 * Get a group by an id
+	 * @param groupId : long
+	 * @return an object Group
+	 */
+	public Group getGroup(long groupId) {
+		Group group = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			group = (Group) session.createCriteria(Group.class).add(Restrictions.like("group_ID", groupId)).uniqueResult();
+			session.close();
+			return group;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return group;
+	}
+	
+	
+	
+	public Set<Contact> getContactsByGroupId(long groupId) {
 		Set<Contact> contacts = null;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
@@ -145,7 +175,6 @@ public class ContactDAO {
 			contacts = new HashSet<>(list);
 			session.close();
 		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -223,10 +252,16 @@ public class ContactDAO {
 			session.getTransaction().commit();
 			result = true;
 			session.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (HibernateException e) {
 			e.getMessage();
+			e.printStackTrace();
+			result = false;
+		} catch(Exception e) {
+			e.getMessage();
+			result = false;
 		}
+		
+		System.out.println("Result = " + result);
 		return result;
 	}
 	
@@ -247,13 +282,17 @@ public class ContactDAO {
 			result = true;
 		} catch (HibernateException e) {
 			e.getMessage();
+			e.printStackTrace();
 			result = false;
 		} catch(Exception e) {
 			e.getMessage();
 			result = false;
 		}
 		
+		System.out.println("Result = " + result);
 		return result;
 	}
+
+
 
 }

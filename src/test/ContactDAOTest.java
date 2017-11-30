@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.HibernateException;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -32,7 +33,7 @@ public class ContactDAOTest {
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
 		
 		Group group1 = new Group("Nanterre");
-		group1.setGroup_ID(1);
+		//group1.setGroup_ID(1);
 		
 		Group group2 = new Group("Paris");
 
@@ -74,7 +75,7 @@ public class ContactDAOTest {
 		
 	
 	// Add contact w multiples phones & groups
-	@Ignore 
+	//@Ignore 
 	@Test
 	public void insertDBContactWPhonesGroupsTest() {
 		boolean result = false;
@@ -161,6 +162,24 @@ public class ContactDAOTest {
 		}
 	}
 	
+	
+	// Test for get a group by an id
+	//@Ignore
+	@Test
+	public void getGroup() {
+		Group group = null;
+		try {
+			ContactDAO dao = new ContactDAO();
+			group = dao.getGroup(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("Group name : " + group.getGroupName());
+	}
+	
+	
+	
 	@Ignore 
 	@Test
 	public void getGroups() {
@@ -173,11 +192,11 @@ public class ContactDAOTest {
 
 
 	// Get contact from an id of group
-	@Ignore
+	//@Ignore
 	@Test
 	public void getContactsFromIdGroup() {
 		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.getContactByGroupId(1);
+		Set<Contact> contacts = contactDAO.getContactsByGroupId(9);
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
 			
@@ -188,7 +207,8 @@ public class ContactDAOTest {
 	}
 	
 	// Test Search contacts
-	@Ignore @Test
+	@Ignore 
+	@Test
 	public void searchContactsByName(){
 		ContactDAO contactDAO = new ContactDAO();
 		Set<Contact> contacts = contactDAO.searchContacts("Baba");
@@ -198,7 +218,8 @@ public class ContactDAOTest {
 		}
 	}
 	
-	@Ignore @Test
+	@Ignore
+	@Test
 	public void searchContactsByCountry(){
 		ContactDAO contactDAO = new ContactDAO();
 		Set<Contact> contacts = contactDAO.searchContacts("France Mali");
@@ -208,7 +229,8 @@ public class ContactDAOTest {
 		}
 	}
 	
-	@Ignore @Test
+	@Ignore 
+	@Test
 	public void searchContactsByCity(){
 		ContactDAO contactDAO = new ContactDAO();
 		Set<Contact> contacts = contactDAO.searchContacts("Auber Neuilly");
@@ -218,7 +240,8 @@ public class ContactDAOTest {
 		}
 	}
 	
-	@Ignore @Test
+	@Ignore
+	@Test
 	public void searchContactsByGroupName(){
 		ContactDAO contactDAO = new ContactDAO();
 		Set<Contact> contacts = contactDAO.searchContacts("Miage");
@@ -230,17 +253,37 @@ public class ContactDAOTest {
 	
 	
 	// ************************* Update ************************
+	@Ignore
+	@Test
+	public void updateContactTest() {
+		ContactDAO dao = new ContactDAO();
+		dao.deleteContact(5);
+	}
+	
+	/**
+	 *  We want to just update the group's name
+	 */
+	@Test
+	public void updateGroupTest() {
+		ContactDAO dao = new ContactDAO();
+		dao.getGroup(1);
+		
+	}
 	
 	
 	// ************************* Delete ************************
-	@Ignore 
+	@Ignore
 	@Test
-	public void getGroups() {
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Group> groups = contactDAO.getGroups();
-		for(Group group : groups){
-			System.out.println(group.toString());
-		}
+	public void deleteContactTest() {
+		ContactDAO dao = new ContactDAO();
+		dao.deleteContact(5);
+	}
+	
+	@Ignore
+	@Test
+	public void deleteGroupsTest() {
+		ContactDAO dao = new ContactDAO();
+		dao.deleteGroup(7);
 	}
 	
 	
