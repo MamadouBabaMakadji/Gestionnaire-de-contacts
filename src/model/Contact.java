@@ -122,7 +122,8 @@ public class Contact {
 	@Override
 	public String toString() {
 		return new String("Contact {contact_ID=" + this.getContact_ID() + ", nom=" + this.getNom() + ", prenom=" + this.getPrenom() + ", mail=" + this.getMail()
-				+ ", address={" + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +", version = " + this.version+ "}");
+				+ ", address={" + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +
+				", version = " + this.version+ "}");
 	}
 
 	

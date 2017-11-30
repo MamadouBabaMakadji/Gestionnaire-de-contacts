@@ -5,9 +5,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -111,6 +113,7 @@ public class ContactDAO {
 		return contact;
 	}
 	
+	
 	public Contact getContactHQL(long contactId) {
 		Contact contact = null;
 		try {
@@ -137,29 +140,43 @@ public class ContactDAO {
 	
 	
 	
+	/**
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings({ "unchecked" })
+	public List<Contact> getAllContacts() {
+		List<Contact> contacts = new LinkedList<Contact>();
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			List<Contact> listContacts = session.createQuery("from Contact").list();
+			for(Contact contact : listContacts) {
+				Contact c = new Contact(contact);
+				contacts.add(c);
+			}
 
-	@SuppressWarnings("unchecked")
-	public List<Contact> getAllContact() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Contact> results = session.createCriteria(Contact.class).setCacheable(true).list();
-//		session.close();
-		return results;
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return contacts;
 	}
+	
 
 	/**
 	 * Get a set of all groups
 	 * 
 	 * @return an hashset of all groups
 	 */
-
 	@SuppressWarnings("unchecked")
-	public Set<Group> getGroups() {
+	public Set<Group> getAllGroups() {
 		List<Group> listGroups = null;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			listGroups = session.createCriteria(Group.class).list();
 			session.close();
-			
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -263,15 +280,21 @@ public class ContactDAO {
 			session.beginTransaction();
 			session.merge(contact);
 			session.getTransaction().commit();
+			session.close();
+			
 			result = true;
-//			session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			e.getMessage();
 		}
 		return result;
 	}
+	
+	
 
+
+	
+	
 	// ****************************** Delete ********************************
 	
 	public boolean deleteContact(long contact_ID) {

@@ -63,6 +63,7 @@ public class ActionEditContact extends Action {
 				phones.add(phone);
 				phones.add(phone2);
 			}
+			
 			// GROUP
 			if (ncf.getGroup() != "") {
 				Group group = new Group(ncf.getGroup());
@@ -72,6 +73,7 @@ public class ActionEditContact extends Action {
 				groups.add(group);
 				contact.setGroups(groups);
 			}
+			
 			// Modifications
 			contact.setNom(ncf.getNom());
 			contact.setPrenom(ncf.getPrenom());

@@ -1,5 +1,6 @@
 package service;
 
+import java.util.List;
 import java.util.Set;
 
 import DAO.ContactDAO;
@@ -23,8 +24,12 @@ public class ContactService
 		return (cdao = new ContactDAO()).getContact(id);
 	}
 	
+	public List<Contact> getAllContact() {
+		return (cdao = new ContactDAO()).getAllContacts();
+	} 
+	
 	public Set<Group> getGroups() {
-		return (cdao = new ContactDAO()).getGroups();
+		return (cdao = new ContactDAO()).getAllGroups();
 	}
 	
 	public Set<Contact> seachContacts (String keywords){
