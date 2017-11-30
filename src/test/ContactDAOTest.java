@@ -25,14 +25,16 @@ public class ContactDAOTest {
 	public void insertDBContactWPhonesTest() {
 		boolean result = false;
 
-		Contact contact = new Contact("toto", "baba", "mbm@hb.net");
-		Adress adress = new Adress("80 rue mbm", "Auber", "55121", "Mali");
+		Contact contact = new Contact("Michel", "baba", "mbm@hb.net");
+		Adress adress = new Adress("80 rue mbm", "Neuilly", "55121", "Mali");
 		
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
 		
 		Group group1 = new Group("Nanterre");
-		Group group2 = new Group("Rouen");
+		group1.setGroup_ID(1);
+		
+		Group group2 = new Group("Paris");
 
 		// Contact
 		contact.setAdress(adress);
@@ -231,7 +233,15 @@ public class ContactDAOTest {
 	
 	
 	// ************************* Delete ************************
-	
+	@Ignore 
+	@Test
+	public void getGroups() {
+		ContactDAO contactDAO = new ContactDAO();
+		Set<Group> groups = contactDAO.getGroups();
+		for(Group group : groups){
+			System.out.println(group.toString());
+		}
+	}
 	
 	
 }

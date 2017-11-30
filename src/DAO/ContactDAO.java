@@ -212,7 +212,7 @@ public class ContactDAO {
 	}
 
 	// ****************************** Delete ********************************
-
+	
 	public boolean deleteContact(long contact_ID) {
 		boolean result = false;
 		try {
@@ -227,6 +227,32 @@ public class ContactDAO {
 			// TODO: handle exception
 			e.getMessage();
 		}
+		return result;
+	}
+	
+	/**
+	 * Method to delete a group
+	 * @param group_ID
+	 * @return true if the group was deleted ; otherwise false
+	 */
+	public boolean deleteGroup(long group_ID) {
+		boolean result = false;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			Group group = (Group) session.load(Group.class, group_ID);
+			session.delete(group);
+			session.getTransaction().commit();
+			session.close();
+			result = true;
+		} catch (HibernateException e) {
+			e.getMessage();
+			result = false;
+		} catch(Exception e) {
+			e.getMessage();
+			result = false;
+		}
+		
 		return result;
 	}
 
