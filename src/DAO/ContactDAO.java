@@ -94,8 +94,7 @@ public class ContactDAO {
 
 	// ****************************** Read ********************************
 	/**
-	 * Get a contact with session.get()
-	 * 
+	 *  
 	 * @param contact_ID
 	 * @return an object Contact
 	 */

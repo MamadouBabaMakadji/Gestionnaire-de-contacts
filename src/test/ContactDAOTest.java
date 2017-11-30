@@ -263,6 +263,7 @@ public class ContactDAOTest {
 	/**
 	 *  We want to just update the group's name
 	 */
+	@Ignore
 	@Test
 	public void updateGroupTest() {
 		ContactDAO dao = new ContactDAO();

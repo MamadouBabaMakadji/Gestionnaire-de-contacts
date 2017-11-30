@@ -6,15 +6,11 @@
 
 		<!-- <cache usage="read-write"/> -->
 
-		<!-- <cache usage="read-write"/> -->
-
 		<id name="contact_ID" type="long" column="contact_ID">
 			<generator class="native" />
 		</id>
 
-		<!-- <version name="version" access="field" column="version"/> -->
-
-		<!-- <version name="version" access="field" column="version"/> -->
+		<version name="version" access="field" column="version"/>
 
 		<property name="nom" lazy="true">
 			<column name="nom"></column>
@@ -28,9 +24,8 @@
 			<column name="mail"></column>
 		</property>
 
-		<!-- Un contact peut avoir une adress -->
-		<many-to-one name="adress" column="adress_ID" unique="true"
-			not-null="false" cascade="all" />
+		<!-- Un contact peut avoir 0 ou 1 adresse -->
+		<many-to-one name="adress" column="adress_ID" unique="true" not-null="false" cascade="all"/>
 
 		<!-- Un contact possède 0, 1 ou n numéros -->
 		<set name="phones" inverse="true" cascade="all" table="phonenumber">
