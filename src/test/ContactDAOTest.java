@@ -235,7 +235,7 @@ public class ContactDAOTest {
 	// ************************* Delete ************************
 	@Ignore 
 	@Test
-	public void getGroups() {
+	public void deleteGroupsTest() {
 		ContactDAO contactDAO = new ContactDAO();
 		Set<Group> groups = contactDAO.getGroups();
 		for(Group group : groups){

@@ -18,6 +18,24 @@ public class NewContactForm extends ActionForm {
 	private String adresse;
 	private String group;
 	private String tel2;
+	private String siretEtp;
+	private String typeContact;
+
+	public String getTypeContact() {
+		return typeContact;
+	}
+
+	public void setTypeContact(String typeContact) {
+		this.typeContact = typeContact;
+	}
+
+	public String getSiretEtp() {
+		return siretEtp;
+	}
+
+	public void setSiretEtp(String siretEtp) {
+		this.siretEtp = siretEtp;
+	}
 
 	public String getGroup() {
 		return group;
@@ -105,7 +123,7 @@ public class NewContactForm extends ActionForm {
 		if (nom == null || nom.length() < 1) {
 			errors.add("nom", new ActionMessage("erreur.nom"));
 		}
-		if (prenom == null || prenom.length() < 1) {
+		if ("Personne".equals(typeContact) && prenom.length() < 1) {
 			errors.add("prenom", new ActionMessage("erreur.prenom"));
 		}
 		if (!mail.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$")) {

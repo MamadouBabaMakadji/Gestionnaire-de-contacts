@@ -25,6 +25,15 @@ public class Contact {
 		this.phones = phones;
 	}
 
+	// Construteur utiliser pour l'entreprise
+	public Contact(String nom, String mail, Adress adress, Set<PhoneNumber> phones) {
+		super();
+		this.nom = nom;
+		this.mail = mail;
+		this.adress = adress;
+		this.phones = phones;
+	}
+
 	public Contact(String nom, String prenom, String mail) {
 		super();
 		this.nom = nom;
@@ -112,10 +121,9 @@ public class Contact {
 
 	@Override
 	public String toString() {
-		return "Contact {contact_ID=" + getContact_ID() + ", nom=" + getNom() + ", prenom=" + getPrenom() + ", mail=" + getMail()
-				+ ", address={" +adress.getCity()+ ", " +adress.getCountry()+ ", " +adress.getStreet()+ ", " +adress.getZip()+"}";
+		return "Contact {contact_ID=" + getContact_ID() + ", nom=" + getNom() + ", prenom=" + getPrenom() + ", mail="
+				+ getMail() + ", address={" + adress.getCity() + ", " + adress.getCountry() + ", " + adress.getStreet()
+				+ ", " + adress.getZip() + "}";
 	}
 
-	
-	
 }

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
 <%@ taglib prefix="html-el" uri="http://struts.apache.org/tags-html-el"%>
@@ -43,6 +42,21 @@
 				x.style.visibility = 'hidden';
 			}
 		}
+
+		function isEntreprise() {
+			var x = document.getElementById('prenom');
+			var y = document.getElementById('siret');
+			x.style.visibility = 'hidden';
+			y.style.visibility = 'visible';
+		}
+
+		function isPersonne() {
+			var x = document.getElementById('prenom');
+			var y = document.getElementById('siret');
+			x.style.visibility = 'visible';
+			y.style.visibility = 'hidden';
+		}
+
 		function noDisplay() {
 			document.getElementById('tel2').style.visibility = 'hidden';
 		}
@@ -57,56 +71,55 @@
 	<html:form action="NewContactForm.do">
 		<table align="center">
 			<tr>
+				<td><br /> <bean:message key="typeContact" /><br /></td>
+				<td><br /> <html:radio property="typeContact" value="Personne"
+						onclick="isPersonne()">
+						<bean:message key="personne" />
+					</html:radio></td>
+				<td><br /> <html:radio property="typeContact"
+						value="Entreprise" onclick="isEntreprise()">
+						<bean:message key="entreprise" />
+					</html:radio></td>
+			</tr>
+			<tr>
+				<td><br /> <bean:message key="siret" /></td>
+				<td><br /> <html:text property="siretEtp" value="N° Siret"
+						styleId="siret" /></td>
+			</tr>
+			<tr>
 				<td><bean:message key="nom" /></td>
-				<td><br />
-				<html:text property="nom" /><br />
-				<br /></td>
+				<td><br /> <html:text property="nom" /><br /> <br /></td>
 				<td><bean:message key="adresse" /></td>
-				<td><br />
-				<html:text property="adresse" /><br />
-				<br /></td>
+				<td><br /> <html:text property="adresse" /><br /> <br /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="prenom" /></td>
-				<td><br />
-				<html:text property="prenom" /><br />
-				<br /></td>
+				<td><br /> <html:text property="prenom" styleId="prenom" /><br />
+					<br /></td>
 				<td><bean:message key="code_postal" /></td>
-				<td><br />
-				<html:text property="code_postal" /><br />
-				<br /></td>
+				<td><br /> <html:text property="code_postal" /><br /> <br /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="mail" /></td>
-				<td><br />
-				<html:text property="mail" /><br />
-				<br /></td>
+				<td><br /> <html:text property="mail" /><br /> <br /></td>
 				<td><bean:message key="ville" /></td>
-				<td><br />
-				<html:text property="ville" /><br />
-				<br /></td>
+				<td><br /> <html:text property="ville" /><br /> <br /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="tel" /></td>
-				<td><br />
-				<html:text property="tel" /><br />
-				<br /></td>
+				<td><br /> <html:text property="tel" /><br /> <br /></td>
 				<td><input type="button" onclick="addTel()"
 					class="btn btn-primary" value="+" /></td>
-				<td><br />
-				<html:text property="tel2" styleId="tel2" /><br />
-				<br /></td>
+				<td><br /> <html:text property="tel2" styleId="tel2" /><br />
+					<br /></td>
 			</tr>
 			<tr>
 				<td><bean:message key="group" /></td>
-				<td><br />
-				<html:text property="group" /><br />
-				<br /></td>
+				<td><br /> <html:text property="group" /><br /> <br /></td>
 				<td><bean:message key="pays" /></td>
-				<td><br />
-				<html:text property="pays" /><br />
-				<br /></td>
+				<td><br /> <html:text property="pays" /><br /> <br /></td>
 			</tr>
+
 			<tr>
 				<td></td>
 				<td><br /> <input type="submit" class="btn btn-primary"
