@@ -387,8 +387,6 @@ public class ContactDAOTest {
 	
 	
 	// ************************* Delete ************************
-	@Ignore
-	@Test
 	public void deleteContactTest() {
 		ContactDAO dao = new ContactDAO();
 		dao.deleteContact(5);

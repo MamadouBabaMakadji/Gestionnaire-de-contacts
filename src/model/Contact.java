@@ -23,7 +23,16 @@ public class Contact {
 		this.prenom = prenom;
 		this.mail = mail;
 	}
-	
+
+	// Construteur utiliser pour l'entreprise
+	public Contact(String nom, String mail, Adress adress, Set<PhoneNumber> phones) {
+		super();
+		this.nom = nom;
+		this.mail = mail;
+		this.adress = adress;
+		this.phones = phones;
+	}
+
 	
 	public Contact(String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones, Set<Group> groups) {
 		super();
@@ -129,13 +138,10 @@ public class Contact {
 
 	@Override
 	public String toString() {
+
 		return new String("Contact {contact_ID=" + this.getContact_ID() + ", nom=" + this.getNom() + ", prenom=" + this.getPrenom() + ", mail=" + this.getMail()
 				+ ", address={" + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +
 				", version = " + this.version+ "}");
 	}
-
-
-
-	
 	
 }

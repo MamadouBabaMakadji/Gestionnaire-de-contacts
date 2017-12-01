@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Adress;
 import model.Contact;
+import model.Entreprise;
 import model.Group;
 import model.PhoneNumber;
 import service.ContactService;
@@ -18,16 +19,17 @@ public class ActionNewContact extends Action {
 			HttpServletResponse response) throws Exception {
 
 		NewContactForm ncf = (NewContactForm) form;
-		if (ncf.getNom() != null && ncf.getPrenom() != null && ncf.getMail().length() > 5) {
+		ContactService cs = new ContactService();
+		Adress adress = new Adress(ncf.getAdresse(), ncf.getVille(), ncf.getCode_postal(), ncf.getPays());
+		PhoneNumber phone = new PhoneNumber(ncf.getTel());
+		Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
+		phones.add(phone);
+		Set<Group> groups = new HashSet<Group>();
+		if ("Personne".equals(ncf.getTypeContact())) {
 			Contact contact = new Contact(ncf.getNom(), ncf.getPrenom(), ncf.getMail());
-			Adress adress = new Adress(ncf.getAdresse(), ncf.getVille(), ncf.getCode_postal(), ncf.getPays());
-			PhoneNumber phone = new PhoneNumber(ncf.getTel());
 			Set<Contact> contacts = new HashSet<Contact>();
-			Set<Group> groups = new HashSet<Group>();
 			// PHONE
-			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone.setContact(contact);
-			phones.add(phone);
 			if (!"".equals(ncf.getTel2())) {
 				PhoneNumber phone2 = new PhoneNumber();
 				phone2.setPhoneNumber(ncf.getTel2());
@@ -46,14 +48,30 @@ public class ActionNewContact extends Action {
 			contact.setPhones(phones);
 			contact.setGroups(groups);
 			// Ajout contact
-			ContactService cs = new ContactService();
 			if (cs.createContact(contact)) {
 				return mapping.findForward("AjoutOK");
 			} else {
 				return mapping.findForward("EchecAjout");
 			}
-		} else
+		} else {
+			// ENTREPRISE
+			if (!"".equals(ncf.getTel2())) {
+				PhoneNumber phone2 = new PhoneNumber();
+				phone2.setPhoneNumber(ncf.getTel2());
+				phones.add(phone2);
+			}
+			Entreprise etp = new Entreprise(ncf.getNom(), ncf.getMail(), adress, phones, ncf.getSiretEtp());
+			if (ncf.getGroup() != "" && ncf.getGroup() != null) {
+				// GROUP
+				Group group = new Group(ncf.getGroup());
+				groups.add(group);
+				etp.setGroups(groups);
+			}
+			if (cs.addEntreprise(etp))
+				return mapping.findForward("AjoutOK");
 			return mapping.findForward("EchecAjout");
+		}
+
 	}
 
 }
