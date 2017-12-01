@@ -318,6 +318,62 @@ public class ContactDAOTest {
 	}
 	
 	
+	// Update contact
+	//@Ignore 
+		@Test
+		public void updateContact() {
+			boolean result = false;
+
+			Contact contact = new Contact("Michel", "baba", "mbm@hb.net");
+			contact.setContact_ID(1);
+			Adress adress = new Adress("80 rue mbm", "Neuilly", "55121", "Mali");
+			
+			PhoneNumber phone1 = new PhoneNumber("7555550202");
+			PhoneNumber phone2 = new PhoneNumber("0526894849");
+			
+			Group group1 = new Group("Nanterre");
+			//group1.setGroup_ID(1);
+			
+			Group group2 = new Group("Paris");
+			//group1.setGroup_ID(2);
+
+			// Contact
+			contact.setAdress(adress);
+
+			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
+			phone1.setContact(contact); phone2.setContact(contact);
+			phones.add(phone1);
+			phones.add(phone2);
+			contact.setPhones(phones);
+
+			Set<Group> groups = new HashSet<Group>();
+			groups.add(group1);
+			groups.add(group2);
+			contact.setGroups(groups);
+
+			List<Object> objects = new LinkedList<Object>();
+			objects.add(contact);
+			objects.add(phone1);
+			objects.add(phone2);
+			
+			// Test ajout contact
+			ContactDAO contactDAO = new ContactDAO();
+			try {
+				result = contactDAO.saveUpdate(contact);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			if (result) {
+				System.out.println("OK");
+			} else {
+				System.out.println("Echec");
+			}
+
+			assertSame(true, result);
+		}
+	
+	
 	// ************************* Delete ************************
 	@Ignore
 	@Test

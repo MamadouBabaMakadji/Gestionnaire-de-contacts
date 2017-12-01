@@ -29,12 +29,14 @@ public class ActionEditContact extends Action {
 			PhoneNumber phone = iter.next();
 			PhoneNumber phone2;
 			Set<Group> groups = new HashSet<Group>();
+			
 			// ADRESS
 			adress.setStreet(ncf.getAdress());
 			adress.setZip(ncf.getCode_postal());
 			adress.setCity(ncf.getVille());
 			adress.setCountry(ncf.getPays());
 			adress.setContact(contact);
+			
 			// PHONE
 			Object[] objectPhone = phones.toArray();
 			if (!"".equals(ncf.getTel2())) {
@@ -80,6 +82,7 @@ public class ActionEditContact extends Action {
 			contact.setMail(ncf.getMail());
 			contact.setAdress(adress);
 			contact.setPhones(phones);
+			contact.setVersion(ncf.getVersion());
 			if (cdao.saveUpdate(contact))
 				return mapping.findForward("EditOK");
 			return mapping.findForward("EchecEdit");

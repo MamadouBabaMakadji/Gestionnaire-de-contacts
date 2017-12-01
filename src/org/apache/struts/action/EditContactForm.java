@@ -21,6 +21,7 @@ public class EditContactForm extends ActionForm {
 	private String tel;
 	private String tel2;
 	private String group;
+	private int version;
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -96,6 +97,14 @@ public class EditContactForm extends ActionForm {
 
 	public void setPays(String pays) {
 		this.pays = pays;
+	}
+	
+	public int getVersion() {
+		return version;
+	}
+	
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public String getTel() {

@@ -97,6 +97,14 @@ public class Contact {
 		this.groups = groups;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -125,6 +133,8 @@ public class Contact {
 				+ ", address={" + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +
 				", version = " + this.version+ "}");
 	}
+
+
 
 	
 	
