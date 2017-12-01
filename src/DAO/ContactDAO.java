@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -17,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 
 import model.Contact;
 import model.Group;
+import model.PhoneNumber;
 import util.HibernateUtil;
 
 
@@ -279,6 +279,9 @@ public class ContactDAO {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			session.merge(contact);
+			for (PhoneNumber pn : contact.getPhones()) {
+				session.merge(pn);
+			}
 			session.getTransaction().commit();
 			session.close();
 			

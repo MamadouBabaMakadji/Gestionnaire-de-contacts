@@ -351,11 +351,6 @@ public class ContactDAOTest {
 			groups.add(group2);
 			contact.setGroups(groups);
 
-			List<Object> objects = new LinkedList<Object>();
-			objects.add(contact);
-			objects.add(phone1);
-			objects.add(phone2);
-			
 			// Test ajout contact
 			ContactDAO contactDAO = new ContactDAO();
 			try {
