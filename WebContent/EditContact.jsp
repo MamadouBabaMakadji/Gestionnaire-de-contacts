@@ -79,6 +79,7 @@
 		<table align="center">
 			<tr>
 				<html:hidden property="identifiant" value="${id_c}" />
+				<html:hidden property="version" value="${version}" />
 				<td><bean:message key="nom" /></td>
 				<td><br /> <html:text property="nom" value="${nom}" /><br />
 					<br /></td>
