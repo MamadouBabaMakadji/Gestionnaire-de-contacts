@@ -4,6 +4,7 @@
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
 <%@ page import="util.HibernateUtil"%>
 <%@ page import="DAO.*"%>
+<%@ page import="service.*"%>
 <%@ page import="model.*"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
@@ -27,9 +28,9 @@
 	<br />
 	<%
 		String id = request.getParameter("id");
-		ContactDAO cdao = new ContactDAO();
+		ContactService service = new ContactService();
 		long contact_ID = Long.parseLong(id);
-		Contact contact = cdao.getContact(contact_ID);
+		Contact contact = service.getContact(contact_ID);
 		Adress contact_adress = contact.getAdress();
 		Set<PhoneNumber> phones = contact.getPhones();
 		Set<Group> groups = contact.getGroups();
