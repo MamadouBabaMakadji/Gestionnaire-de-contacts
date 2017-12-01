@@ -152,6 +152,7 @@ public class ContactDAO {
 			List<Contact> listContacts = session.createQuery("from Contact").list();
 			for(Contact contact : listContacts) {
 				Contact c = new Contact(contact);
+				c.setContact_ID(contact.getContact_ID());
 				contacts.add(c);
 			}
 

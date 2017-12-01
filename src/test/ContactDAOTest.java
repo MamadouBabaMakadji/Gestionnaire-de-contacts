@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.HibernateException;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -16,6 +15,7 @@ import model.Adress;
 import model.Contact;
 import model.Group;
 import model.PhoneNumber;
+import service.ContactService;
 
 public class ContactDAOTest {
 
@@ -150,6 +150,23 @@ public class ContactDAOTest {
 	public void getContactTest() {
 		ContactDAO contactDAO = new ContactDAO();
 		Contact contact = contactDAO.getContact(1);
+
+		System.out.println("Contact : " + contact.toString());
+		
+		for(PhoneNumber phoneNumber : contact.getPhones()){
+			System.out.println(phoneNumber.toString());
+		}
+		
+		for(Group group : contact.getGroups()){
+			System.out.println(group.toString());
+		}
+	}
+	
+	
+	@Test
+	public void getContactServiceTest() {
+		ContactService service = new ContactService();
+		Contact contact = service.getContact(1);
 
 		System.out.println("Contact : " + contact.toString());
 		
