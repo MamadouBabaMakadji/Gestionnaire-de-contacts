@@ -71,7 +71,7 @@ public class Group {
 	
 	@Override
 	public String toString() {
-		return "Group {groupName=" + groupName + "}";
+		return "Group { groupID = "+this.group_ID+", groupName=" + this.groupName + ", version = " + this.version+ "}";
 	}
 	
 	

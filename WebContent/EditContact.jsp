@@ -4,6 +4,7 @@
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
 <%@ page import="util.HibernateUtil"%>
 <%@ page import="DAO.*"%>
+<%@ page import="service.*"%>
 <%@ page import="model.*"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
@@ -27,9 +28,9 @@
 	<br />
 	<%
 		String id = request.getParameter("id");
-		ContactDAO cdao = new ContactDAO();
+		ContactService service = new ContactService();
 		long contact_ID = Long.parseLong(id);
-		Contact contact = cdao.getContact(contact_ID);
+		Contact contact = service.getContact(contact_ID);
 		Adress contact_adress = contact.getAdress();
 		Set<PhoneNumber> phones = contact.getPhones();
 		Set<Group> groups = contact.getGroups();
@@ -48,14 +49,16 @@
 			request.setAttribute("tel2", tel2);
 		}
 
-		String nom = contact.getNom();
-		String prenom = contact.getPrenom();
-		String mail = contact.getMail();
-		String adress = contact_adress.getStreet();
-		String ville = contact_adress.getCity();
-		String code_postal = contact_adress.getZip();
-		String pays = contact_adress.getCountry();
-		String tel = phone.getPhoneNumber();
+		String nom 			= contact.getNom();
+		String prenom 		= contact.getPrenom();
+		String mail 		= contact.getMail();
+		String adress 		= contact_adress.getStreet();
+		String ville 		= contact_adress.getCity();
+		String code_postal 	= contact_adress.getZip();
+		String pays 		= contact_adress.getCountry();
+		String tel 			= phone.getPhoneNumber();
+		int version			= contact.getVersion();
+		
 		request.setAttribute("nom", nom);
 		request.setAttribute("prenom", prenom);
 		request.setAttribute("mail", mail);
@@ -65,6 +68,7 @@
 		request.setAttribute("pays", pays);
 		request.setAttribute("tel", tel);
 		request.setAttribute("id_c", contact_ID);
+		request.setAttribute("version", version);
 	%>
 	<h2>
 		<center>
@@ -119,7 +123,7 @@
 			<tr>
 				<td></td>
 				<td><br /> <input type="submit" class="btn btn-primary"
-					value="<bean:message key="enreg.modif" />" /></td>
+					value="<bean:message key="enreg.modif"/>" /></td>
 			</tr>
 		</table>
 	</html:form>

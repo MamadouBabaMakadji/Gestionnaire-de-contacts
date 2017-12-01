@@ -5,6 +5,7 @@
 <%@ page import="model.*"%>
 <%@ page import="java.util.*"%>
 <%@page import="DAO.*"%>
+<%@page import="service.*"%>
 <%@page import="org.hibernate.Session"%>
 
 <!DOCTYPE html>
@@ -54,9 +55,9 @@ input {
 		</tr>
 		<%
 			try {
-				ContactDAO dao = new ContactDAO();
-				List<Contact> contacts = new ArrayList<Contact>();
-				contacts = dao.getAllContact();
+				ContactService service = new ContactService();
+				Set<Contact> contacts = new HashSet<Contact>();
+				contacts = service.getAllContacts();
 				Iterator<Contact> iter = contacts.iterator();
 				while (iter.hasNext()) {
 					Contact contact = iter.next();

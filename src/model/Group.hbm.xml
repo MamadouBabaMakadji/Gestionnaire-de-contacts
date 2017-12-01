@@ -6,7 +6,7 @@
 		<id name="group_ID" type="long" column="group_ID">
 			<generator class="native" />
 		</id>
-		<!-- <version name="version" access="field" column="version"/> -->
+		<version name="version" access="field" column="version"/>
 
 		<property name="groupName">
 			<column name="groupName"></column>

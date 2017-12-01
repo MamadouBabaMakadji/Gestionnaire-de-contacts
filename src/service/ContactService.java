@@ -27,9 +27,13 @@ public class ContactService
 	public Contact getContact(long id) {
 		return (cdao = new ContactDAO()).getContact(id);
 	}
-
+	
+	public Set<Contact> getAllContacts() {
+		return (cdao = new ContactDAO()).getAllContacts();
+	} 
+	
 	public Set<Group> getGroups() {
-		return (cdao = new ContactDAO()).getGroups();
+		return (cdao = new ContactDAO()).getAllGroups();
 	}
 
 	public Set<Contact> seachContacts(String keywords) {

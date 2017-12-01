@@ -62,7 +62,7 @@ public class PhoneNumber {
 
 	@Override
 	public String toString() {
-		return "PhoneNumber {phoneNumber=" + phoneNumber + ", contact=" + contact + "}";
+		return "PhoneNumber {phoneNumber=" + phoneNumber + ", contact=" + contact.getContact_ID() + "}";
 	}
 
 	
