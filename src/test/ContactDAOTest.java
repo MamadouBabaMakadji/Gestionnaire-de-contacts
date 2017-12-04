@@ -274,15 +274,15 @@ public class ContactDAOTest {
 		boolean result = false;
 		try {
 
-			Contact contact = new Contact(1, 5, "Obama", "Oussem", "mbm@hb.net");
+			Contact contact = new Contact(1, 8, "Obama", "Oussem", "mbm@hb.net");
 			Adress adress = new Adress(1, "80 rue mbm", "Paris", "55121", "DZ");
 			contact.setAdress(adress);
 			
 			PhoneNumber phone1 = new PhoneNumber(1, "0202020202", contact);
 			PhoneNumber phone2 = new PhoneNumber(2, "0526894849", contact);
 			
-			Group group1 = new Group(2,"Miage",4);
-			Group group2 = new Group(3,"U Paris X",5);
+			Group group1 = new Group(2, "MIAGE", 7);
+			Group group2 = new Group(3, "U Paris X", 7);
 
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone1.setContact(contact); phone2.setContact(contact);
