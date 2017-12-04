@@ -26,27 +26,37 @@ public class Contact {
 
 	// Construteur utiliser pour l'entreprise
 	public Contact(String nom, String mail, Adress adress, Set<PhoneNumber> phones) {
-		super();
 		this.nom = nom;
 		this.mail = mail;
 		this.adress = adress;
 		this.phones = phones;
 	}
+	
+	
 
 	
-	public Contact(String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones, Set<Group> groups) {
-		super();
+	public Contact(long contact_ID, int version, String nom, String prenom, String mail) {
+		this.contact_ID = contact_ID;
+		this.version = version;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
-		this.adress = new Adress(adress.getStreet(), adress.getCity(), adress.getCountry(), adress.getZip());
+	}
+
+
+	public Contact(long id, String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones, Set<Group> groups) {
+		this.contact_ID = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+		this.adress = new Adress(adress.getAdress_ID(), adress.getStreet(), adress.getCity(), adress.getZip(), adress.getCountry());
 		this.phones.addAll(phones);
 		this.groups.addAll(groups);
 	}
 
 
 	public Contact(Contact c) {
-		this(c.prenom, c.nom, c.mail, c.adress, c.phones, c.groups);
+		this(c.contact_ID, c.prenom, c.nom, c.mail, c.adress, c.phones, c.groups);
 	}
 	
 
@@ -140,8 +150,15 @@ public class Contact {
 	public String toString() {
 
 		return new String("Contact {contact_ID=" + this.getContact_ID() + ", nom=" + this.getNom() + ", prenom=" + this.getPrenom() + ", mail=" + this.getMail()
-				+ ", address={" + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +
+				+ ", address={" + this.adress.getAdress_ID() + ", " + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +
 				", version = " + this.version+ "}");
+	}
+	
+	
+	public String toString2() {
+
+		return new String("Contact {contact_ID=" + this.getContact_ID() + ", nom=" + this.getNom() + ", prenom=" + this.getPrenom() + ", mail=" + this.getMail()
+				+ ", version = " + this.version+ "}");
 	}
 	
 }

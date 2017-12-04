@@ -11,8 +11,22 @@ public class Adress {
 	public Adress() {
 	}
 
+	public Adress(long id, String street, String city, String zip, String country) {
+		this(street, city, zip, country);
+		this.adress_ID = id;
+	}
+	
+
+	public Adress(long adress_ID, String street, String city, String zip, String country, Contact contact) {
+		this.adress_ID = adress_ID;
+		this.street = street;
+		this.city = city;
+		this.zip = zip;
+		this.country = country;
+		this.contact = contact;
+	}
+
 	public Adress(String street, String city, String zip, String country) {
-		super();
 		this.street = street;
 		this.city = city;
 		this.zip = zip;

@@ -9,8 +9,13 @@ public class PhoneNumber {
 	}
 
 	public PhoneNumber(String phoneNumber) {
-		super();
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public PhoneNumber(long phone_ID, String phoneNumber, Contact contact) {
+		this.phone_ID = phone_ID;
+		this.phoneNumber = phoneNumber;
+		this.contact = contact;
 	}
 
 	public long getPhone_ID() {
@@ -62,7 +67,7 @@ public class PhoneNumber {
 
 	@Override
 	public String toString() {
-		return "PhoneNumber {phoneNumber=" + phoneNumber + ", contact=" + contact.getContact_ID() + "}";
+		return "PhoneNumber {id=" + this.phone_ID + ", phoneNumber=" + phoneNumber + ", contact=" + contact.getContact_ID() + "}";
 	}
 
 	

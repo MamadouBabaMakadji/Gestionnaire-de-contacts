@@ -22,6 +22,10 @@ public class EditContactForm extends ActionForm {
 	private String tel2;
 	private String group;
 	private int version;
+	
+	private long[] groupsId;
+	private String[] groupsName = new String[20];
+	
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -123,6 +127,24 @@ public class EditContactForm extends ActionForm {
 		this.tel2 = tel2;
 	}
 
+	
+	public long[] getGroupsId() {
+		return groupsId;
+	}
+
+	public void setGroupsId(long[] groupsId) {
+		this.groupsId = groupsId;
+	}
+
+	public String[] getGroupsName() {
+		return groupsName;
+	}
+
+	public void setGroupsName(String[] groupsName) {
+		this.groupsName = groupsName;
+	}
+
+	
 	@Override
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		ActionErrors errors = new ActionErrors();

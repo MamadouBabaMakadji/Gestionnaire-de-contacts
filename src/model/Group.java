@@ -15,6 +15,14 @@ public class Group {
 	public Group(String groupName) {
 		this.groupName = groupName;
 	}
+	
+	
+
+	public Group(long group_ID, String groupName, int version) {
+		this.group_ID = group_ID;
+		this.groupName = groupName;
+		this.version = version;
+	}
 
 	public long getGroup_ID() {
 		return group_ID;

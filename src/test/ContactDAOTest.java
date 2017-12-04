@@ -23,7 +23,7 @@ public class ContactDAOTest {
 	// Add contact w multiples phones and w multiples groups
 	//@Ignore 
 	@Test
-	public void insertDBContactWPhonesTest() {
+	public void insertDBContactWPG() {
 		boolean result = false;
 
 		Contact contact = new Contact("Michel", "baba", "mbm@hb.net");
@@ -32,10 +32,11 @@ public class ContactDAOTest {
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
 		
-		Group group1 = new Group("Nanterre");
-		//group1.setGroup_ID(1);
+		Group group1 = new Group("Miage");
+		group1.setGroup_ID(1);
 		
-		Group group2 = new Group("Paris");
+		Group group2 = new Group("U Paris X");
+		group1.setGroup_ID(2);
 
 		// Contact
 		contact.setAdress(adress);
@@ -72,62 +73,21 @@ public class ContactDAOTest {
 
 		assertSame(true, result);
 	}
-		
-	
-	// Add contact w multiples phones & groups
-	@Ignore 
-	@Test
-	public void insertDBContactWPhonesGroupsTest() {
-		boolean result = false;
-
-		Contact contact = new Contact("oussema", "Baba", "mbm@hb.net");
-		Adress adress = new Adress("80 rue mbm", "Neuilly", "55121", "Mali");
-		PhoneNumber phone1 = new PhoneNumber("7555550202");
-		PhoneNumber phone2 = new PhoneNumber("0526894849");
-		Group group1 = new Group("Miage");
-
-		// Contact
-		contact.setAdress(adress);
-		
-		phone1.setContact(contact);
-		phone2.setContact(contact);
-		contact.getPhones().add(phone1);
-		contact.getPhones().add(phone2);
-
-		contact.getGroups().add(group1);
-		
-		group1.getContacts().add(contact);
-
-		// Test add contact
-		ContactDAO contactDAO = new ContactDAO();
-		try {
-			result = contactDAO.insertDB(contact);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		if (result) {
-			System.out.println("OK");
-		} else {
-			System.out.println("Echec");
-		}
-
-		assertSame(true, result);
-	}
 
 	
 	// Add a group
-	@Ignore
+	//@Ignore
 	@Test
 	public void insertDBGroupTest() {
 		boolean result = false;
 
-		Group group1 = new Group("TOTO");
+		Group group1 = new Group("Miage");
+		Group group2 = new Group("U Paris X");
 
 		// Test add group
 		ContactDAO contactDAO = new ContactDAO();
 		try {
-			result = contactDAO.insertDB(group1);
+			result = contactDAO.insertDB(group2);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -148,34 +108,21 @@ public class ContactDAOTest {
 	//@Ignore 
 	@Test
 	public void getContactTest() {
-		ContactDAO contactDAO = new ContactDAO();
-		Contact contact = contactDAO.getContact(1);
+		try {
+			ContactDAO contactDAO = new ContactDAO();
+			Contact contact = contactDAO.getContact(1);
 
-		System.out.println("Contact : " + contact.toString());
-		
-		for(PhoneNumber phoneNumber : contact.getPhones()){
-			System.out.println(phoneNumber.toString());
-		}
-		
-		for(Group group : contact.getGroups()){
-			System.out.println(group.toString());
-		}
-	}
-	
-	
-	@Test
-	public void getContactServiceTest() {
-		ContactService service = new ContactService();
-		Contact contact = service.getContact(1);
-
-		System.out.println("Contact : " + contact.toString());
-		
-		for(PhoneNumber phoneNumber : contact.getPhones()){
-			System.out.println(phoneNumber.toString());
-		}
-		
-		for(Group group : contact.getGroups()){
-			System.out.println(group.toString());
+			System.out.println("Contact : " + contact.toString());
+			
+			for(PhoneNumber phoneNumber : contact.getPhones()){
+				System.out.println(phoneNumber.toString());
+			}
+			
+			for(Group group : contact.getGroups()){
+				System.out.println(group.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -205,25 +152,28 @@ public class ContactDAOTest {
 	
 	
 	// Get a contact by HQL
-	@Ignore 
+	//@Ignore 
 	@Test
-	public void getContactWHqlTest() {
-		ContactDAO dao = new ContactDAO();
-		Contact contact = dao.getContactHQL(1);
-		
-		System.out.println("Contact : " + contact.getNom() + ", Id = " +contact.getContact_ID()+ ", City = " +contact.getAdress().getCity());
-		System.out.println("Contact : " + contact.toString());
-		
-		for(PhoneNumber phoneNumber : contact.getPhones()){
-			System.out.println(phoneNumber.getPhoneNumber());
-		}
-		
-		for(Group group : contact.getGroups()){
-			System.out.println("Id of group = " + group.getGroup_ID()+ ", Group name" +group.getGroupName());
+	public void getAllContactsHQLTest() {
+		try {
+			ContactDAO dao = new ContactDAO();
+			Set<Contact> contacts = dao.getAllContactsLazy();
+			for(Contact contact : contacts) {
+				System.out.println("Contact : " + contact.toString2());
+				
+				for(PhoneNumber phoneNumber : contact.getPhones()) {
+					System.out.println(phoneNumber.toString());
+				}
+				
+				for(Group group : contact.getGroups()) {
+					System.out.println(group.toString());
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	
 	// Test for get a group by an id
@@ -316,46 +266,23 @@ public class ContactDAOTest {
 	
 	
 	// ************************* Update ************************
-	@Ignore
-	@Test
-	public void updateContactTest() {
-		ContactDAO dao = new ContactDAO();
-		dao.deleteContact(5);
-	}
-	
-	/**
-	 *  We want to just update the group's name
-	 */
-	@Ignore
-	@Test
-	public void updateGroupTest() {
-		ContactDAO dao = new ContactDAO();
-		dao.getGroup(1);
-		
-	}
-	
 	
 	// Update contact
 	//@Ignore 
-		@Test
-		public void updateContact() {
-			boolean result = false;
+	@Test
+	public void updateContact() {
+		boolean result = false;
+		try {
 
-			Contact contact = new Contact("Michel", "baba", "mbm@hb.net");
-			contact.setContact_ID(1);
-			Adress adress = new Adress("80 rue mbm", "Neuilly", "55121", "Mali");
-			
-			PhoneNumber phone1 = new PhoneNumber("7555550202");
-			PhoneNumber phone2 = new PhoneNumber("0526894849");
-			
-			Group group1 = new Group("Nanterre");
-			//group1.setGroup_ID(1);
-			
-			Group group2 = new Group("Paris");
-			//group1.setGroup_ID(2);
-
-			// Contact
+			Contact contact = new Contact(1, 5, "Obama", "Oussem", "mbm@hb.net");
+			Adress adress = new Adress(1, "80 rue mbm", "Paris", "55121", "DZ");
 			contact.setAdress(adress);
+			
+			PhoneNumber phone1 = new PhoneNumber(1, "0202020202", contact);
+			PhoneNumber phone2 = new PhoneNumber(2, "0526894849", contact);
+			
+			Group group1 = new Group(2,"Miage",4);
+			Group group2 = new Group(3,"U Paris X",5);
 
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone1.setContact(contact); phone2.setContact(contact);
@@ -366,24 +293,20 @@ public class ContactDAOTest {
 			Set<Group> groups = new HashSet<Group>();
 			groups.add(group1);
 			groups.add(group2);
+			group2.getContacts().add(contact);
+			group1.getContacts().add(contact);
 			contact.setGroups(groups);
-
-			// Test ajout contact
-			ContactDAO contactDAO = new ContactDAO();
-			try {
-				result = contactDAO.saveUpdate(contact);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			if (result) {
-				System.out.println("OK");
-			} else {
-				System.out.println("Echec");
-			}
-
-			assertSame(true, result);
+			
+			ContactDAO dao = new ContactDAO();
+			dao.update(contact);
+			
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+		assertSame(true, result);
+	}
 	
 	
 	// ************************* Delete ************************

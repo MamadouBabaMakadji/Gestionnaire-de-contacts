@@ -19,8 +19,8 @@ public class ContactService
 		return (cdao = new ContactDAO()).insertDB(contact);
 	}
 
-//	Pour la création Entreprise
-	public boolean addEntreprise(Entreprise etp) throws Exception {
+
+	public boolean createEntreprise(Entreprise etp) throws Exception {
 		return (cdao = new ContactDAO()).insertDB(etp);
 	}
 
@@ -38,5 +38,9 @@ public class ContactService
 
 	public Set<Contact> seachContacts(String keywords) {
 		return (cdao = new ContactDAO()).searchContacts(keywords);
+	}
+	
+	public boolean updateContact(Contact contact){
+		return (cdao = new ContactDAO()).update(contact);
 	}
 }

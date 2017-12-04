@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -21,7 +22,6 @@ import util.HibernateUtil;
 
 
 public class ContactDAO {
-
 	public ContactDAO() {
 	}
 
@@ -105,8 +105,13 @@ public class ContactDAO {
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			contact = new Contact((Contact) session.createCriteria(Contact.class).add(Restrictions.like("contact_ID", contact_ID)).uniqueResult());
+			//session.flush();
+			session.evict(contact);
+			session.clear();
 			session.close();
 		} catch (HibernateException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -114,28 +119,33 @@ public class ContactDAO {
 	}
 	
 	
-	public Contact getContactHQL(long contactId) {
-		Contact contact = null;
+	public Set<Contact> getAllContactsLazy() {
+		Set<Contact> contacts = new HashSet<Contact>();
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 
 			// Build query
 			StringBuilder sb = new StringBuilder();
-			sb.append("select c from Contact as c left join  fetch c.groups as g");
+			sb.append("from Contact");
 
 			// Execute query
 			Query query = session.createQuery(sb.toString());
 
 			@SuppressWarnings("unchecked")
 			List<Contact> list = (List<Contact>) query.list();
-			contact = list.get(1);
-			//session.close();
+			for (Contact contact : list) {
+				Contact c = new Contact(contact.getNom(), contact.getPrenom(), contact.getMail());
+				c.setContact_ID(contact.getContact_ID());
+				contacts.add(c);
+			}	
+
+			session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return contact;
+		return contacts;
 	}
 	
 	
@@ -149,12 +159,14 @@ public class ContactDAO {
 		List<Contact> contacts = new LinkedList<Contact>();
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
-			List<Contact> listContacts = session.createQuery("from Contact").list();
+			//List<Contact> listContacts = session.createQuery("from Contact").list();
+			List<Contact> listContacts = session.createCriteria(Contact.class).setFetchMode("groups", FetchMode.SELECT).list();
 			for(Contact contact : listContacts) {
 				Contact c = new Contact(contact);
 				c.setContact_ID(contact.getContact_ID());
 				contacts.add(c);
 			}
+			
 
 			session.close();
 		} catch (HibernateException e) {
@@ -274,15 +286,16 @@ public class ContactDAO {
 	 * @param contact
 	 * @return
 	 */
-	public boolean saveUpdate(Contact contact) {
+	public boolean update(Contact contact) {
 		boolean result = false;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			session.merge(contact);
+			session.update(contact);
 			for (PhoneNumber pn : contact.getPhones()) {
-				session.merge(pn);
+				session.update(pn);
 			}
+			
 			session.getTransaction().commit();
 			session.close();
 			

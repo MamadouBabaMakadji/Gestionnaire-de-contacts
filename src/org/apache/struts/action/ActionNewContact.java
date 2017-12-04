@@ -67,7 +67,7 @@ public class ActionNewContact extends Action {
 				groups.add(group);
 				etp.setGroups(groups);
 			}
-			if (cs.addEntreprise(etp))
+			if (cs.createEntreprise(etp))
 				return mapping.findForward("AjoutOK");
 			return mapping.findForward("EchecAjout");
 		}

@@ -52,7 +52,7 @@ input {
 			try {
 				ContactService service = new ContactService();
 				Set<Contact> contacts = new HashSet<Contact>();
-				contacts = service.getAllContacts();
+				contacts.addAll(service.getAllContacts());
 				Iterator<Contact> iter = contacts.iterator();
 				while (iter.hasNext()) {
 					Contact contact = iter.next();
@@ -68,6 +68,8 @@ input {
 					out.print("</td><td><a href='EditContact.jsp?id=" + contact.getContact_ID()
 							+ "'>Modifier</a></td></tr>");
 				}
+				
+				
 				
 			} catch (Exception e) {
 				throw new Exception(e.getMessage());

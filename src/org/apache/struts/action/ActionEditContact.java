@@ -83,7 +83,7 @@ public class ActionEditContact extends Action {
 			contact.setAdress(adress);
 			contact.setPhones(phones);
 			contact.setVersion(ncf.getVersion());
-			if (cdao.saveUpdate(contact))
+			if (cdao.update(contact))
 				return mapping.findForward("EditOK");
 			return mapping.findForward("EchecEdit");
 		} else {
