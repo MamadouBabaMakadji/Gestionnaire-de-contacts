@@ -15,7 +15,6 @@ public class Contact {
 
 	public Contact() {
 	}
-
 	
 	public Contact(String nom, String prenom, String mail) {
 		super();
@@ -32,9 +31,6 @@ public class Contact {
 		this.phones = phones;
 	}
 	
-	
-
-	
 	public Contact(long contact_ID, int version, String nom, String prenom, String mail) {
 		this.contact_ID = contact_ID;
 		this.version = version;
@@ -42,7 +38,13 @@ public class Contact {
 		this.prenom = prenom;
 		this.mail = mail;
 	}
-
+	
+	public Contact(long contact_ID, String nom, String prenom, String mail) {
+		this.contact_ID = contact_ID;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+	}
 
 	public Contact(long id, String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones, Set<Group> groups) {
 		this.contact_ID = id;
@@ -53,7 +55,6 @@ public class Contact {
 		this.phones.addAll(phones);
 		this.groups.addAll(groups);
 	}
-
 
 	public Contact(Contact c) {
 		this(c.contact_ID, c.prenom, c.nom, c.mail, c.adress, c.phones, c.groups);

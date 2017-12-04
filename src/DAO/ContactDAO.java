@@ -118,6 +118,24 @@ public class ContactDAO {
 		return contact;
 	}
 	
+	public Contact getContact2(long contact_ID) {
+		Contact contact = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			contact = new Contact((Contact) session.get(Contact.class, contact_ID));
+			session.evict(contact);
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return contact;
+	}
+	
+	
+	
 	
 	public Set<Contact> getAllContactsLazy() {
 		Set<Contact> contacts = new HashSet<Contact>();
@@ -336,12 +354,13 @@ public class ContactDAO {
 	
 	// ****************************** Delete ********************************
 	
-	public boolean deleteContact(long contact_ID) {
+	public boolean deleteContact(long contactId) {
 		boolean result = false;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Contact contact = (Contact) session.load(Contact.class, contact_ID);
+			Contact contact = (Contact)session.get(Contact.class, contactId);
+			contact.setGroups(null);
 			session.delete(contact);
 			session.getTransaction().commit();
 			result = true;
@@ -369,7 +388,8 @@ public class ContactDAO {
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			Group group = (Group) session.load(Group.class, group_ID);
+			Group group = (Group) session.get(Group.class, group_ID);
+			//group.setContacts(null);
 			session.delete(group);
 			session.getTransaction().commit();
 			session.close();

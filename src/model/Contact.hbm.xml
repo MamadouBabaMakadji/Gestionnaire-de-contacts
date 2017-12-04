@@ -2,14 +2,15 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="model">
-	<class name="Contact" table="contact" discriminator-value="personne">
+	<class name="Contact" table="contact" discriminator-value="personne" >
 
 		<id name="contact_ID" type="long" column="contact_ID">
 			<generator class="native" />
 		</id>
 		
+		
 		<discriminator column="entreprise" type="string"></discriminator>
-		<version name="version" access="field" column="version" />
+		<version name="version" access="field" column="version"  />
 
 		<property name="nom" lazy="true">
 			<column name="nom"></column>

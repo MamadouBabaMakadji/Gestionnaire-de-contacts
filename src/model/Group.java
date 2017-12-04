@@ -18,6 +18,12 @@ public class Group {
 	
 	
 
+	public Group(long group_ID, int version) {
+		super();
+		this.group_ID = group_ID;
+		this.version = version;
+	}
+
 	public Group(long group_ID, String groupName, int version) {
 		this.group_ID = group_ID;
 		this.groupName = groupName;
