@@ -26,14 +26,14 @@ public class DAOTest {
 	public void insertDBContactWPG() {
 		boolean result = false;
 
-		Contact contact = new Contact("oussem", "baba", "mbm@hb.net");
+		Contact contact = new Contact("toto", "baba", "mbm@hb.net");
 		Adress adress = new Adress("80 rue mbm", "Neuilly", "55121", "Mali");
 		
 		PhoneNumber phone1 = new PhoneNumber("7555550202");
 		PhoneNumber phone2 = new PhoneNumber("0526894849");
 		
-		Group group1 = new Group(1, "Miage", 2);
-		/*Group group2 = new Group(2, "Paris X", 1);*/
+		Group group1 = new Group(1, "Miage", 1);
+		Group group2 = new Group(2, "Paris X", 1);
 
 		// Contact
 		contact.setAdress(adress);
@@ -46,7 +46,7 @@ public class DAOTest {
 
 		Set<Group> groups = new HashSet<Group>();
 		groups.add(group1);
-		/*groups.add(group2);*/
+		groups.add(group2);
 		contact.setGroups(groups);
 
 		List<Object> objects = new LinkedList<Object>();
@@ -276,15 +276,15 @@ public class DAOTest {
 		boolean result = false;
 		try {
 
-			Contact contact = new Contact(9, 2, "Baba", "Oussem", "mbm@hb.net");
-			Adress adress = new Adress(9, "80 rue mbm", "Paris", "55121", "DZ");
+			Contact contact = new Contact(2, 0, "toto", "baba", "mbm@hb.net");
+			Adress adress = new Adress(2, "80 rue mbm", "Paris", "55121", "DZ");
 			contact.setAdress(adress);
 			
-			PhoneNumber phone1 = new PhoneNumber(17, "0202020202", contact);
-			PhoneNumber phone2 = new PhoneNumber(18, "0526894849", contact);
+			PhoneNumber phone1 = new PhoneNumber(3, "0202020202", contact);
+			PhoneNumber phone2 = new PhoneNumber(4, "0526894849", contact);
 			
-			Group group1 = new Group(14, "Miage", 3);
-			Group group2 = new Group(15, "Paris X", 3);
+			Group group1 = new Group(1, "Miage", 2);
+			Group group2 = new Group(2, "Paris X", 2);
 
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone1.setContact(contact); phone2.setContact(contact);
@@ -294,10 +294,11 @@ public class DAOTest {
 
 			Set<Group> groups = new HashSet<Group>();
 			groups.add(group1);
-			groups.add(group2);
-			group2.getContacts().add(contact);
-			group1.getContacts().add(contact);
+			//groups.add(group2);
+			/*group2.getContacts().add(contact);
+			group1.getContacts().add(contact);*/
 			contact.setGroups(groups);
+			
 			
 			ContactDAO dao = new ContactDAO();
 			dao.update(contact);
@@ -333,15 +334,14 @@ public class DAOTest {
 	@Test
 	public void deleteContactTest() {
 		ContactDAO dao = new ContactDAO();
-		dao.deleteContact(10);
+		dao.deleteContact(1);
 	}
 	
 	//@Ignore
 	@Test
 	public void deleteGroupsTest() {
 		ContactDAO dao = new ContactDAO();
-		dao.deleteGroup(12);
+		dao.deleteGroup(2);
 	}
-	
-	
+
 }

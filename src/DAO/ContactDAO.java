@@ -389,7 +389,10 @@ public class ContactDAO {
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			Group group = (Group) session.get(Group.class, group_ID);
-			//group.setContacts(null);
+			for (Contact contact : group.getContacts()) {
+				contact.getGroups().remove(group);
+				session.update(contact);
+			}
 			session.delete(group);
 			session.getTransaction().commit();
 			session.close();
