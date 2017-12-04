@@ -309,6 +309,23 @@ public class ContactDAOTest {
 	}
 	
 	
+	//@Ignore
+	@Test
+	public void updateGroup() {
+		boolean result = false;
+		try {
+			Group group = new Group(2,"MIAGE",5);
+			ContactDAO dao = new ContactDAO();
+			dao.update(group);
+			result = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		assertSame(true, result);
+	}
+	
+	
+	
 	// ************************* Delete ************************
 	public void deleteContactTest() {
 		ContactDAO dao = new ContactDAO();

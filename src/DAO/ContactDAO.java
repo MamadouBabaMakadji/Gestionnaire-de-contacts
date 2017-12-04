@@ -281,8 +281,7 @@ public class ContactDAO {
 	// ****************************** Update ********************************
 
 	/**
-	 * Save and update an object
-	 * 
+	 * Save and update a contact
 	 * @param contact
 	 * @return
 	 */
@@ -296,6 +295,29 @@ public class ContactDAO {
 				session.update(pn);
 			}
 			
+			session.getTransaction().commit();
+			session.close();
+			
+			result = true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
+		return result;
+	}
+	
+	/**
+	 * Save and update a group
+	 * 
+	 * @param contact
+	 * @return
+	 */
+	public boolean update(Group group) {
+		boolean result = false;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.update(group);
 			session.getTransaction().commit();
 			session.close();
 			
