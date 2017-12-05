@@ -36,8 +36,7 @@
 		Set<PhoneNumber> phones = contact.getPhones();
 		Set<Group> groups = contact.getGroups();
 		
-		Iterator<PhoneNumber> iterPhone = phones.iterator();
-		
+		/* Iterator<PhoneNumber> iterPhone = phones.iterator(); */
 /* 		if (!groups.isEmpty()) {
 			Iterator<Group> iterGroup = groups.iterator();
 			Group groupe = iterGroup.next();
@@ -45,13 +44,15 @@
 			request.setAttribute("group", group);
 		} */
 
-		PhoneNumber phone = iterPhone.next();
+/* 		PhoneNumber phone = iterPhone.next();
 		if (iterPhone.hasNext()) {
 			PhoneNumber phone2 = iterPhone.next();
 			String tel2 = phone2.getPhoneNumber();
 			request.setAttribute("tel2", tel2);
-		}
+		} */
 
+		
+		int version			= contact.getVersion();
 		String nom 			= contact.getNom();
 		String prenom 		= contact.getPrenom();
 		String mail 		= contact.getMail();
@@ -60,9 +61,8 @@
 		String ville 		= adress.getCity();
 		String code_postal 	= adress.getZip();
 		String pays 		= adress.getCountry();
-		long telId			= phone.getPhone_ID();
-		String tel 			= phone.getPhoneNumber();
-		int version			= contact.getVersion();
+/* 		long telId			= phone.getPhone_ID();
+		String tel 			= phone.getPhoneNumber(); */
 		String groupe		= "Group";
 		
 		request.setAttribute("nom", nom);
@@ -72,8 +72,8 @@
 		request.setAttribute("ville", ville);
 		request.setAttribute("code_postal", code_postal);
 		request.setAttribute("pays", pays);
-		request.setAttribute("tel", tel);
-		request.setAttribute("id_c", contact_ID);
+/* 		request.setAttribute("tel", tel); */
+		request.setAttribute("contact_ID", contact_ID);
 		request.setAttribute("version", version);
 		request.setAttribute("groups", groups);
 		request.setAttribute("phones", phones);
@@ -88,7 +88,7 @@
 	<html:form action="EditContactForm.do" method="post">
 		<table align="center">
 			<tr>
-				<html:hidden property="identifiant" value="${id_c}" />
+				<html:hidden property="identifiant" value="${contact_ID}" />
 				<html:hidden property="version" value="${version}" />
 				<td><bean:message key="nom" /></td>
 				<td><br /> <html:text property="nom" value="${nom}" /><br />

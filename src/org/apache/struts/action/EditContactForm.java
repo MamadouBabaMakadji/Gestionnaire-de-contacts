@@ -10,41 +10,43 @@ import org.apache.struts.action.ActionMessage;
 public class EditContactForm extends ActionForm {
 
 	private static final long serialVersionUID = 1L;
-	private int identifiant;
+	private int contactId;
+	private int versionContact;
 	private String nom;
 	private String prenom;
 	private String mail;
+	private long adressId;
 	private String adress;
 	private String ville;
 	private String code_postal;
 	private String pays;
-	private String tel;
-	private String tel2;
-	private String group;
-	private int version;
 	
-	private long[] groupsId;
+	private Long[] phonesId = new Long[20];
+	private String[] phonesNumber = new String[20];
+	
+	private Long[] groupsId = new Long[20];
 	private String[] groupsName = new String[20];
-	
+	private Integer[] versionGroup = new Integer[20];
 
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getGroup() {
-		return group;
+	public int getContactId() {
+		return contactId;
 	}
 
-	public void setGroup(String group) {
-		this.group = group;
+	public void setContactId(int identifiant) {
+		this.contactId = identifiant;
 	}
-
-	public int getIdentifiant() {
-		return identifiant;
+	
+	public int getVersionContact() {
+		return versionContact;
 	}
-
-	public void setIdentifiant(int identifiant) {
-		this.identifiant = identifiant;
+	
+	public void setVersionContact(int version) {
+		this.versionContact = version;
 	}
 
 	public String getNom() {
@@ -69,6 +71,14 @@ public class EditContactForm extends ActionForm {
 
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public long getAdressId() {
+		return adressId;
+	}
+
+	public void setAdressId(long adressId) {
+		this.adressId = adressId;
 	}
 
 	public String getAdress() {
@@ -102,37 +112,28 @@ public class EditContactForm extends ActionForm {
 	public void setPays(String pays) {
 		this.pays = pays;
 	}
-	
-	public int getVersion() {
-		return version;
-	}
-	
-	public void setVersion(int version) {
-		this.version = version;
+
+	public Long[] getPhonesId() {
+		return phonesId;
 	}
 
-	public String getTel() {
-		return tel;
+	public void setPhonesId(Long[] phonesId) {
+		this.phonesId = phonesId;
 	}
 
-	public void setTel(String tel) {
-		this.tel = tel;
+	public String[] getPhonesNumber() {
+		return phonesNumber;
 	}
 
-	public String getTel2() {
-		return tel2;
+	public void setPhonesNumber(String[] phonesNumber) {
+		this.phonesNumber = phonesNumber;
 	}
 
-	public void setTel2(String tel2) {
-		this.tel2 = tel2;
-	}
-
-	
-	public long[] getGroupsId() {
+	public Long[] getGroupsId() {
 		return groupsId;
 	}
 
-	public void setGroupsId(long[] groupsId) {
+	public void setGroupsId(Long[] groupsId) {
 		this.groupsId = groupsId;
 	}
 
@@ -143,7 +144,16 @@ public class EditContactForm extends ActionForm {
 	public void setGroupsName(String[] groupsName) {
 		this.groupsName = groupsName;
 	}
+	
+	public Integer[] getVersionGroup() {
+		return versionGroup;
+	}
 
+	public void setVersionGroup(Integer[] versionGroup) {
+		this.versionGroup = versionGroup;
+	}
+
+	
 	
 	@Override
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -159,9 +169,13 @@ public class EditContactForm extends ActionForm {
 		if (!mail.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$")) {
 			errors.add("mail", new ActionMessage("erreur.mail"));
 		}
-		if (tel.length() != 10) {
-			errors.add("tel", new ActionMessage("erreur.tel"));
+		
+		for (String tel : phonesNumber) {
+			if (tel.length() != 10) {
+				errors.add("tel", new ActionMessage("erreur.tel"));
+			}
 		}
+		
 		if (code_postal.length() != 5) {
 			errors.add("code_postal", new ActionMessage("erreur.code_postal"));
 		}
