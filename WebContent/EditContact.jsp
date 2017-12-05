@@ -37,22 +37,6 @@
 		Set<PhoneNumber> phones = contact.getPhones();
 		Set<Group> groups = contact.getGroups();
 		
-		/* Iterator<PhoneNumber> iterPhone = phones.iterator(); */
-/* 		if (!groups.isEmpty()) {
-			Iterator<Group> iterGroup = groups.iterator();
-			Group groupe = iterGroup.next();
-			String group = groupe.getGroupName();
-			request.setAttribute("group", group);
-		} */
-
-/* 		PhoneNumber phone = iterPhone.next();
-		if (iterPhone.hasNext()) {
-			PhoneNumber phone2 = iterPhone.next();
-			String tel2 = phone2.getPhoneNumber();
-			request.setAttribute("tel2", tel2);
-		} */
-
-		
 		int versionContact		= contact.getVersion();
 		String nom 				= contact.getNom();
 		String prenom 			= contact.getPrenom();
@@ -62,9 +46,6 @@
 		String ville 			= adress.getCity();
 		String code_postal 		= adress.getZip();
 		String pays 			= adress.getCountry();
-/* 		long telId				= phone.getPhone_ID();
-		String tel 				= phone.getPhoneNumber(); */
-		String groupe			= "Group";
 		
 		request.setAttribute("nom", nom);
 		request.setAttribute("prenom", prenom);
@@ -73,12 +54,10 @@
 		request.setAttribute("ville", ville);
 		request.setAttribute("code_postal", code_postal);
 		request.setAttribute("pays", pays);
-/* 		request.setAttribute("tel", tel); */
 		request.setAttribute("contact_ID", contact_ID);
 		request.setAttribute("version", versionContact);
 		request.setAttribute("groups", groups);
 		request.setAttribute("phones", phones);
-		request.setAttribute("Group", groupe);
 		
 	%>
 	<h2>
@@ -114,60 +93,31 @@
 				<td><br /> <html:text property="ville" value="${ville}" /><br />
 					<br /></td>
 			</tr>
-			<tr>
-				<td><bean:message key="tel"/></td>
-				<td><br/> <html:text property="tel" value="${tel}" /><br/><br/></td>
-				<td><bean:message key="tel2" /></td>
-				<td><br/> <html:text property="tel2" value="${tel2}"/><br/><br/></td>
-			</tr>
+			
+			
+			<% int t=0; request.setAttribute("t", t); %> 
+			<logic:iterate name="phones" id="phone">
+				<% if ((t%2) == 0 ){out.print("<tr>");} %>
+						<td><bean:message key="tel" /></td>
+						<td><br/><html:text property="phonesNumber" value="${phone.getPhoneNumber()}"/><br/><br/></td>		
+				<% if ((t%2) == 1 ){out.print("</tr>");} t++;%>
+			</logic:iterate>
+
 
 			<tr>
 				<td><bean:message key="pays" /></td>
 				<td><br/><html:text property="pays" value="${pays}"/><br/><br/></td>				
 			</tr>
 			
-			<% int i=1; request.setAttribute("i", i); %> 
-			<logic:iterate name="groups" id="groupeId">
-				<% if ((i%2) == 0){ System.out.println("Passage d");out.print("toto");} out.print("i = " +i);%>
+			
+			<% int g=0; request.setAttribute("g", g); %> 
+			<logic:iterate name="groups" id="group">
+				<% if ((g%2) == 0){out.print("<tr>");} %>	
 						<td><bean:message key="group" /></td>
-						<td><br/>	<html:text property="groupsName" value="${groupeId.getGroupName()}"/><br/><br/></td>		
-				<% if ((i%2) == 0){ System.out.println("Passage f"); out.print("</tr>");} out.print("i = " +i); i++; 
-				
-				%>
-			</logic:iterate>
+						<td><br/><html:text property="groupsName" value="${group.getGroupName()}"/><br/><br/></td>		
+				<% if ((g%2) == 1 ){out.print("</tr>");} g++;%>
+			</logic:iterate>	
 			
-			
-			
-<%-- 			<%
-				int i = 0;
-				System.out.println("Size groups " + groups.size());
-				for (Group group : groups) {
-					groupe = groupe + " " +i;
-					request.setAttribute("group", group.getGroupName());
-					if (i % 2 == 0) {
-						
-						System.out.println("Passage if : i = " + i);
-						System.out.println("Group name : " + group.getGroupName());
-						
-						out.print("<tr>");
-							out.print("<td>Groupe" + i + "</td>");
-							out.print("<td><html:text property='groupsName' value='${group}'/></td>");
-						out.print("</tr>");
-					}
-					
-					else {
-						System.out.println("Passage else : i = " +i);
-						System.out.println("Group name : " + group.getGroupName());
-						
-						out.print("<td>Groupe" + i + "</td>");
-						out.print("<td><html:text property='groupsName' value='${group}'/></td>");
-					}
-					i++;
-				}
-			%> --%>
-			
-			
-
 			<tr>
 				<td></td>
 				<td><br /> <input type="submit" class="btn btn-primary"
