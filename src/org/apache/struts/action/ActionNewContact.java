@@ -6,12 +6,15 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import model.Adress;
 import model.Contact;
 import model.Entreprise;
 import model.Group;
 import model.PhoneNumber;
-import service.ContactService;
+import service.IContactService;
 
 public class ActionNewContact extends Action {
 
@@ -19,7 +22,8 @@ public class ActionNewContact extends Action {
 			HttpServletResponse response) throws Exception {
 
 		NewContactForm ncf = (NewContactForm) form;
-		ContactService cs = new ContactService();
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactService IContactService = (service.IContactService) context.getBean("service");
 		Adress adress = new Adress(ncf.getAdresse(), ncf.getVille(), ncf.getCode_postal(), ncf.getPays());
 		PhoneNumber phone = new PhoneNumber(ncf.getTel());
 		Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
@@ -48,7 +52,7 @@ public class ActionNewContact extends Action {
 			contact.setPhones(phones);
 			contact.setGroups(groups);
 			// Ajout contact
-			if (cs.createContact(contact)) {
+			if (IContactService.createContact(contact)) {
 				return mapping.findForward("AjoutOK");
 			} else {
 				return mapping.findForward("EchecAjout");
@@ -67,7 +71,7 @@ public class ActionNewContact extends Action {
 				groups.add(group);
 				etp.setGroups(groups);
 			}
-			if (cs.addEntreprise(etp))
+			if (IContactService.addEntreprise(etp))
 				return mapping.findForward("AjoutOK");
 			return mapping.findForward("EchecAjout");
 		}

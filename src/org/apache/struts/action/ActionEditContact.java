@@ -7,11 +7,14 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.ContactDAO;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import model.Adress;
 import model.Contact;
 import model.Group;
 import model.PhoneNumber;
+import service.IContactService;
 
 public class ActionEditContact extends Action {
 
@@ -21,22 +24,23 @@ public class ActionEditContact extends Action {
 
 		EditContactForm ncf = (EditContactForm) form;
 		if (ncf.getNom() != null && ncf.getPrenom() != null && ncf.getMail().length() > 5) {
-			ContactDAO cdao = new ContactDAO();
-			Contact contact = cdao.getContact((long) ncf.getIdentifiant());
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactService IContactService = (service.IContactService) context.getBean("service");
+			Contact contact = IContactService.getContact((long) ncf.getIdentifiant());
 			Adress adress = contact.getAdress();
 			Set<PhoneNumber> phones = contact.getPhones();
 			Iterator<PhoneNumber> iter = phones.iterator();
 			PhoneNumber phone = iter.next();
 			PhoneNumber phone2;
 			Set<Group> groups = new HashSet<Group>();
-			
+
 			// ADRESS
 			adress.setStreet(ncf.getAdress());
 			adress.setZip(ncf.getCode_postal());
 			adress.setCity(ncf.getVille());
 			adress.setCountry(ncf.getPays());
 			adress.setContact(contact);
-			
+
 			// PHONE
 			Object[] objectPhone = phones.toArray();
 			if (!"".equals(ncf.getTel2())) {
@@ -65,7 +69,7 @@ public class ActionEditContact extends Action {
 				phones.add(phone);
 				phones.add(phone2);
 			}
-			
+
 			// GROUP
 			if (ncf.getGroup() != "") {
 				Group group = new Group(ncf.getGroup());
@@ -75,7 +79,7 @@ public class ActionEditContact extends Action {
 				groups.add(group);
 				contact.setGroups(groups);
 			}
-			
+
 			// Modifications
 			contact.setNom(ncf.getNom());
 			contact.setPrenom(ncf.getPrenom());
@@ -83,7 +87,7 @@ public class ActionEditContact extends Action {
 			contact.setAdress(adress);
 			contact.setPhones(phones);
 			contact.setVersion(ncf.getVersion());
-			if (cdao.saveUpdate(contact))
+			if (IContactService.saveUpdate(contact))
 				return mapping.findForward("EditOK");
 			return mapping.findForward("EchecEdit");
 		} else {
