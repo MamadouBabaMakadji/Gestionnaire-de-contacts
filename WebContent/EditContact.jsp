@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
+<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ page import="util.HibernateUtil"%>
 <%@ page import="DAO.*"%>
 <%@ page import="service.*"%>
@@ -52,18 +53,18 @@
 		} */
 
 		
-		int version			= contact.getVersion();
-		String nom 			= contact.getNom();
-		String prenom 		= contact.getPrenom();
-		String mail 		= contact.getMail();
-		long adressId		= adress.getAdress_ID();
-		String street 		= adress.getStreet();;
-		String ville 		= adress.getCity();
-		String code_postal 	= adress.getZip();
-		String pays 		= adress.getCountry();
-/* 		long telId			= phone.getPhone_ID();
-		String tel 			= phone.getPhoneNumber(); */
-		String groupe		= "Group";
+		int versionContact		= contact.getVersion();
+		String nom 				= contact.getNom();
+		String prenom 			= contact.getPrenom();
+		String mail 			= contact.getMail();
+		long adressId			= adress.getAdress_ID();
+		String street 			= adress.getStreet();;
+		String ville 			= adress.getCity();
+		String code_postal 		= adress.getZip();
+		String pays 			= adress.getCountry();
+/* 		long telId				= phone.getPhone_ID();
+		String tel 				= phone.getPhoneNumber(); */
+		String groupe			= "Group";
 		
 		request.setAttribute("nom", nom);
 		request.setAttribute("prenom", prenom);
@@ -74,7 +75,7 @@
 		request.setAttribute("pays", pays);
 /* 		request.setAttribute("tel", tel); */
 		request.setAttribute("contact_ID", contact_ID);
-		request.setAttribute("version", version);
+		request.setAttribute("version", versionContact);
 		request.setAttribute("groups", groups);
 		request.setAttribute("phones", phones);
 		request.setAttribute("Group", groupe);
@@ -88,8 +89,8 @@
 	<html:form action="EditContactForm.do" method="post">
 		<table align="center">
 			<tr>
-				<html:hidden property="identifiant" value="${contact_ID}" />
-				<html:hidden property="version" value="${version}" />
+				<html:hidden property="contactId" value="${contact_ID}" />
+				<html:hidden property="versionContact" value="${version}" />
 				<td><bean:message key="nom" /></td>
 				<td><br /> <html:text property="nom" value="${nom}" /><br />
 					<br /></td>
@@ -114,58 +115,58 @@
 					<br /></td>
 			</tr>
 			<tr>
-				<td><bean:message key="tel" /></td>
-				<td><br /> <html:text property="tel" value="${tel}" /><br />
-					<br /></td>
+				<td><bean:message key="tel"/></td>
+				<td><br/> <html:text property="tel" value="${tel}" /><br/><br/></td>
 				<td><bean:message key="tel2" /></td>
-				<td><br /> <html:text property="tel2" value="${tel2}" /><br />
-					<br /></td>
+				<td><br/> <html:text property="tel2" value="${tel2}"/><br/><br/></td>
 			</tr>
 
 			<tr>
 				<td><bean:message key="pays" /></td>
-				<td><br /> <html:text property="pays" value="${pays}" /><br />
-					<br /></td>
-					
-<%-- 				<td><bean:message key="group"/></td>
-					<td><br/><html:text property="group" value="${group}"/><br/>
-					<br/></td> --%>
-					
+				<td><br/><html:text property="pays" value="${pays}"/><br/><br/></td>				
 			</tr>
 			
-			<%
+			<% int i=1; request.setAttribute("i", i); %> 
+			<logic:iterate name="groups" id="groupeId">
+				<% if ((i%2) == 0){ System.out.println("Passage d");out.print("toto");} out.print("i = " +i);%>
+						<td><bean:message key="group" /></td>
+						<td><br/>	<html:text property="groupsName" value="${groupeId.getGroupName()}"/><br/><br/></td>		
+				<% if ((i%2) == 0){ System.out.println("Passage f"); out.print("</tr>");} out.print("i = " +i); i++; 
+				
+				%>
+			</logic:iterate>
+			
+			
+			
+<%-- 			<%
 				int i = 0;
 				System.out.println("Size groups " + groups.size());
 				for (Group group : groups) {
 					groupe = groupe + " " +i;
 					request.setAttribute("group", group.getGroupName());
 					if (i % 2 == 0) {
-						System.out.println("Passage if : " + i);
-						System.out.println("Group name : " + group.getGroupName());
-						out.print("<tr>");
 						
-							out.print("<td><bean:message key='group'/></td>");
+						System.out.println("Passage if : i = " + i);
+						System.out.println("Group name : " + group.getGroupName());
+						
+						out.print("<tr>");
+							out.print("<td>Groupe" + i + "</td>");
 							out.print("<td><html:text property='groupsName' value='${group}'/></td>");
-							
 						out.print("</tr>");
 					}
 					
 					else {
-						System.out.println("Passage else : " +i);
+						System.out.println("Passage else : i = " +i);
 						System.out.println("Group name : " + group.getGroupName());
 						
-						out.print("<td><bean:message key='group'/></td>");
+						out.print("<td>Groupe" + i + "</td>");
 						out.print("<td><html:text property='groupsName' value='${group}'/></td>");
 					}
 					i++;
 				}
-
-			%>
-			<tr>
-				<td><bean:message key="group" /></td>
-				<td><br /> <html:text property="group" value="${group}" /><br />
-					<br /></td>
-			</tr>
+			%> --%>
+			
+			
 
 			<tr>
 				<td></td>

@@ -1,11 +1,9 @@
 package org.apache.struts.action;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
+import javax.servlet.http.HttpServletRequest;
 
 public class EditContactForm extends ActionForm {
 
@@ -25,7 +23,7 @@ public class EditContactForm extends ActionForm {
 	private String[] phonesNumber = new String[20];
 	
 	private Long[] groupsId = new Long[20];
-	private String[] groupsName = new String[20];
+	private Set<String> groupsName = new HashSet<String>();
 	private Integer[] versionGroup = new Integer[20];
 
 	
@@ -137,12 +135,12 @@ public class EditContactForm extends ActionForm {
 		this.groupsId = groupsId;
 	}
 
-	public String[] getGroupsName() {
+	public Set<String> getGroupsName() {
 		return groupsName;
 	}
 
-	public void setGroupsName(String[] groupsName) {
-		this.groupsName = groupsName;
+	public void setGroupsName(String groupsName) {
+		this.groupsName.add(groupsName);
 	}
 	
 	public Integer[] getVersionGroup() {
