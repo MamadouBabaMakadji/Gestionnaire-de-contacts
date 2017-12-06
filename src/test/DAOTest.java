@@ -81,13 +81,14 @@ public class DAOTest {
 		Group group1 = new Group("Miage");
 		Group group2 = new Group("Paris X");
 		Group group3 = new Group("Info");
+		Group group4 = new Group("DZ");
 
 		// Test add group
 		ContactDAO contactDAO = new ContactDAO();
 		try {
 /*			result = contactDAO.insertDB(group1);
 			result = contactDAO.insertDB(group2);*/
-			result = contactDAO.insertDB(group3);
+			result = contactDAO.insertDB(group4);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,8 +111,9 @@ public class DAOTest {
 	public void getContactTest() {
 		try {
 			ContactDAO contactDAO = new ContactDAO();
-			//Contact contact = contactDAO.getContact(1);
-			Contact contact = contactDAO.getContact2(2);
+			ContactService service = new ContactService();
+			Contact contact = service.getContact(1);
+			//Contact contact = contactDAO.getContact2(2);
 
 			System.out.println("Contact : " + contact.toString());
 			
@@ -278,16 +280,16 @@ public class DAOTest {
 		boolean result = false;
 		try {
 
-			Contact contact = new Contact(2, 2, "toto", "baba", "mbm@hb.net");
+			Contact contact = new Contact(2, 3, "toto", "baba", "mbm@hb.net");
 			Adress adress = new Adress(2, "80 rue mbm", "Paris", "55121", "DZ");
 			contact.setAdress(adress);
 			
 			PhoneNumber phone1 = new PhoneNumber(3, "0202020202", contact);
-			PhoneNumber phone2 = new PhoneNumber(4, "0526894849", contact);
+			PhoneNumber phone2 = new PhoneNumber(4, "0303030303", contact);
 			
-			Group group1 = new Group(4, "Miage", 1);
-			Group group2 = new Group(3, "Paris X", 1);
-			Group group3 = new Group(5, "Info", 0);
+			Group group1 = new Group(4, "Miage", 2);
+			Group group2 = new Group(3, "Paris X", 2);
+			Group group3 = new Group(5, "Info", 1);
 
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone1.setContact(contact); phone2.setContact(contact);

@@ -46,8 +46,9 @@ public class Contact {
 		this.mail = mail;
 	}
 
-	public Contact(long id, String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones, Set<Group> groups) {
+	public Contact(long id, int version,String nom, String prenom, String mail, Adress adress, Set<PhoneNumber> phones, Set<Group> groups) {
 		this.contact_ID = id;
+		this.version = version;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
@@ -57,7 +58,7 @@ public class Contact {
 	}
 
 	public Contact(Contact c) {
-		this(c.contact_ID, c.prenom, c.nom, c.mail, c.adress, c.phones, c.groups);
+		this(c.contact_ID, c.version,c.prenom, c.nom, c.mail, c.adress, c.phones, c.groups);
 	}
 	
 
@@ -152,7 +153,7 @@ public class Contact {
 
 		return new String("Contact {contact_ID=" + this.getContact_ID() + ", nom=" + this.getNom() + ", prenom=" + this.getPrenom() + ", mail=" + this.getMail()
 				+ ", address={" + this.adress.getAdress_ID() + ", " + this.adress.getCity() + ", " + this.adress.getCountry() + ", " + this.adress.getStreet() + ", " + this.adress.getZip() +
-				", version = " + this.version+ "}");
+				"}, version = " + this.version+ "}");
 	}
 	
 	

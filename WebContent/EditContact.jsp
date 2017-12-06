@@ -32,12 +32,18 @@
 		ContactService service = new ContactService();
 		long contact_ID = Long.parseLong(id);
 		
+		System.out.println("Id contact = " +contact_ID);
+		
 		Contact contact = service.getContact(contact_ID);
+		System.out.println(contact.toString());
+		
 		Adress adress = contact.getAdress();
 		Set<PhoneNumber> phones = contact.getPhones();
 		Set<Group> groups = contact.getGroups();
 		
 		int versionContact		= contact.getVersion();
+		System.out.println("Version contact = " +contact.getVersion());
+		
 		String nom 				= contact.getNom();
 		String prenom 			= contact.getPrenom();
 		String mail 			= contact.getMail();
@@ -47,29 +53,31 @@
 		String code_postal 		= adress.getZip();
 		String pays 			= adress.getCountry();
 		
+		request.setAttribute("contact_ID", contact_ID);
 		request.setAttribute("nom", nom);
 		request.setAttribute("prenom", prenom);
 		request.setAttribute("mail", mail);
+		request.setAttribute("version", versionContact);
+		request.setAttribute("adressId", adressId);
 		request.setAttribute("street", street);
 		request.setAttribute("ville", ville);
 		request.setAttribute("code_postal", code_postal);
 		request.setAttribute("pays", pays);
-		request.setAttribute("contact_ID", contact_ID);
-		request.setAttribute("version", versionContact);
 		request.setAttribute("groups", groups);
 		request.setAttribute("phones", phones);
 		
 	%>
 	<h2>
 		<center>
-			<bean:message key="modifier.contact" />
+			<bean:message key="modifier.contact"/>
 		</center>
 	</h2>
 	<html:form action="EditContactForm.do" method="post">
 		<table align="center">
 			<tr>
-				<html:hidden property="contactId" value="${contact_ID}" />
-				<html:hidden property="versionContact" value="${version}" />
+				<html:hidden property="contactId" value="${contact_ID}"/>
+				<html:hidden property="versionContact" value="${version}"/>
+				<html:hidden property="adressId" value="${adressId}"/>
 				<td><bean:message key="nom" /></td>
 				<td><br /> <html:text property="nom" value="${nom}" /><br />
 					<br /></td>
@@ -99,7 +107,10 @@
 			<logic:iterate name="phones" id="phone">
 				<% if ((t%2) == 0 ){out.print("<tr>");} %>
 						<td><bean:message key="tel" /></td>
-						<td><br/><html:text property="phonesNumber" value="${phone.getPhoneNumber()}"/><br/><br/></td>		
+						<td><br/><html:text property="phonesNumber" value="${phone.getPhoneNumber()}"/><br/><br/></td>
+						<%-- <% request.setAttribute("phonesId", phonesId); %> --%>
+						<html:hidden property="phonesId" value="${phone.getPhone_ID()}"/>
+						
 				<% if ((t%2) == 1 ){out.print("</tr>");} t++;%>
 			</logic:iterate>
 
@@ -114,9 +125,11 @@
 			<logic:iterate name="groups" id="group">
 				<% if ((g%2) == 0){out.print("<tr>");} %>	
 						<td><bean:message key="group" /></td>
-						<td><br/><html:text property="groupsName" value="${group.getGroupName()}"/><br/><br/></td>		
+						<td><br/><html:text property="groupsName" value="${group.getGroupName()}"/><br/><br/></td>
+						<html:hidden property="groupsId" value="${group.getGroup_ID()}"/>
+						<html:hidden property="groupsVersion" value="${group.getVersion()}"/>
 				<% if ((g%2) == 1 ){out.print("</tr>");} g++;%>
-			</logic:iterate>	
+			</logic:iterate>
 			
 			<tr>
 				<td></td>

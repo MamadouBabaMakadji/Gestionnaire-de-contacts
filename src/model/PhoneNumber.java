@@ -12,11 +12,20 @@ public class PhoneNumber {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	
+	
+	public PhoneNumber(long phone_ID, String phoneNumber) {
+		this.phone_ID = phone_ID;
+		this.phoneNumber = phoneNumber;
+	}
+
 	public PhoneNumber(long phone_ID, String phoneNumber, Contact contact) {
 		this.phone_ID = phone_ID;
 		this.phoneNumber = phoneNumber;
 		this.contact = contact;
 	}
+	
+	
 
 	public long getPhone_ID() {
 		return phone_ID;
