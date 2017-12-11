@@ -193,14 +193,9 @@ public class DAOTest {
 			e.printStackTrace();
 		}
 	}
-	
-	
-<<<<<<< HEAD:src/test/DAOTest.java
-	//@Ignore 
-=======
+
 	
 	@Ignore 
->>>>>>> Update DAO add Spring getTemplate:src/test/ContactDAOTest.java
 	@Test
 	public void getAllGroupsTest() {
 		ContactDAO dao = new ContactDAO();

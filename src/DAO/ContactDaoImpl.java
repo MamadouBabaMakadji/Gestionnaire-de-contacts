@@ -20,7 +20,7 @@ import model.PhoneNumber;
 
 public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 
-
+	// TODO getAllContacts
 	// ****************************** Create ********************************
 	/**
 	 * Insert an object in database
