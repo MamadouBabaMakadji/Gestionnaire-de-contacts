@@ -19,7 +19,7 @@ public interface IContactDao {
 
 	public Contact getContactHQL(long contactId);
 
-	public Set<Contact> getAllContacts();
+	public List<Contact> getAllContacts();
 
 	public Set<Group> getAllGroups();
 

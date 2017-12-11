@@ -106,7 +106,7 @@ public class DAOTest {
 	// ************************* Read ************************
 	
 	// Get a contact
-	//@Ignore 
+	@Ignore 
 	@Test
 	public void getContactTest() {
 		try {
@@ -195,7 +195,12 @@ public class DAOTest {
 	}
 	
 	
+<<<<<<< HEAD:src/test/DAOTest.java
 	//@Ignore 
+=======
+	
+	@Ignore 
+>>>>>>> Update DAO add Spring getTemplate:src/test/ContactDAOTest.java
 	@Test
 	public void getAllGroupsTest() {
 		ContactDAO dao = new ContactDAO();

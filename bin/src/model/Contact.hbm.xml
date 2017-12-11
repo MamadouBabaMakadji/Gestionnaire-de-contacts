@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="model">
+	<class name="Contact" table="contact" discriminator-value="personne" >
+		<cache usage="read-write"/>
+		
+		<id name="contact_ID" type="long" column="contact_ID">
+			<generator class="native" />
+		</id>
+		
+		
+		<discriminator column="entreprise" type="string"></discriminator>
+		<version name="version" access="field" column="version"  />
+
+		<property name="nom" lazy="true">
+			<column name="nom"></column>
+		</property>
+
+		<property name="prenom" lazy="true">
+			<column name="prenom"></column>
+		</property>
+
+		<property name="mail" lazy="true">
+			<column name="mail"></column>
+		</property>
+
+		<!-- Un contact peut avoir 0 ou 1 adresse -->
+		<many-to-one name="adress" column="adress_ID" unique="true" not-null="false" cascade="all"/>
+
+		<!-- Un contact possède 0, 1 ou n numéros -->
+		<set name="phones" inverse="true" cascade="all" table="phonenumber">
+			<key column="contact_ID" not-null="true"></key>
+			<one-to-many class="PhoneNumber" />
+		</set>
+
+		<!-- Un contact appartient à 0, 1 ou n groupes -->
+		<set name="groups" table="contact_group" cascade="all" optimistic-lock="false">
+			<key column="contact_ID" not-null="true"></key>
+			<many-to-many column="group_ID" class="Group"></many-to-many>
+		</set>
+
+		<subclass name="Entreprise" discriminator-value="entreprise">
+			<property name="numSiret" type="string"></property>
+		</subclass>
+		
+	</class>
+</hibernate-mapping>

@@ -29,7 +29,7 @@
 	<br />
 	<%
 		String id = request.getParameter("id");
-		ContactService service = new ContactService();
+		IContactService service = new ContactServiceImpl();
 		long contact_ID = Long.parseLong(id);
 		
 		System.out.println("Id contact = " +contact_ID);

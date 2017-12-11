@@ -47,7 +47,7 @@
 		<%
 			try
 			{
-				ContactService cs = new ContactService();
+				IContactService cs = new ContactServiceImpl();
 				
 // 				List<Contact> listContact = cs.afficheContactDuGroup(request.getParameter("id"));
 // 				for(Contact c : listContact)
