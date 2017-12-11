@@ -8,6 +8,7 @@
 <%@page import="DAO.*"%>
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
+<%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,46 +33,35 @@
 			request.setAttribute("var", var);
 		%>
 		<h2>
-			<bean:message key="MesContacts" />
+			<center>
+				<bean:message key="MesContacts" />
+			</center>
 		</h2>
 	</div>
 	<div>
 		<table class="w3-table w3-bordered w3-red w3-card-4 w3-hover-classes">
-			<tr class="w3-black">
+			<tr class="w3-dark-grey">
 				<td><bean:message key="nom" /></td>
 				<td><bean:message key="prenom" /></td>
 				<td><bean:message key="mail" /></td>
-				<td><bean:message key="tel" /></td>
-				<td><bean:message key="ville" /></td>
+				<%-- <td><bean:message key="tel" /></td> --%>
 				<td><bean:message key="adresse" /></td>
+				<td><bean:message key="ville" /></td>
 				<td><bean:message key="code_postal" /></td>
 				<td><bean:message key="pays" /></td>
 			</tr>
-			<%
-				try {
-					ContactService service = new ContactService();
-					Set<Contact> contacts = new HashSet<Contact>();
-					contacts = service.getAllContacts();
-					Iterator<Contact> iter = contacts.iterator();
-					while (iter.hasNext()) {
-						Contact contact = iter.next();
-						Adress adress = contact.getAdress();
-						Set<PhoneNumber> phones = contact.getPhones();
-						out.print("<tr><td>" + contact.getNom() + "</td><td>" + contact.getPrenom() + "</td><td>"
-								+ contact.getMail() + "</td><td>");
-						Object[] phoneObjects = phones.toArray();
-						for (int i = 0; i < phoneObjects.length; i++) {
-							PhoneNumber phone = (PhoneNumber) phoneObjects[i];
-							out.print("\n" + phone.getPhoneNumber() + "\n");
-						}
-
-						out.print("</td><td>" + adress.getCity() + "</td><td>" + adress.getStreet() + "</td><td>"
-								+ adress.getZip() + "</td><td>" + adress.getCountry() + "</td></tr>");
-					}
-				} catch (Exception e) {
-					throw new Exception(e.getMessage());
-				}
-			%>
+			<logic:iterate id="contact" name="listContacts">
+				<tr>
+					<td><bean:write name="contact" property="prenom" /></td>
+					<td><bean:write name="contact" property="nom" /></td>
+					<td><bean:write name="contact" property="mail" /></td>
+					<td><bean:write name="contact" property="adress.street" /></td>
+					<td><bean:write name="contact" property="adress.city" /></td>
+					<td><bean:write name="contact" property="adress.country" /></td>
+					<td><bean:write name="contact" property="adress.zip" /></td>
+					<!-- 					<td></td> -->
+				</tr>
+			</logic:iterate>
 		</table>
 	</div>
 </body>

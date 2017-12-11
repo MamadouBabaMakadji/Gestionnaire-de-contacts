@@ -4,21 +4,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import model.Contact;
 import model.Group;
 import model.PhoneNumber;
-import util.HibernateUtil;
 
-public class ContactDaoImpl implements IContactDao {
+public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
+
 
 	// ****************************** Create ********************************
 	/**
@@ -28,17 +29,14 @@ public class ContactDaoImpl implements IContactDao {
 	 * @return a boolean if instructions have finished without errors
 	 * @throws HibernateException
 	 */
+	@Transactional
 	public boolean insertDB(Object object) throws Exception {
 		boolean result = false;
 		if (object == null)
 			return result;
 		else {
 			try {
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				session.beginTransaction();
-				session.save(object);
-				session.getTransaction().commit();
-				session.close();
+				getHibernateTemplate().save(object);
 				result = true;
 			} catch (HibernateException e) {
 				e.printStackTrace();
@@ -60,15 +58,9 @@ public class ContactDaoImpl implements IContactDao {
 			return result;
 		else {
 			try {
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				session.beginTransaction();
-
 				for (Object o : objects) {
-					session.save(o);
+					getHibernateTemplate().save(o);
 				}
-
-				session.getTransaction().commit();
-				session.close();
 				result = true;
 			} catch (HibernateException e) {
 				e.printStackTrace();
@@ -79,12 +71,8 @@ public class ContactDaoImpl implements IContactDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Object[]> executerRequete(String requete) throws SQLException {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
 
-		List<Object[]> result = session.createQuery(requete).list();
-		session.getTransaction().commit();
-		session.close();
+		List<Object[]> result = (List<Object[]>) getHibernateTemplate().find(requete).listIterator();
 		return result;
 	}
 
@@ -96,11 +84,18 @@ public class ContactDaoImpl implements IContactDao {
 	 */
 	public Contact getContact(long contact_ID) {
 		Contact contact = null;
+		System.out.println("JE suis bien dedans");
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			contact = new Contact((Contact) session.createCriteria(Contact.class)
-					.add(Restrictions.like("contact_ID", contact_ID)).uniqueResult());
-			session.close();
+			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Contact.class)
+					.add(Restrictions.like("contact_ID", contact_ID));
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
+			// contact = new Contact((Contact)
+			// session.createCriteria(Contact.class)
+			// .add(Restrictions.like("contact_ID",
+			// contact_ID)).uniqueResult());
+			// session.close();
+			contact = (Contact) getHibernateTemplate().findByCriteria(detachedCriteria);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -111,19 +106,20 @@ public class ContactDaoImpl implements IContactDao {
 	public Contact getContactHQL(long contactId) {
 		Contact contact = null;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
 
 			// Build query
 			StringBuilder sb = new StringBuilder();
 			sb.append("select c from Contact as c left join  fetch c.groups as g");
 
 			// Execute query
-			Query query = session.createQuery(sb.toString());
+
+			// Query query = session.createQuery(sb.toString());
 
 			@SuppressWarnings("unchecked")
-			List<Contact> list = (List<Contact>) query.list();
+			List<Contact> list = (List<Contact>) getHibernateTemplate().find(sb.toString()).iterator();
 			contact = list.get(1);
-			// session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -137,24 +133,25 @@ public class ContactDaoImpl implements IContactDao {
 	 * @return
 	 */
 	@SuppressWarnings({ "unchecked" })
-	public Set<Contact> getAllContacts() {
-		List<Contact> contacts = new LinkedList<Contact>();
+	public List<Contact> getAllContacts() {
+
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			List<Contact> listContacts = session.createQuery("from Contact").list();
-			for (Contact contact : listContacts) {
+			Iterator<Contact> listContacts = (Iterator<Contact>) getHibernateTemplate().find("from Contact").iterator();
+			while (listContacts
+					.hasNext()) /* (Contact contact : listContacts) */ {
+				Contact contact = listContacts.next();
 				Contact c = new Contact(contact);
 				c.setContact_ID(contact.getContact_ID());
 				contacts.add(c);
 			}
 
-			session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new HashSet<Contact>(contacts);
+		return contacts;
 	}
 
 	/**
@@ -166,9 +163,12 @@ public class ContactDaoImpl implements IContactDao {
 	public Set<Group> getAllGroups() {
 		List<Group> listGroups = null;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			listGroups = session.createCriteria(Group.class).list();
-			session.close();
+			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Group.class);
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
+			// listGroups = session.createCriteria(Group.class).list();
+			listGroups = (List<Group>) getHibernateTemplate().findByCriteria(detachedCriteria).listIterator();
+			// session.close();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -186,10 +186,16 @@ public class ContactDaoImpl implements IContactDao {
 	public Group getGroup(long groupId) {
 		Group group = null;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			group = (Group) session.createCriteria(Group.class).add(Restrictions.like("group_ID", groupId))
-					.uniqueResult();
-			session.close();
+			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Group.class)
+					.add(Restrictions.like("group_ID", groupId));
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
+			// group = (Group)
+			// session.createCriteria(Group.class).add(Restrictions.like("group_ID",
+			// groupId))
+			// .uniqueResult();
+			// session.close();
+			group = (Group) getHibernateTemplate().findByCriteria(detachedCriteria).iterator();
 			return group;
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -201,19 +207,20 @@ public class ContactDaoImpl implements IContactDao {
 	public Set<Contact> getContactsByGroupId(long groupId) {
 		Set<Contact> contacts = null;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
 
 			// Build query
 			StringBuilder sb = new StringBuilder();
 			sb.append("select c from Contact as c join c.groups as g where g.group_ID = :groupId");
 
 			// Execute query
-			Query query = session.createQuery(sb.toString());
-			query.setParameter("groupId", groupId);
+			// Query query = session.createQuery(sb.toString());
+			// query.setParameter("groupId", groupId);
 			@SuppressWarnings("unchecked")
-			List<Contact> list = (List<Contact>) query.list();
+			List<Contact> list = (List<Contact>) getHibernateTemplate().find(sb.toString()).iterator();
 			contacts = new HashSet<>(list);
-			session.close();
+			// session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -233,7 +240,8 @@ public class ContactDaoImpl implements IContactDao {
 		try {
 			String[] words = search.split(" ");
 			List<String> setKeyWords = new ArrayList<String>(Arrays.asList(words));
-			Session session = HibernateUtil.getSessionFactory().openSession();
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
 
 			// Build query
 			StringBuilder sb = new StringBuilder();
@@ -242,12 +250,12 @@ public class ContactDaoImpl implements IContactDao {
 			sb.append(" or g.groupName in (:keyWords)");
 
 			// Execute query
-			Query query = session.createQuery(sb.toString());
-			query.setParameterList("keyWords", setKeyWords);
+			// Query query = session.createQuery(sb.toString());
+			// query.setParameterList("keyWords", setKeyWords);
 			@SuppressWarnings("unchecked")
-			List<Contact> list = (List<Contact>) query.list();
+			List<Contact> list = (List<Contact>) getHibernateTemplate().find(sb.toString(), setKeyWords).iterator();
 			contacts = new HashSet<>(list);
-			session.close();
+			// session.close();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -268,14 +276,15 @@ public class ContactDaoImpl implements IContactDao {
 	public boolean saveUpdate(Contact contact) {
 		boolean result = false;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
-			session.merge(contact);
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
+			// session.beginTransaction();
+			getHibernateTemplate().merge(contact);
 			for (PhoneNumber pn : contact.getPhones()) {
-				session.merge(pn);
+				getHibernateTemplate().merge(pn);
 			}
-			session.getTransaction().commit();
-			session.close();
+			// session.getTransaction().commit();
+			// session.close();
 
 			result = true;
 		} catch (HibernateException e) {
@@ -290,13 +299,14 @@ public class ContactDaoImpl implements IContactDao {
 	public boolean deleteContact(long contact_ID) {
 		boolean result = false;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
-			Contact contact = (Contact) session.load(Contact.class, contact_ID);
-			session.delete(contact);
-			session.getTransaction().commit();
+			// Session session =
+			// HibernateUtil.getSessionFactory().openSession();
+			// session.beginTransaction();
+			Contact contact = (Contact) getHibernateTemplate().load(Contact.class, contact_ID);
+			getHibernateTemplate().delete(contact);
+			// session.getTransaction().commit();
 			result = true;
-			session.close();
+			// session.close();
 		} catch (HibernateException e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -319,12 +329,8 @@ public class ContactDaoImpl implements IContactDao {
 	public boolean deleteGroup(long group_ID) {
 		boolean result = false;
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
-			Group group = (Group) session.load(Group.class, group_ID);
-			session.delete(group);
-			session.getTransaction().commit();
-			session.close();
+			Group group = (Group) getHibernateTemplate().load(Group.class, group_ID);
+			getHibernateTemplate().delete(group);
 			result = true;
 		} catch (HibernateException e) {
 			e.getMessage();
@@ -334,8 +340,6 @@ public class ContactDaoImpl implements IContactDao {
 			e.getMessage();
 			result = false;
 		}
-
-		System.out.println("Result = " + result);
 		return result;
 	}
 

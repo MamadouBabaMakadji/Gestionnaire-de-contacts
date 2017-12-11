@@ -7,66 +7,92 @@
 <struts-config>
 
 	<form-beans>
-		<form-bean name="LoginForm" 		type="org.apache.struts.action.LoginForm"/>
-		<form-bean name="NewContactForm" 	type="org.apache.struts.action.NewContactForm"/>
-		<form-bean name="EditContactForm" 	type="org.apache.struts.action.EditContactForm"/>
-		<form-bean name="SuppContactForm" 	type="org.apache.struts.action.SuppContactForm"/>
-		<form-bean name="SearchForm" 		type="org.apache.struts.action.SearchForm"/>
-		<form-bean name="GroupContactForm" 	type="org.apache.struts.action.GroupContactForm"/>
+		<form-bean name="LoginForm" type="org.apache.struts.action.LoginForm" />
+		<form-bean name="NewContactForm" type="org.apache.struts.action.NewContactForm" />
+		<form-bean name="EditContactForm" type="org.apache.struts.action.EditContactForm" />
+		<form-bean name="SuppContactForm" type="org.apache.struts.action.SuppContactForm" />
+		<form-bean name="SearchForm" type="org.apache.struts.action.SearchForm" />
+		<form-bean name="GroupContactForm" type="org.apache.struts.action.GroupContactForm" />
+		<form-bean name="ViewContactForm" type="org.apache.struts.action.ViewContactForm" />
+		<form-bean name="ViewEditContactForm" type="org.apache.struts.action.ViewEditContactForm" />
 	</form-beans>
-	
-	
+
+
 	<global-exceptions>
-		<exception type="DAO.ContactDAO.ajouter" key="erreur.application" path="/erreur.jsp">
+		<exception type="DAO.ContactDAO.ajouter" key="erreur.application"
+			path="/erreur.jsp">
 		</exception>
-		<exception type="javax.servlet.ServletException" key="erreur.application" path="/erreur.jsp" />
-		<exception type="java.sql.SQLException" key="erreur.application" path="/erreur.jsp">
+		<exception type="javax.servlet.ServletException" key="erreur.application"
+			path="/erreur.jsp" />
+		<exception type="java.sql.SQLException" key="erreur.application"
+			path="/erreur.jsp">
 		</exception>
-<!-- 		<exception type="java.lang.Exception" key="erreur.application" handler="Exception.GestionExceptionHandler" path="erreur.jsp"> -->
-<!-- 		</exception> -->
+		<!-- <exception type="java.lang.Exception" key="erreur.application" handler="Exception.GestionExceptionHandler" 
+			path="erreur.jsp"> -->
+		<!-- </exception> -->
 	</global-exceptions>
-	
+
 	<global-forwards>
 		<forward name="erreurAppli" path="erreur.jsp"></forward>
 	</global-forwards>
-	
-	
-	
+
+
+
 	<action-mappings>
-	
-		<action path="/LoginForm" type="org.apache.struts.action.ActionLogin" name="LoginForm" input="/Index.jsp" scope="request" validate="true">
+
+		<action path="/LoginForm" type="org.apache.struts.action.ActionLogin"
+			name="LoginForm" input="/Index.jsp" scope="request" validate="true">
 			<forward name="succes" path="/Main.jsp"></forward>
 			<forward name="echec" path="/Index.jsp"></forward>
 		</action>
-		
-		<action path="/NewContactForm" type="org.apache.struts.action.ActionNewContact" name="NewContactForm" input="/FormNewContact.jsp" scope="request" validate="true">
+
+		<action path="/NewContactForm" type="org.apache.struts.action.ActionNewContact"
+			name="NewContactForm" input="/FormNewContact.jsp" scope="request"
+			validate="true">
 			<forward name="AjoutOK" path="/ok.jsp"></forward>
 			<forward name="EchecAjout" path="/FormNewContact.jsp"></forward>
 		</action>
-		
-		<action path="/EditContactForm" type="org.apache.struts.action.ActionEditContact" name="EditContactForm" input="/EditContact.jsp" scope="request" validate="true">
+
+		<action path="/EditContactForm" type="org.apache.struts.action.ActionEditContact"
+			name="EditContactForm" input="/EditContact.jsp" scope="request"
+			validate="true">
 			<forward name="EditOK" path="/modif_ok.jsp"></forward>
 			<forward name="EchecAjout" path="/FormEditContact.jsp"></forward>
 		</action>
-		
-		<action path="/SuppContactForm" type="org.apache.struts.action.ActionSuppContact" name="SuppContactForm" input="/SuppContact.jsp" scope="request" validate="true">
+
+		<action path="/SuppContactForm" type="org.apache.struts.action.ActionSuppContact"
+			name="SuppContactForm" input="/SuppContact.jsp" scope="request"
+			validate="true">
 			<forward name="SuppOK" path="/Supp_ok.jsp"></forward>
 			<forward name="EchecSupp" path="/FormSuppContact.jsp"></forward>
 		</action>
-		
-		<action path="/SearchForm" type="org.apache.struts.action.ActionSearch" name="SearchForm" input="/Main.jsp" scope="request" validate="true">
+
+		<action path="/SearchForm" type="org.apache.struts.action.ActionSearch"
+			name="SearchForm" input="/Main.jsp" scope="request" validate="true">
 			<forward name="ResultSearch" path="/ResultSearch.jsp"></forward>
 			<forward name="Main" path="/Main.jsp"></forward>
 		</action>
-		
-		<action path="/GroupContactForm" type="org.apache.struts.action.ActionGroupContact" name="GroupContactForm" input="/MainGroupContact.jsp" scope="request" validate="true">
+
+		<action path="/GroupContactForm" type="org.apache.struts.action.ActionGroupContact"
+			name="GroupContactForm" input="/MainGroupContact.jsp" scope="request"
+			validate="true">
 			<forward name="ok" path="/GroupOK.jsp"></forward>
 			<forward name="no" path="/MainGroupContact.jsp"></forward>
 		</action>
-	
+
+		<action path="/ViewContactForm" type="org.apache.struts.action.ActionViewContacts"
+			name="ViewContactForm" input="/Main.jsp" scope="request" validate="true">
+			<forward name="view" path="/contact.jsp"></forward>
+		</action>
+		
+		<action path="/ViewEditContactForm" type="org.apache.struts.action.ActionViewEditContact"
+			name="ViewEditContactForm" input="/Main.jsp" scope="request" validate="true">
+			<forward name="viewEdit" path="/FormEditContact.jsp"></forward>
+		</action>
+
 	</action-mappings>
-	
-	
+
+
 	<!-- ========== message file =========================== -->
 	<message-resources parameter="Ressources" />
 

@@ -145,7 +145,7 @@ public class ContactDAOTest {
 	// ************************* Read ************************
 	
 	// Get a contact
-	//@Ignore 
+	@Ignore 
 	@Test
 	public void getContactTest() {
 		ContactDAO contactDAO = new ContactDAO();
@@ -243,7 +243,7 @@ public class ContactDAOTest {
 	
 	
 	
-	//@Ignore 
+	@Ignore 
 	@Test
 	public void getAllGroupsTest() {
 		ContactDAO dao = new ContactDAO();

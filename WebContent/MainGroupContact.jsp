@@ -46,7 +46,7 @@
 		<%
 			try
 			{	
-				ContactService cs = new ContactService();
+				IContactService cs = new ContactServiceImpl();
 				List<Group> gp ;//= cs.getNameGroup();
 // 				for(Group var : gp)
 // 				{

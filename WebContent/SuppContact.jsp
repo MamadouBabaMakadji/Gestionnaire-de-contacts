@@ -1,3 +1,5 @@
+<%@page import="service.ContactServiceImpl"%>
+<%@page import="service.IContactService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
@@ -28,9 +30,9 @@
 
 	<%
 		String id = request.getParameter("id");
-		ContactDAO cdao = new ContactDAO();
+		IContactService service = new ContactServiceImpl();
 		long contact_ID = Long.parseLong(id);
-		Contact contact = cdao.getContact(contact_ID);
+		Contact contact = service.getContact(contact_ID);
 		Adress adress = contact.getAdress();
 		Set<PhoneNumber> phones = contact.getPhones();
 		Set<Group> groups = contact.getGroups();

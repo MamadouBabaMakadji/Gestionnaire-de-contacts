@@ -54,28 +54,28 @@ input {
 			<td><bean:message key="action" /></td>
 		</tr>
 		<%
-			try {
-				ContactService service = new ContactService();
-				Set<Contact> contacts = new HashSet<Contact>();
-				contacts = service.getAllContacts();
-				Iterator<Contact> iter = contacts.iterator();
-				while (iter.hasNext()) {
-					Contact contact = iter.next();
-					Adress adress = contact.getAdress();
-					Set<PhoneNumber> phones = contact.getPhones();
-					out.print("<tr><td>" + contact.getNom() + "</td><td>" + contact.getPrenom() + "</td><td>"
-							+ contact.getMail() + "</td><td>");
-					Object[] phoneObjects = phones.toArray();
-					for (int i = 0; i < phoneObjects.length; i++) {
-						PhoneNumber phone = (PhoneNumber) phoneObjects[i];
-						out.print("\n" + phone.getPhoneNumber() + "\n");
-					}
-					out.print("</td><td><a href='SuppContact.jsp?id=" + contact.getContact_ID()
-							+ "'>Supprimer</a></td></tr>");
-				}
-			} catch (Exception e) {
-				throw new Exception(e.getMessage());
-			}
+// 			try {
+// 				IContactService service = new ContactServiceImpl();
+// 				Set<Contact> contacts = new HashSet<Contact>();
+// 				contacts = service.getAllContacts();
+// 				Iterator<Contact> iter = contacts.iterator();
+// 				while (iter.hasNext()) {
+// 					Contact contact = iter.next();
+// 					Adress adress = contact.getAdress();
+// 					Set<PhoneNumber> phones = contact.getPhones();
+// 					out.print("<tr><td>" + contact.getNom() + "</td><td>" + contact.getPrenom() + "</td><td>"
+// 							+ contact.getMail() + "</td><td>");
+// 					Object[] phoneObjects = phones.toArray();
+// 					for (int i = 0; i < phoneObjects.length; i++) {
+// 						PhoneNumber phone = (PhoneNumber) phoneObjects[i];
+// 						out.print("\n" + phone.getPhoneNumber() + "\n");
+// 					}
+// 					out.print("</td><td><a href='SuppContact.jsp?id=" + contact.getContact_ID()
+// 							+ "'>Supprimer</a></td></tr>");
+// 				}
+// 			} catch (Exception e) {
+// 				throw new Exception(e.getMessage());
+// 			}
 		%>
 
 

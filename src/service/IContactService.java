@@ -1,5 +1,6 @@
 package service;
 
+import java.util.List;
 import java.util.Set;
 
 import model.Contact;
@@ -15,7 +16,7 @@ public interface IContactService {
 
 	public Contact getContact(long id);
 
-	public Set<Contact> getAllContacts();
+	public List<Contact> getAllContacts();
 
 	public Set<Group> getGroups();
 

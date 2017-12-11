@@ -28,7 +28,7 @@
 	<br />
 	<%
 		String id = request.getParameter("id");
-		ContactService service = new ContactService();
+		IContactService service = new ContactServiceImpl();
 		long contact_ID = Long.parseLong(id);
 		Contact contact = service.getContact(contact_ID);
 		Adress contact_adress = contact.getAdress();

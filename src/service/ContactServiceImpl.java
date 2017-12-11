@@ -1,5 +1,6 @@
 package service;
 
+import java.util.List;
 import java.util.Set;
 
 import DAO.IContactDao;
@@ -28,7 +29,7 @@ public class ContactServiceImpl implements IContactService {
 		return cdao.getContact(id);
 	}
 
-	public Set<Contact> getAllContacts() {
+	public List<Contact> getAllContacts() {
 		return cdao.getAllContacts();
 	}
 
