@@ -206,7 +206,7 @@ public class ContactDAO {
 		List<Group> listGroups = null;
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
-			listGroups	= session.createCriteria(Group.class).list();
+			listGroups = session.createCriteria(Group.class).list();
 			session.close();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block

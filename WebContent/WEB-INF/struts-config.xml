@@ -13,7 +13,8 @@
 		<form-bean name="SuppContactForm" type="org.apache.struts.action.SuppContactForm" />
 		<form-bean name="SearchForm" type="org.apache.struts.action.SearchForm" />
 		<form-bean name="GroupContactForm" type="org.apache.struts.action.GroupContactForm" />
-		<form-bean name="ViewContactForm" type="org.apache.struts.action.ViewContactForm" />
+		<form-bean name="ViewContactForm" type="org.apache.struts.action.ViewForm" />
+		<form-bean name="Groups" type="org.apache.struts.action.ViewForm" />
 		<form-bean name="ViewEditContactForm" type="org.apache.struts.action.ViewEditContactForm" />
 	</form-beans>
 
@@ -83,6 +84,11 @@
 		<action path="/ViewContactForm" type="org.apache.struts.action.ActionViewContacts"
 			name="ViewContactForm" input="/Main.jsp" scope="request" validate="true">
 			<forward name="view" path="/contact.jsp"></forward>
+		</action>
+		
+		<action path="/Groups" type="org.apache.struts.action.ActionViewGroups"
+			name="Groups" input="/Main.jsp" scope="request" validate="true">
+			<forward name="view" path="/MainGroupContact.jsp"></forward>
 		</action>
 		
 		<action path="/ViewEditContactForm" type="org.apache.struts.action.ActionViewEditContact"

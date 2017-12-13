@@ -4,6 +4,7 @@
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Set"%>
 <%@page import="model.*"%>
 <%@page import="service.*"%>
 <%@page import="DAO.*"%>
@@ -47,11 +48,12 @@
 			try
 			{	
 				IContactService cs = new ContactServiceImpl();
-				List<Group> gp ;//= cs.getNameGroup();
-// 				for(Group var : gp)
-// 				{
-// 					out.print("<tr><td>"+var.getGroupName()+"</td><td><a href='deleteGroup.jsp?id="+var.getGroupId()+"'>Supprimer</a></td><td><a href='GroupContact.jsp?id="+var.getGroupId()+"&name="+var.getGroupName()+"'+>Afficher le Groupe</a></td></tr>");
-// 				}
+				Set<Group> gp = cs.getAllGroups();
+ 				for(Group var : gp)
+ 				{
+ 					out.print("<tr><td>"+var.getGroupName()+"</td><td><a href='deleteGroup.jsp?id="+var.getGroup_ID()+
+ 							"'>Supprimer</a></td><td><a href='GroupContact.jsp?id="+var.getGroup_ID()+"&name="+var.getGroupName()+"'+>Afficher le Groupe</a></td></tr>");
+ 				}
 			}			
 			catch(Exception e){
 				e.printStackTrace();

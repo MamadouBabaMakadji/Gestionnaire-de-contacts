@@ -13,12 +13,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import DAO.ContactDaoImpl;
+import DAO.IContactDao;
 import model.Adress;
 import model.Contact;
 import model.Group;
 import model.PhoneNumber;
-import service.ContactService;
-import service.IContactService;
 
 public class DAOSpringImplTest {
 
@@ -58,9 +57,11 @@ public class DAOSpringImplTest {
 		objects.add(phone2);
 		
 		// Test ajout contact
-		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		
 		try {
-			result = ContactDaoImpl.insertDBObjects(objects);
+			result = IContactDao.insertDBObjects(objects);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -87,11 +88,12 @@ public class DAOSpringImplTest {
 		Group group4 = new Group("DZ");
 
 		// Test add group
-		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
 		try {
 /*			result = ContactDaoImpl.insertDB(group1);
 			result = ContactDaoImpl.insertDB(group2);*/
-			result = ContactDaoImpl.insertDB(group4);
+			result = IContactDao.insertDB(group4);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,13 +111,13 @@ public class DAOSpringImplTest {
 	// ************************* Read ************************
 	
 	// Get a contact
-	@Ignore 
+	//@Ignore 
 	@Test
 	public void getContactTest() {
 		try {
-			ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
-			ContactService service = new ContactService();
-			Contact contact = service.getContact(1);
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			Contact contact = IContactDao.getContact(1);
 			//Contact contact = ContactDaoImpl.getContact2(2);
 
 			System.out.println("Contact : " + contact.toString());
@@ -139,8 +141,9 @@ public class DAOSpringImplTest {
 	public void getGroupTest() {
 		Group group = null;
 		try {
-			ContactDaoImpl dao = new ContactDaoImpl();
-			group = dao.getGroup(1);
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			group = IContactDao.getGroup(5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,8 +157,8 @@ public class DAOSpringImplTest {
 	public void getAllContactTest() {
 		try {
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-			IContactService IContactService = (service.IContactService) context.getBean("service");
-			List<Contact> contacts = IContactService.getAllContacts();
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			List<Contact> contacts = IContactDao.getAllContacts();
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString());
 				
@@ -174,13 +177,38 @@ public class DAOSpringImplTest {
 	}
 	
 	
+	//@Ignore
+	@Test
+	public void getAllContactWGroupsTest() {
+		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			Set<Contact> contacts = IContactDao.getAllContactsWGroups();
+			for(Contact contact : contacts) {
+				System.out.println("Contact : " + contact.toString());
+				
+				for(PhoneNumber phoneNumber : contact.getPhones()) {
+					System.out.println(phoneNumber.toString());
+				}
+				
+				for(Group group : contact.getGroups()) {
+					System.out.println(group.toString());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	// Get a contact by HQL
 	//@Ignore 
 	@Test
 	public void getAllContactsHQLTest() {
 		try {
-			ContactDaoImpl dao = new ContactDaoImpl();
-			Set<Contact> contacts = dao.getAllContactsLazy();
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			Set<Contact> contacts = IContactDao.getAllContactsLazy();
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString2());
 				
@@ -199,11 +227,12 @@ public class DAOSpringImplTest {
 	}
 
 	
-	@Ignore 
+	//@Ignore 
 	@Test
 	public void getAllGroupsTest() {
-		ContactDaoImpl dao = new ContactDaoImpl();
-		Set<Group> groups = dao.getAllGroups();
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		Set<Group> groups = IContactDao.getAllGroups();
 		for(Group group : groups){
 			System.out.println(group.toString());
 		}
@@ -211,14 +240,14 @@ public class DAOSpringImplTest {
 
 
 	// Get contact from an id of group
-	@Ignore
+	//@Ignore
 	@Test
 	public void getContactsFromIdGroupTest() {
-		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
-		Set<Contact> contacts = ContactDaoImpl.getContactsByGroupId(9);
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		Set<Contact> contacts = IContactDao.getContactsByGroupId(2);
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
-			
 			for(Group group : c.getGroups()) {
 				System.out.println(group.getGroupName());
 			}
@@ -227,25 +256,27 @@ public class DAOSpringImplTest {
 	
 	
 	// Test Search contacts
-	@Ignore 
+	//@Ignore 
 	@Test
 	public void searchContactsByNameTest(){
-		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
-		Set<Contact> contacts = ContactDaoImpl.searchContacts("Baba");
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		Set<Contact> contacts = IContactDao.searchContacts("Baba");
 		System.out.println("toto il va péter");
-		for(Contact c : contacts){
+		for(Contact c : contacts) {
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
 		}
 	}
 	
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void searchContactsByCountryTest(){
-		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
-		Set<Contact> contacts = ContactDaoImpl.searchContacts("France Mali");
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		Set<Contact> contacts = IContactDao.searchContacts("France Mali");
 		System.out.println("toto il va péter");
-		for(Contact c : contacts){
+		for(Contact c : contacts) {
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
 		}
 	}
@@ -253,7 +284,7 @@ public class DAOSpringImplTest {
 	
 	@Ignore 
 	@Test
-	public void searchContactsByCityTest(){
+	public void searchContactsByCityTest() {
 		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
 		Set<Contact> contacts = ContactDaoImpl.searchContacts("Auber Neuilly");
 		System.out.println("toto il va péter");
@@ -266,8 +297,9 @@ public class DAOSpringImplTest {
 	@Ignore
 	@Test
 	public void searchContactsByGroupNameTest(){
-		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
-		Set<Contact> contacts = ContactDaoImpl.searchContacts("Miage");
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		Set<Contact> contacts = IContactDao.searchContacts("Miage");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -310,8 +342,10 @@ public class DAOSpringImplTest {
 			contact.setGroups(groups);
 			
 			
-			ContactDaoImpl dao = new ContactDaoImpl();
-			dao.saveUpdate(contact);
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			
+			IContactDao.saveUpdate(contact);
 			
 			result = true;
 		} catch (Exception e) {
@@ -328,8 +362,10 @@ public class DAOSpringImplTest {
 		boolean result = false;
 		try {
 			Group group = new Group(2, "Miage", 11);
-			ContactDaoImpl dao = new ContactDaoImpl();
-			dao.update(group);
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			
+			IContactDao.update(group);
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -343,15 +379,18 @@ public class DAOSpringImplTest {
 	//@Ignore
 	@Test
 	public void deleteContactTest() {
-		ContactDaoImpl dao = new ContactDaoImpl();
-		dao.deleteContact(1);
+
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		IContactDao.deleteContact(1);
 	}
 	
 	//@Ignore
 	@Test
 	public void deleteGroupsTest() {
-		ContactDaoImpl dao = new ContactDaoImpl();
-		dao.deleteGroup(2);
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+		IContactDao.deleteGroup(2);
 	}
 
 }

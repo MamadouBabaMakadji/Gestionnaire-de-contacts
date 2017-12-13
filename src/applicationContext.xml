@@ -34,14 +34,15 @@
 				<prop key="hibernate.hbm2ddl.auto">create</prop>
 				<prop key="connection.pool_size">1</prop>
 				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-				<!-- <property name="cache.provider_class"> org.hibernate.cache.EhCacheProvider</property> -->
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+				<!-- <prop key="cache.provider_class"> org.hibernate.cache.EhCacheProvider</prop> -->
 				<prop key="cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 				<prop key="net.sf.ehcache.configurationResourceName">/ehcache.xml</prop>
 			</props>
 		</property>
 	</bean>
+
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">

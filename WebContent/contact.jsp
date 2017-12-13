@@ -50,6 +50,7 @@
 				<td><bean:message key="code_postal" /></td>
 				<td><bean:message key="pays" /></td>
 			</tr>
+			
 			<logic:iterate id="contact" name="listContacts">
 				<tr>
 					<td><bean:write name="contact" property="prenom" /></td>
@@ -59,7 +60,6 @@
 					<td><bean:write name="contact" property="adress.city" /></td>
 					<td><bean:write name="contact" property="adress.country" /></td>
 					<td><bean:write name="contact" property="adress.zip" /></td>
-					<!-- 					<td></td> -->
 				</tr>
 			</logic:iterate>
 		</table>

@@ -1,14 +1,18 @@
 package org.apache.struts.action;
 
 import java.util.List;
+import java.util.Set;
 
 import model.Contact;
+import model.Group;
 
-public class ViewContactForm extends ActionForm {
+public class ViewForm extends ActionForm {
 
 	private static final long serialVersionUID = 1L;
 
 	private List<Contact> listContacts;
+	private Set<Group> groups;
+	
 
 	public List<Contact> getListContacts() {
 		return listContacts;
@@ -18,4 +22,12 @@ public class ViewContactForm extends ActionForm {
 		this.listContacts = listContacts;
 	}
 
+	public Set<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set<Group> groups) {
+		this.groups = groups;
+	}
+	
 }

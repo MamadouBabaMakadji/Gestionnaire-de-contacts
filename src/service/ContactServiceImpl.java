@@ -25,19 +25,54 @@ public class ContactServiceImpl implements IContactService {
 		return cdao.insertDB(etp);
 	}
 
+	@Override
+	public boolean insertDBObjects(List<Object> objects) throws Exception {
+		return cdao.insertDBObjects(objects);
+	}
+
+	@Override
+	public boolean insertDB(Object object) throws Exception {
+		return false;
+	}
+	
+	@Override
 	public Contact getContact(long id) {
 		return cdao.getContact(id);
 	}
 
+	@Override
 	public List<Contact> getAllContacts() {
 		return cdao.getAllContacts();
 	}
+	
+	
+	@Override
+	public Set<Contact> getAllContactsLazy() {
+		return cdao.getAllContactsLazy();
+	}
 
-	public Set<Group> getGroups() {
+	@Override
+	public Set<Contact> getContactsByGroupId(long groupId) {
+		return cdao.getContactsByGroupId(groupId);
+	}
+	
+	@Override
+	public Group getGroup(long groupId) {
+		return cdao.getGroup(groupId);
+	}
+
+	@Override
+	public Set<Group> getAllGroups() {
 		return cdao.getAllGroups();
 	}
 
-	public Set<Contact> seachContacts(String keywords) {
+	@Override
+	public Set<Contact> getAllContactsWgroups() {
+		return cdao.getAllContactsWGroups();
+	}
+
+	@Override
+	public Set<Contact> searchContacts(String keywords) {
 		return cdao.searchContacts(keywords);
 	}
 
@@ -45,9 +80,19 @@ public class ContactServiceImpl implements IContactService {
 	public boolean saveUpdate(Contact contact) {
 		return cdao.saveUpdate(contact);
 	}
+	
+	@Override
+	public boolean update(Group group) {
+		return cdao.update(group);
+	}
 
 	@Override
 	public boolean deleteContact(long contact_ID) {
 		return cdao.deleteContact(contact_ID);
+	}
+	
+	@Override
+	public boolean deleteGroup(long groupId) {
+		return cdao.deleteGroup(groupId);
 	}
 }
