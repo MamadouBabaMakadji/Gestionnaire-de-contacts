@@ -30,6 +30,8 @@ public interface IContactDao {
 	public Set<Contact> searchContacts(String search);
 
 	public boolean saveUpdate(Contact contact);
+	
+	public boolean update(Group group);
 
 	public boolean deleteContact(long contact_ID);
 

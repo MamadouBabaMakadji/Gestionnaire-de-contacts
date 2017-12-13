@@ -9,15 +9,18 @@ import java.util.Set;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import DAO.ContactDAO;
+import DAO.ContactDaoImpl;
 import model.Adress;
 import model.Contact;
 import model.Group;
 import model.PhoneNumber;
 import service.ContactService;
+import service.IContactService;
 
-public class DAOTest {
+public class DAOSpringImplTest {
 
 	// ************************* Create ************************
 	// Add contact w multiples phones and w multiples groups
@@ -55,9 +58,9 @@ public class DAOTest {
 		objects.add(phone2);
 		
 		// Test ajout contact
-		ContactDAO contactDAO = new ContactDAO();
+		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
 		try {
-			result = contactDAO.insertDBObjects(objects);
+			result = ContactDaoImpl.insertDBObjects(objects);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,11 +87,11 @@ public class DAOTest {
 		Group group4 = new Group("DZ");
 
 		// Test add group
-		ContactDAO contactDAO = new ContactDAO();
+		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
 		try {
-/*			result = contactDAO.insertDB(group1);
-			result = contactDAO.insertDB(group2);*/
-			result = contactDAO.insertDB(group4);
+/*			result = ContactDaoImpl.insertDB(group1);
+			result = ContactDaoImpl.insertDB(group2);*/
+			result = ContactDaoImpl.insertDB(group4);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,10 +113,10 @@ public class DAOTest {
 	@Test
 	public void getContactTest() {
 		try {
-			ContactDAO contactDAO = new ContactDAO();
+			ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
 			ContactService service = new ContactService();
 			Contact contact = service.getContact(1);
-			//Contact contact = contactDAO.getContact2(2);
+			//Contact contact = ContactDaoImpl.getContact2(2);
 
 			System.out.println("Contact : " + contact.toString());
 			
@@ -131,12 +134,12 @@ public class DAOTest {
 	
 	
 	// Test for get a group by an id
-	@Ignore
+	//@Ignore
 	@Test
 	public void getGroupTest() {
 		Group group = null;
 		try {
-			ContactDAO dao = new ContactDAO();
+			ContactDaoImpl dao = new ContactDaoImpl();
 			group = dao.getGroup(1);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,8 +153,9 @@ public class DAOTest {
 	@Test
 	public void getAllContactTest() {
 		try {
-			ContactDAO dao = new ContactDAO();
-			Set<Contact> contacts = dao.getAllContacts();
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactService IContactService = (service.IContactService) context.getBean("service");
+			List<Contact> contacts = IContactService.getAllContacts();
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString());
 				
@@ -175,7 +179,7 @@ public class DAOTest {
 	@Test
 	public void getAllContactsHQLTest() {
 		try {
-			ContactDAO dao = new ContactDAO();
+			ContactDaoImpl dao = new ContactDaoImpl();
 			Set<Contact> contacts = dao.getAllContactsLazy();
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString2());
@@ -195,10 +199,10 @@ public class DAOTest {
 	}
 
 	
-	//@Ignore 
+	@Ignore 
 	@Test
 	public void getAllGroupsTest() {
-		ContactDAO dao = new ContactDAO();
+		ContactDaoImpl dao = new ContactDaoImpl();
 		Set<Group> groups = dao.getAllGroups();
 		for(Group group : groups){
 			System.out.println(group.toString());
@@ -210,8 +214,8 @@ public class DAOTest {
 	@Ignore
 	@Test
 	public void getContactsFromIdGroupTest() {
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.getContactsByGroupId(9);
+		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
+		Set<Contact> contacts = ContactDaoImpl.getContactsByGroupId(9);
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
 			
@@ -226,8 +230,8 @@ public class DAOTest {
 	@Ignore 
 	@Test
 	public void searchContactsByNameTest(){
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.searchContacts("Baba");
+		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
+		Set<Contact> contacts = ContactDaoImpl.searchContacts("Baba");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -238,8 +242,8 @@ public class DAOTest {
 	@Ignore
 	@Test
 	public void searchContactsByCountryTest(){
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.searchContacts("France Mali");
+		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
+		Set<Contact> contacts = ContactDaoImpl.searchContacts("France Mali");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -250,8 +254,8 @@ public class DAOTest {
 	@Ignore 
 	@Test
 	public void searchContactsByCityTest(){
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.searchContacts("Auber Neuilly");
+		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
+		Set<Contact> contacts = ContactDaoImpl.searchContacts("Auber Neuilly");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -262,8 +266,8 @@ public class DAOTest {
 	@Ignore
 	@Test
 	public void searchContactsByGroupNameTest(){
-		ContactDAO contactDAO = new ContactDAO();
-		Set<Contact> contacts = contactDAO.searchContacts("Miage");
+		ContactDaoImpl ContactDaoImpl = new ContactDaoImpl();
+		Set<Contact> contacts = ContactDaoImpl.searchContacts("Miage");
 		System.out.println("toto il va péter");
 		for(Contact c : contacts){
 			System.out.println("Id : " +c.getContact_ID()+ ", nom : " +c.getNom()+ ", prénom : " +c.getPrenom());
@@ -306,8 +310,8 @@ public class DAOTest {
 			contact.setGroups(groups);
 			
 			
-			ContactDAO dao = new ContactDAO();
-			dao.update(contact);
+			ContactDaoImpl dao = new ContactDaoImpl();
+			dao.saveUpdate(contact);
 			
 			result = true;
 		} catch (Exception e) {
@@ -324,7 +328,7 @@ public class DAOTest {
 		boolean result = false;
 		try {
 			Group group = new Group(2, "Miage", 11);
-			ContactDAO dao = new ContactDAO();
+			ContactDaoImpl dao = new ContactDaoImpl();
 			dao.update(group);
 			result = true;
 		} catch (Exception e) {
@@ -339,14 +343,14 @@ public class DAOTest {
 	//@Ignore
 	@Test
 	public void deleteContactTest() {
-		ContactDAO dao = new ContactDAO();
+		ContactDaoImpl dao = new ContactDaoImpl();
 		dao.deleteContact(1);
 	}
 	
 	//@Ignore
 	@Test
 	public void deleteGroupsTest() {
-		ContactDAO dao = new ContactDAO();
+		ContactDaoImpl dao = new ContactDaoImpl();
 		dao.deleteGroup(2);
 	}
 
