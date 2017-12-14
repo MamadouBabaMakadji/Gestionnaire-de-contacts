@@ -14,8 +14,11 @@
 		<form-bean name="SearchForm" type="org.apache.struts.action.SearchForm" />
 		<form-bean name="GroupContactForm" type="org.apache.struts.action.GroupContactForm" />
 		<form-bean name="ViewContactForm" type="org.apache.struts.action.ViewForm" />
-		<form-bean name="ViewEditContactForm" type="org.apache.struts.action.ViewEditContactForm" />
-		<form-bean name="ViewSuppContactForm" type="org.apache.struts.action.ViewSuppContactForm" />
+		<form-bean name="ViewGroupForm" type="org.apache.struts.action.ViewForm" />
+		<form-bean name="ViewEditContactForm"
+			type="org.apache.struts.action.ViewEditContactForm" />
+		<form-bean name="ViewSuppContactForm"
+			type="org.apache.struts.action.ViewSuppContactForm" />
 	</form-beans>
 
 
@@ -85,14 +88,21 @@
 			name="ViewContactForm" input="/Main.jsp" scope="request" validate="true">
 			<forward name="view" path="/contact.jsp"></forward>
 		</action>
-		
+
+		<action path="/ViewGroupForm" type="org.apache.struts.action.ActionViewGroups"
+			name="ViewGroupForm" input="/Main.jsp" scope="request" validate="true">
+			<forward name="view" path="/MainGroupContact.jsp"></forward>
+		</action>
+
 		<action path="/ViewEditContactForm" type="org.apache.struts.action.ActionViewEditContact"
-			name="ViewEditContactForm" input="/Main.jsp" scope="request" validate="true">
+			name="ViewEditContactForm" input="/Main.jsp" scope="request"
+			validate="true">
 			<forward name="viewEdit" path="/FormEditContact.jsp"></forward>
 		</action>
-		
+
 		<action path="/ViewSuppContactForm" type="org.apache.struts.action.ActionViewSuppContact"
-			name="ViewSuppContactForm" input="/Main.jsp" scope="request" validate="true">
+			name="ViewSuppContactForm" input="/Main.jsp" scope="request"
+			validate="true">
 			<forward name="viewSupp" path="/FormSuppContact.jsp"></forward>
 		</action>
 

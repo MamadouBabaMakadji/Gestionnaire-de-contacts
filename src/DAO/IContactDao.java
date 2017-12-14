@@ -20,19 +20,26 @@ public interface IContactDao {
 	public Contact getContactHQL(long contactId);
 
 	public List<Contact> getAllContacts();
+	
+	public Set<Contact> getAllContactsWGroups();
+	
+	public Set<Contact> getContactsByGroupId(long groupId);
 
 	public Set<Group> getAllGroups();
 
 	public Group getGroup(long groupId);
 
-	public Set<Contact> getContactsByGroupId(long groupId);
-
 	public Set<Contact> searchContacts(String search);
 
 	public boolean saveUpdate(Contact contact);
+	
+	public boolean update(Group group);
 
 	public boolean deleteContact(long contact_ID);
 
 	public boolean deleteGroup(long group_ID);
+
+	public Set<Contact> getAllContactsLazy();
+
 
 }

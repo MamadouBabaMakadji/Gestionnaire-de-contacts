@@ -29,6 +29,18 @@ public class Group {
 		this.groupName = groupName;
 		this.version = version;
 	}
+	
+	public Group(long group_ID, String groupName, int version, Set<Contact> contacts) {
+		this.group_ID = group_ID;
+		this.groupName = groupName;
+		this.version = version;
+		this.contacts.addAll(contacts);
+	}
+
+	public Group(Group group) {
+		this(group.group_ID, group.groupName, group.version);
+	}
+	
 
 	public long getGroup_ID() {
 		return group_ID;
@@ -51,7 +63,7 @@ public class Group {
 	}
 
 	public void setContacts(Set<Contact> contacts) {
-		this.contacts = contacts;
+		this.contacts.addAll(contacts);
 	}
 	
 	public int getVersion() {

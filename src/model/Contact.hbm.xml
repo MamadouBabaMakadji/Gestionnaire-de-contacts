@@ -9,7 +9,6 @@
 			<generator class="native" />
 		</id>
 		
-		
 		<discriminator column="entreprise" type="string"></discriminator>
 		<version name="version" access="field" column="version"  />
 
