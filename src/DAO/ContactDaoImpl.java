@@ -82,20 +82,15 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	 * @param contact_ID
 	 * @return an object Contact
 	 */
+	@Transactional
 	public Contact getContact(long contact_ID) {
 		Contact contact = null;
-		System.out.println("JE suis bien dedans");
 		try {
 			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Contact.class)
 					.add(Restrictions.like("contact_ID", contact_ID));
-			// Session session =
-			// HibernateUtil.getSessionFactory().openSession();
-			// contact = new Contact((Contact)
-			// session.createCriteria(Contact.class)
-			// .add(Restrictions.like("contact_ID",
-			// contact_ID)).uniqueResult());
-			// session.close();
-			contact = (Contact) getHibernateTemplate().findByCriteria(detachedCriteria);
+			@SuppressWarnings("unchecked")
+			List<Contact> list = (List<Contact>) getHibernateTemplate().findByCriteria(detachedCriteria);
+			contact = list.get(0);
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -118,7 +113,7 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 			// Query query = session.createQuery(sb.toString());
 
 			@SuppressWarnings("unchecked")
-			List<Contact> list = (List<Contact>) getHibernateTemplate().find(sb.toString()).iterator();
+			List<Contact> list = (List<Contact>) getHibernateTemplate().find(sb.toString());
 			contact = list.get(1);
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -299,14 +294,9 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	public boolean deleteContact(long contact_ID) {
 		boolean result = false;
 		try {
-			// Session session =
-			// HibernateUtil.getSessionFactory().openSession();
-			// session.beginTransaction();
 			Contact contact = (Contact) getHibernateTemplate().load(Contact.class, contact_ID);
 			getHibernateTemplate().delete(contact);
-			// session.getTransaction().commit();
 			result = true;
-			// session.close();
 		} catch (HibernateException e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -316,7 +306,6 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 			result = false;
 		}
 
-		System.out.println("Result = " + result);
 		return result;
 	}
 

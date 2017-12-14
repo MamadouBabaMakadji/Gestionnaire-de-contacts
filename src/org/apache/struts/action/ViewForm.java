@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.Contact;
 
-public class ViewContactForm extends ActionForm {
+public class ViewForm extends ActionForm {
 
 	private static final long serialVersionUID = 1L;
 

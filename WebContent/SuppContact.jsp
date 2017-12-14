@@ -7,19 +7,22 @@
 <%@page import="DAO.*"%>
 <%@page import="model.*"%>
 <%@page import="java.util.*"%>
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<title><bean:message key="modifier.contact" /></title>
+<title><bean:message key="main.supprimer.contact" /></title>
 </head>
 <body>
 
 	<ul class="nav nav-pills">
 		<li role="presentation" class="active"><a href="Main.jsp"><bean:message
 					key="main.page.accueil" /></a></li>
-		<li role="presentation"><a href="contact.jsp"><bean:message
+		<li role="presentation"><a href="ViewContactForm.do"><bean:message
 					key="main.contacts" /></a></li>
 		<li role="presentation"><a href="MainGroupContact.jsp"><bean:message
 					key="main.groupes.contacts" /></a></li>
@@ -30,7 +33,8 @@
 
 	<%
 		String id = request.getParameter("id");
-		IContactService service = new ContactServiceImpl();
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactService service = (service.IContactService) context.getBean("service");
 		long contact_ID = Long.parseLong(id);
 		Contact contact = service.getContact(contact_ID);
 		Adress adress = contact.getAdress();
@@ -44,8 +48,25 @@
 		String ville = adress.getCity();
 		String code_postal = adress.getZip();
 		String pays = adress.getCountry();
-		PhoneNumber phone = iterPhone.next();
-		String tel = phone.getPhoneNumber();
+		int i = 0;
+		String tel;
+		PhoneNumber phone;
+		
+		while(iterPhone.hasNext()){
+			if(i==0){
+				// first number
+				phone = iterPhone.next();
+				tel = phone.getPhoneNumber();
+				request.setAttribute("tel", tel);
+			}
+			if(i==1){
+				// Second Number
+				phone = iterPhone.next();
+				tel = phone.getPhoneNumber();
+				request.setAttribute("tel2", tel);
+			}
+			i++;
+		}
 
 		if (!groups.isEmpty()) {
 			Iterator<Group> iterGroup = groups.iterator();
@@ -54,20 +75,13 @@
 			request.setAttribute("group", group);
 		}
 
-		if (iterPhone.hasNext()) {
-			PhoneNumber phone2 = iterPhone.next();
-			String tel2 = phone2.getPhoneNumber();
-			request.setAttribute("tel2", tel2);
-		}
-
 		request.setAttribute("nom", nom);
 		request.setAttribute("prenom", prenom);
 		request.setAttribute("mail", mail);
-		request.setAttribute("adress", adress);
+		request.setAttribute("adress", street);
 		request.setAttribute("ville", ville);
 		request.setAttribute("code_postal", code_postal);
 		request.setAttribute("pays", pays);
-		request.setAttribute("tel", tel);
 		request.setAttribute("id_c", contact_ID);
 	%>
 	<h2>

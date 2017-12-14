@@ -59,7 +59,7 @@ input {
 				<td><bean:write name="contact" property="mail" /></td>
 				<td><a
 					href="EditContact.jsp?id=<bean:write name="contact" property="contact_ID" />">
-						<bean:message key="modifier" /> >
+						<bean:message key="modifier" />
 				</a></td>
 			</tr>
 		</logic:iterate>

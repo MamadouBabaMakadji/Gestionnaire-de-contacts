@@ -27,9 +27,9 @@ public class ActionNewContact extends Action {
 		Adress adress = new Adress(ncf.getAdresse(), ncf.getVille(), ncf.getCode_postal(), ncf.getPays());
 		PhoneNumber phone = new PhoneNumber(ncf.getTel());
 		Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
-		phones.add(phone);
 		Set<Group> groups = new HashSet<Group>();
 		if ("Personne".equals(ncf.getTypeContact())) {
+			phones.add(phone);
 			Contact contact = new Contact(ncf.getNom(), ncf.getPrenom(), ncf.getMail());
 			Set<Contact> contacts = new HashSet<Contact>();
 			// PHONE
@@ -59,12 +59,17 @@ public class ActionNewContact extends Action {
 			}
 		} else {
 			// ENTREPRISE
+			Entreprise etp = new Entreprise(ncf.getNom(), ncf.getMail(), adress, phones, ncf.getSiretEtp());
+			phone.setContact(etp);
+			phones.add(phone);
 			if (!"".equals(ncf.getTel2())) {
 				PhoneNumber phone2 = new PhoneNumber();
 				phone2.setPhoneNumber(ncf.getTel2());
+				phone2.setContact(etp);
 				phones.add(phone2);
+
 			}
-			Entreprise etp = new Entreprise(ncf.getNom(), ncf.getMail(), adress, phones, ncf.getSiretEtp());
+			etp.setPhones(phones);
 			if (ncf.getGroup() != "" && ncf.getGroup() != null) {
 				// GROUP
 				Group group = new Group(ncf.getGroup());

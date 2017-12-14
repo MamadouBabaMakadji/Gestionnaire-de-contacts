@@ -7,6 +7,7 @@
 <%@page import="DAO.*"%>
 <%@page import="service.*"%>
 <%@page import="org.hibernate.Session"%>
+<%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 
 <!DOCTYPE html>
 <html>
@@ -29,7 +30,7 @@ input {
 	<ul class="nav nav-pills">
 		<li role="presentation" class="active"><a href="Main.jsp"><bean:message
 					key="main.page.accueil" /></a></li>
-		<li role="presentation"><a href="contact.jsp"><bean:message
+		<li role="presentation"><a href="ViewContactForm.do"><bean:message
 					key="main.contacts" /></a></li>
 		<li role="presentation"><a href="MainGroupContact.jsp"><bean:message
 					key="main.groupes.contacts" /></a></li>
@@ -50,35 +51,21 @@ input {
 			<td><bean:message key="nom" /></td>
 			<td><bean:message key="prenom" /></td>
 			<td><bean:message key="mail" /></td>
-			<td><bean:message key="tel" /></td>
+			<%-- 	<td><bean:message key="tel" /></td> --%>
 			<td><bean:message key="action" /></td>
 		</tr>
-		<%
-// 			try {
-// 				IContactService service = new ContactServiceImpl();
-// 				Set<Contact> contacts = new HashSet<Contact>();
-// 				contacts = service.getAllContacts();
-// 				Iterator<Contact> iter = contacts.iterator();
-// 				while (iter.hasNext()) {
-// 					Contact contact = iter.next();
-// 					Adress adress = contact.getAdress();
-// 					Set<PhoneNumber> phones = contact.getPhones();
-// 					out.print("<tr><td>" + contact.getNom() + "</td><td>" + contact.getPrenom() + "</td><td>"
-// 							+ contact.getMail() + "</td><td>");
-// 					Object[] phoneObjects = phones.toArray();
-// 					for (int i = 0; i < phoneObjects.length; i++) {
-// 						PhoneNumber phone = (PhoneNumber) phoneObjects[i];
-// 						out.print("\n" + phone.getPhoneNumber() + "\n");
-// 					}
-// 					out.print("</td><td><a href='SuppContact.jsp?id=" + contact.getContact_ID()
-// 							+ "'>Supprimer</a></td></tr>");
-// 				}
-// 			} catch (Exception e) {
-// 				throw new Exception(e.getMessage());
-// 			}
-		%>
-
-
+		<logic:iterate id="contact" name="listSuppContacts">
+			<tr>
+				<td><bean:write name="contact" property="prenom" /></td>
+				<td><bean:write name="contact" property="nom" /></td>
+				<td><bean:write name="contact" property="mail" /></td>
+				<td><bean:write name="contact" property="mail" /></td>
+				<td><a
+					href="SuppContact.jsp?id=<bean:write name="contact" property="contact_ID" />">
+						<bean:message key="supprimer" />
+				</a></td>
+			</tr>
+		</logic:iterate>
 	</table>
 
 

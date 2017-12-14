@@ -25,7 +25,7 @@ public class ActionEditContact extends Action {
 		if (ncf.getNom() != null && ncf.getPrenom() != null && ncf.getMail().length() > 5) {
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 			IContactService IContactService = (service.IContactService) context.getBean("service");
-			Contact contact = IContactService.getContact((long) ncf.getContactId());
+			Contact contact = IContactService.getContact(ncf.getContactId());
 			Adress adress = contact.getAdress();
 			Set<PhoneNumber> phones = contact.getPhones();
 			Iterator<PhoneNumber> iter = phones.iterator();

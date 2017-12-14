@@ -25,7 +25,7 @@
 	<ul class="nav nav-pills">
 		<li role="presentation" class="active"><a href="Main.jsp"><bean:message
 					key="main.page.accueil" /></a></li>
-		<li role="presentation"><a href="contact.jsp"><bean:message
+		<li role="presentation"><a href="ViewContactForm.do"><bean:message
 					key="main.contacts" /></a></li>
 		<li role="presentation"><a href="MainGroupContact.jsp"><bean:message
 					key="main.groupes.contacts" /></a></li>

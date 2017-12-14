@@ -14,11 +14,14 @@
 <title>Résultat de la recherche</title>
 </head>
 <body>
-<ul class="nav nav-pills">
-  <li role="presentation" class="active"><a href="Main.jsp"><bean:message key="main.page.accueil" /></a></li>
-  <li role="presentation"><a href="FormEditContact.jsp"><bean:message key="main.contacts" /></a></li>
-  <li role="presentation"><a href="MainGroupContact.jsp"><bean:message key="main.groupes.contacts" /></a></li>
-</ul>
+	<ul class="nav nav-pills">
+		<li role="presentation" class="active"><a href="Main.jsp"><bean:message
+					key="main.page.accueil" /></a></li>
+		<li role="presentation"><a href="ViewContactForm.do"><bean:message
+					key="main.contacts" /></a></li>
+		<li role="presentation"><a href="MainGroupContact.jsp"><bean:message
+					key="main.groupes.contacts" /></a></li>
+	</ul>
 <br>
 	<div class="w3-container w3-teal">
 		<h2>Resultat de la recherche</h2>

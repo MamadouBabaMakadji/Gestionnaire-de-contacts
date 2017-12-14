@@ -12,21 +12,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import model.Contact;
 import service.IContactService;
 
-public class ActionViewContacts extends Action {
+public class ActionViewSuppContact extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ViewForm view = (ViewForm) form;
+		ViewSuppContactForm view = (ViewSuppContactForm) form;
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService service = (IContactService) context.getBean("service");
-		List<Contact> listContacts = new ArrayList<Contact>();
-		listContacts = service.getAllContacts();
-		view.setListContacts(listContacts);
-		request.setAttribute("listContacts", listContacts);
+		List<Contact> listSuppContacts = new ArrayList<Contact>();
+		listSuppContacts = service.getAllContacts();
+		view.setListContacts(listSuppContacts);
+		request.setAttribute("listSuppContacts", listSuppContacts);
 
-		return mapping.findForward("view");
+		return mapping.findForward("viewSupp");
 	}
-
+	
+	
 }

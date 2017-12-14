@@ -8,6 +8,8 @@
 <%@ page import="service.*"%>
 <%@ page import="model.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,7 @@
 	<ul class="nav nav-pills">
 		<li role="presentation" class="active"><a href="Main.jsp"><bean:message
 					key="main.page.accueil" /></a></li>
-		<li role="presentation"><a href="FormEditContact.jsp"><bean:message
+		<li role="presentation"><a href="ViewContactForm.do"><bean:message
 					key="main.contacts" /></a></li>
 		<li role="presentation"><a href="MainGroupContact.jsp"><bean:message
 					key="main.groupes.contacts" /></a></li>
@@ -29,18 +31,13 @@
 	<br />
 	<%
 		String id = request.getParameter("id");
-		IContactService service = new ContactServiceImpl();
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactService service = (service.IContactService) context.getBean("service");
 		long contact_ID = Long.parseLong(id);
-		
-		System.out.println("Id contact = " +contact_ID);
-		
 		Contact contact = service.getContact(contact_ID);
-		System.out.println(contact.toString());
-		
 		Adress adress = contact.getAdress();
 		Set<PhoneNumber> phones = contact.getPhones();
 		Set<Group> groups = contact.getGroups();
-		
 		int versionContact		= contact.getVersion();
 		System.out.println("Version contact = " +contact.getVersion());
 		
@@ -121,15 +118,15 @@
 			</tr>
 			
 			
-			<% int g=0; request.setAttribute("g", g); %> 
-			<logic:iterate name="groups" id="group">
-				<% if ((g%2) == 0){out.print("<tr>");} %>	
-						<td><bean:message key="group" /></td>
-						<td><br/><html:text property="groupsName" value="${group.getGroupName()}"/><br/><br/></td>
-						<html:hidden property="groupsId" value="${group.getGroup_ID()}"/>
-						<html:hidden property="groupsVersion" value="${group.getVersion()}"/>
-				<% if ((g%2) == 1 ){out.print("</tr>");} g++;%>
-			</logic:iterate>
+<%-- 			<% int g=0; request.setAttribute("g", g); %>  --%>
+<%-- 			<logic:iterate name="groups" id="group"> --%>
+<%-- 				<% if ((g%2) == 0){out.print("<tr>");} %>	 --%>
+<%-- 						<td><bean:message key="group" /></td> --%>
+<%-- 						<td><br/><html:text property="groupsName" value="${group.getGroupName()}"/><br/><br/></td> --%>
+<%-- 						<html:hidden property="groupsId" value="${group.getGroup_ID()}"/> --%>
+<%-- 						<html:hidden property="groupsVersion" value="${group.getVersion()}"/> --%>
+<%-- 				<% if ((g%2) == 1 ){out.print("</tr>");} g++;%> --%>
+<%-- 			</logic:iterate> --%>
 			
 			<tr>
 				<td></td>

@@ -13,16 +13,12 @@ public class ActionSuppContact extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		SuppContactForm ncf = (SuppContactForm) form;
-		if (ncf.getNom() != null && ncf.getPrenom() != null && ncf.getMail().length() > 5) {
-			long contact_ID = (long) ncf.getIdentifiant();
-			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-			IContactService IContactService = (service.IContactService) context.getBean("service");
-			if (IContactService.deleteContact(contact_ID))
-				return mapping.findForward("SuppOK");
-			return mapping.findForward("EchecSupp");
-		} else {
-			return mapping.findForward("EchecSupp");
-		}
+		long contact_ID = ncf.getIdentifiant();
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactService IContactService = (service.IContactService) context.getBean("service");
+		if (IContactService.deleteContact(contact_ID))
+			return mapping.findForward("SuppOK");
+		return mapping.findForward("EchecSupp");
 	}
 
 }

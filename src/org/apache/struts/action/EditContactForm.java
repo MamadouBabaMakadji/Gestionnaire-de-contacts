@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public class EditContactForm extends ActionForm {
 
 	private static final long serialVersionUID = 1L;
-	private int contactId;
+	private long contactId;
 	private int versionContact;
 	private String nom;
 	private String prenom;
@@ -35,8 +35,27 @@ public class EditContactForm extends ActionForm {
 		return serialVersionUID;
 	}
 	
+	
 
-	public int getContactId() {
+	public void setContactId(long contactId) {
+		this.contactId = contactId;
+	}
+
+
+
+	public void setPhonesId(List<Long> phonesId) {
+		this.phonesId = phonesId;
+	}
+
+
+
+	public void setPhonesNumber(List<String> phonesNumber) {
+		this.phonesNumber = phonesNumber;
+	}
+
+
+
+	public long getContactId() {
 		return contactId;
 	}
 
@@ -165,30 +184,30 @@ public class EditContactForm extends ActionForm {
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		ActionErrors errors = new ActionErrors();
 		System.out.println("Passage EditActionForm");
-		System.out.println("Version contact = " +versionContact);
-		
-		System.out.println("Size phonesId = " +phonesId.size());
+		System.out.println("Version contact = " + versionContact);
+
+		System.out.println("Size phonesId = " + phonesId.size());
 		for (long id : phonesId) {
-			System.out.println("Tel Id = " +id);
+			System.out.println("Tel Id = " + id);
 		}
-		
+
 		if (nom == null || nom.length() < 1) {
 			errors.add("nom", new ActionMessage("erreur.nom"));
 		}
-		if (prenom == null || prenom.length() < 1) {
-			errors.add("prenom", new ActionMessage("erreur.prenom"));
-		}
+
+		// if (prenom == null || prenom.length() < 1) {
+		// errors.add("prenom", new ActionMessage("erreur.prenom"));
+		// }
 
 		if (!mail.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$")) {
 			errors.add("mail", new ActionMessage("erreur.mail"));
 		}
-		
-/*		for (String tel : phonesNumber) {
-			if (tel.length() != 10) {
-				errors.add("tel", new ActionMessage("erreur.tel"));
-			}
-		}*/
-		
+
+		/*
+		 * for (String tel : phonesNumber) { if (tel.length() != 10) {
+		 * errors.add("tel", new ActionMessage("erreur.tel")); } }
+		 */
+
 		if (code_postal.length() != 5) {
 			errors.add("code_postal", new ActionMessage("erreur.code_postal"));
 		}

@@ -26,7 +26,7 @@
 			src="images/newContact.png" /> <bean:message
 				key="main.nouveau.contact" /></a> <a href="ViewEditContactForm.do"
 			class="list-group-item"><img src="images/edit-contact.png" /> <bean:message
-				key="modifier.contact" /></a> <a href="FormSuppContact.jsp"
+				key="modifier.contact" /></a> <a href="ViewSuppContactForm.do"
 			class="list-group-item"><img src="images/delete.png" /> <bean:message
 				key="main.supprimer.contact" /></a> <a href="#" class="list-group-item"><img
 			src="images/chercher-contact.png" /> <bean:message

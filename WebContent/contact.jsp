@@ -57,8 +57,8 @@
 					<td><bean:write name="contact" property="mail" /></td>
 					<td><bean:write name="contact" property="adress.street" /></td>
 					<td><bean:write name="contact" property="adress.city" /></td>
-					<td><bean:write name="contact" property="adress.country" /></td>
 					<td><bean:write name="contact" property="adress.zip" /></td>
+					<td><bean:write name="contact" property="adress.country" /></td>
 					<!-- 					<td></td> -->
 				</tr>
 			</logic:iterate>
