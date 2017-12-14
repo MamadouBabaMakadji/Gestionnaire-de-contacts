@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Set"%>
-<%@page import="model.*"%>
-<%@page import="service.*"%>
-<%@page import="DAO.*"%>
+<%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Set"%>
+<%@ page import="model.*"%>
+<%@ page import="service.*"%>
+<%@ page import="DAO.*"%>
 
 <!DOCTYPE html>
 <html>
@@ -39,26 +39,34 @@
 		</div>
 		<table class="w3-table w3-bordered w3-red w3-card-4 w3-hover-classes">
 				<tr class="w3-dark-grey">
-				<td><bean:message key="nom"/></td>
-				<td><bean:message key="action"/></td>
-				<td></td>
+					<td><bean:message key="nom"/></td>
+					<%-- <td><bean:message key="action"/></td> --%>
+					<td></td>
 				</tr>
-				<%@page import="java.sql.*"%>
-		<%
-			try
-			{	
-				IContactService cs = new ContactServiceImpl();
-				Set<Group> gp = cs.getAllGroups();
- 				for(Group var : gp)
- 				{
- 					out.print("<tr><td>"+var.getGroupName()+"</td><td><a href='deleteGroup.jsp?id="+var.getGroup_ID()+
- 							"'>Supprimer</a></td><td><a href='GroupContact.jsp?id="+var.getGroup_ID()+"&name="+var.getGroupName()+"'+>Afficher le Groupe</a></td></tr>");
- 				}
-			}			
-			catch(Exception e){
-				e.printStackTrace();
-			}			
-		%>
+				
+				<logic:iterate id="group" name="listGroups">
+					<tr>
+						<td><bean:write name="group" property="groupName"/></td>
+					</tr>
+				</logic:iterate>
+				
+<%-- 				
+				<%
+					try
+					{	
+						IContactService cs = new ContactServiceImpl();
+						Set<Group> gp = cs.getAllGroups();
+		 				for(Group var : gp)
+		 				{
+		 					out.print("<tr><td>"+var.getGroupName()+"</td><td><a href='deleteGroup.jsp?id="+var.getGroup_ID()+
+		 							"'>Supprimer</a></td><td><a href='GroupContact.jsp?id="+var.getGroup_ID()+"&name="+var.getGroupName()+"'+>Afficher le Groupe</a></td></tr>");
+		 				}
+					}		
+					catch(Exception e){
+						e.printStackTrace();
+					}			
+				%> 
+--%>
 				
 				
 		</table>

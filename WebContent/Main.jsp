@@ -17,7 +17,7 @@
 					key="main.page.accueil" /></a></li>
 		<li role="presentation"><a href="ViewContactForm.do"><bean:message
 					key="main.contacts" /></a></li>
-		<li role="presentation"><a href="MainGroupContact.jsp"><bean:message
+		<li role="presentation"><a href="ViewGroupForm.do"><bean:message
 					key="main.groupes.contacts" /></a></li>
 	</ul>
 	<a><img src="images/contact.jpg" /></a>
