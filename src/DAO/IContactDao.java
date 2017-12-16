@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import model.Contact;
 import model.Group;
 
@@ -32,6 +34,9 @@ public interface IContactDao {
 	public Set<Contact> searchContacts(String search);
 
 	public boolean saveUpdate(Contact contact);
+
+	@Transactional(readOnly = false)
+	public boolean update(Contact contact);
 	
 	public boolean update(Group group);
 

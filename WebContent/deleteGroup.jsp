@@ -22,43 +22,8 @@
 	<br />
 	<br />
 	<br />
-	<%@page import="java.sql.*"%>
 	<%
 		String id = request.getParameter("id");
-
-		String driver = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://localhost/contact_db";
-		String login = "root";
-		String mdp = "root";
-		String requete = "delete from contact_group where id='" + id + "'";
-
-		//System.out.println(requete);
-
-		Statement stmt = null;
-		Connection connect = null;
-
-		try {
-			Class.forName(driver);
-			connect = DriverManager.getConnection(url, login, mdp);
-			stmt = connect.createStatement();
-			stmt.executeUpdate(requete); // Exécute la requête
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		} finally {
-			try {
-
-				if (stmt != null) {
-					stmt.close();
-				}
-				if (connect != null) {
-					connect.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
 	%>
 	<p class="bg-success">
 		<bean:message key="supp.group" />
