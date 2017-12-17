@@ -1,3 +1,14 @@
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page import="org.hibernate.HibernateException"%>
+<%@page import="java.util.*"%>
+<%@page import="model.*"%>
+<%@page import="service.*"%>
+<%@page import="DAO.*"%>
+<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
+<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
+<%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -123,9 +134,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu" data-widget="tree">
           <li class="header">Menu</li>
           <!-- Optionally, you can add icons to the links -->
-          <li><a href="main.html"><i class="fa fa-home"></i> <span>Home</span></a></li>
-          <li class="active"><a href="contacts.html"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-          <li><a href="groups.html"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
+          <li class="active"><a href="#"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
+          <li><a href="groups2.jsp"><i class="fa fa-group"></i> <span>Groups</span></a></li>
           <li><a href="contracts.html"><i class="fa fa-folder"></i> <span>Contracts</span></a></li>
       </ul>
 
@@ -159,39 +170,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>Name</th>
                       <th>Last Name</th>
                       <th>Mail</th>
+                      <th>Street</th>
                       <th>City</th>
-                      <th>Reason</th>
+                      <th>Country</th>
                     </tr>
-                    <tr>
-                      <td>183</td>
-                      <td>John Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="label label-success">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                      <td>Afficher</td>
-                    </tr>
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="label label-warning">Pending</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                      <td>Afficher</td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="label label-primary">Approved</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="label label-danger">Denied</span></td>
-                      <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                    </tr>
+                    
+					<logic:iterate id="contact" name="listContacts">
+						<tr>
+							<td><bean:write name="contact" property="prenom" /></td>
+							<td><bean:write name="contact" property="nom" /></td>
+							<td><bean:write name="contact" property="mail" /></td>
+							<td><bean:write name="contact" property="adress.street" /></td>
+							<td><bean:write name="contact" property="adress.city" /></td>
+							<td><bean:write name="contact" property="adress.country" /></td>
+							<td><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">See</a></td>
+							<td><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">Delete</a></td>
+						</tr>
+					</logic:iterate>
+					
                   </table>
                 </div>
                 <!-- /.box-body -->

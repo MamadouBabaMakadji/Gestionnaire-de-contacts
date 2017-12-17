@@ -28,10 +28,6 @@
 	</ul>
 	<br>
 	<div class="w3-container w3-teal">
-		<%
-			String var = request.getParameter("name");
-			request.setAttribute("var", var);
-		%>
 		<h2>
 			<center>
 				<bean:message key="MesContacts" />
