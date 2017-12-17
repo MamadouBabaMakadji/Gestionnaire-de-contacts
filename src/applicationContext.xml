@@ -31,11 +31,11 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="connection.pool_size">1</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
-				<!-- <prop key="cache.provider_class"> org.hibernate.cache.EhCacheProvider</prop> -->
+			<!-- 	<prop key="cache.provider_class"> org.hibernate.cache.EhCacheProvider</prop> -->
 				<prop key="cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 				<prop key="net.sf.ehcache.configurationResourceName">/ehcache.xml</prop>
@@ -43,7 +43,12 @@
 		</property>
 	</bean>
 
+	<bean id="template" class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory" ref="mySessionFactory"></property>
+<!-- 		<property name="checkWriteOperations" value="false"></property> -->
+	</bean>
 
+	<tx:annotation-driven/>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="mySessionFactory" />
@@ -52,19 +57,24 @@
 
 	<tx:advice id="txAdvice">
 		<tx:attributes>
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="sav*" propagation="REQUIRED" />
-			<tx:method name="find*" read-only="true" />
-			<tx:method name="*" propagation="REQUIRED" />
+			<tx:method name="get*" read-only="false" />
+			<tx:method name="find*" read-only="false" />
+			<tx:method name="generate*" read-only="false" />
+			<tx:method name="sav*" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="add*" read-only="false" />
+			<tx:method name="create*" read-only="false" />
+			<tx:method name="update" read-only="false" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
-	
+
 	<aop:config>
 		<aop:advisor pointcut="execution(* service.ContactServiceImpl.*(..))"
 			advice-ref="txAdvice" />
 	</aop:config>
 
-	<bean name="dao" class="DAO.ContactDaoImpl">
+	<bean id="dao" name="dao" class="DAO.ContactDaoImpl">
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
 	<bean name="service" class="service.ContactServiceImpl">

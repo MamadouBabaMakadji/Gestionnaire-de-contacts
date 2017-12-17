@@ -35,7 +35,6 @@ public interface IContactDao {
 
 	public boolean saveUpdate(Contact contact);
 
-	@Transactional(readOnly = false)
 	public boolean update(Contact contact);
 	
 	public boolean update(Group group);

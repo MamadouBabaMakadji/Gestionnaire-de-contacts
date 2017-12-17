@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import DAO.ContactDaoImpl;
 import DAO.IContactDao;
@@ -28,14 +29,14 @@ public class DAOSpringImplTest {
 	public void insertDBContactWPG() {
 		boolean result = false;
 
-		Contact contact = new Contact("toto", "baba", "mbm@hb.net");
+		Contact contact = new Contact("toto", "stMichel", "mbm@hb.net");
 		Adress adress = new Adress("80 rue mbm", "Neuilly", "55121", "Mali");
 		
-		PhoneNumber phone1 = new PhoneNumber("7555550202");
-		PhoneNumber phone2 = new PhoneNumber("0526894849");
+		PhoneNumber phone1 = new PhoneNumber("0404040404");
+		PhoneNumber phone2 = new PhoneNumber("0505050505");
 		
-		Group group1 = new Group(1, "Miage", 1);
-		Group group2 = new Group(2, "Paris X", 1);
+		Group group1 = new Group(5, "Info", 3);
+		Group group2 = new Group(4, "Miage", 4);
 
 		// Contact
 		contact.setAdress(adress);
@@ -322,9 +323,9 @@ public class DAOSpringImplTest {
 			PhoneNumber phone1 = new PhoneNumber(3, "0202020202", contact);
 /*			PhoneNumber phone2 = new PhoneNumber(4, "0303030303", contact);*/
 			
-			Group group1 = new Group(4, "Miage", 3);
-/*			Group group2 = new Group(3, "Paris X", 2);
-			Group group3 = new Group(5, "Info", 1);*/
+/*			Group group1 = new Group(4, "Miage", 3);
+			Group group2 = new Group(3, "Paris X", 2);*/
+			Group group3 = new Group(5, "Info", 2);
 
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone1.setContact(contact); 
@@ -334,13 +335,14 @@ public class DAOSpringImplTest {
 			contact.setPhones(phones);
 
 			Set<Group> groups = new HashSet<Group>();
-			groups.add(group1);
-/*			groups.add(group2);
-			groups.add(group3);*/
+/*			groups.add(group1);
+			groups.add(group2);*/
+			groups.add(group3);
 			/*group2.getContacts().add(contact);
 			group1.getContacts().add(contact);*/
-			contact.setGroups(groups);
+			group3.getContacts().add(contact);
 			
+			contact.setGroups(groups);
 			
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
@@ -361,10 +363,10 @@ public class DAOSpringImplTest {
 	public void updateGroup() {
 		boolean result = false;
 		try {
-			Group group = new Group(2, "Miage", 11);
+			Group group = new Group(4, "Miage", 6);
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-			
+			group.setGroupName("MIIAGEE");
 			IContactDao.update(group);
 			result = true;
 		} catch (Exception e) {
@@ -379,10 +381,9 @@ public class DAOSpringImplTest {
 	//@Ignore
 	@Test
 	public void deleteContactTest() {
-
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-		IContactDao.deleteContact(1);
+		IContactDao.deleteContact(3);
 	}
 	
 	//@Ignore
