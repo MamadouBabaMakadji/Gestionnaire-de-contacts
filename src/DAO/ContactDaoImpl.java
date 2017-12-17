@@ -69,7 +69,11 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 			try {
 				HibernateTemplate ht = getHibernateTemplate();
 				for (Object o : objects) {
-					ht.save(o);
+					try {
+						ht.saveOrUpdate(o);
+					} catch (DataAccessException e) {
+						e.printStackTrace();
+					}
 				}
 				result = true;
 			} catch (HibernateException e) {
@@ -135,8 +139,8 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	 */
 	@Override
 	@SuppressWarnings({ "unchecked" })
-	public List<Contact> getAllContacts() {
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
+	public Set<Contact> getAllContacts() {
+		Set<Contact> contacts = new HashSet<Contact>();
 		try {
 			Iterator<Contact> listContacts = (Iterator<Contact>) getHibernateTemplate().find("from Contact").iterator();
 			while (listContacts
@@ -179,6 +183,38 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		return contacts;
 	}
 
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@Override
+	@SuppressWarnings({ "unchecked" })
+	public List<Contact> getTenLastContacts() {
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		try {
+			Iterator<Contact> listContacts = (Iterator<Contact>) getHibernateTemplate().find("from Contact").iterator();
+			while (listContacts
+					.hasNext()) /* (Contact contact : listContacts) */ {
+				Contact contact = listContacts.next();
+				Contact c = new Contact(contact);
+				c.setContact_ID(contact.getContact_ID());
+				contacts.add(c);
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return contacts;
+	}
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Get a set of all groups
 	 * 

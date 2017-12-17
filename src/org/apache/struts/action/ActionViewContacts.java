@@ -22,8 +22,7 @@ public class ActionViewContacts extends Action {
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService service = (IContactService) context.getBean("service");
 
-		List<Contact> listContacts = new ArrayList<Contact>();
-		listContacts = service.getAllContacts();
+		List<Contact> listContacts = new ArrayList<Contact>(service.getAllContacts());
 		view.setListContacts(listContacts);
 		request.setAttribute("listContacts", listContacts);
 

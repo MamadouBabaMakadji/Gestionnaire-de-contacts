@@ -21,8 +21,7 @@ public class ActionViewSuppContact extends Action {
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService service = (IContactService) context.getBean("service");
-		List<Contact> listSuppContacts = new ArrayList<Contact>();
-		listSuppContacts = service.getAllContacts();
+		List<Contact> listSuppContacts = new ArrayList<Contact>(service.getAllContacts());
 		view.setListContacts(listSuppContacts);
 		request.setAttribute("listSuppContacts", listSuppContacts);
 

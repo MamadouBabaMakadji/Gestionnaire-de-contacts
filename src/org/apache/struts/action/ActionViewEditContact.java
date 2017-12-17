@@ -21,8 +21,7 @@ public class ActionViewEditContact extends Action {
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService service = (IContactService) context.getBean("service");
-		List<Contact> listEditContacts = new ArrayList<Contact>();
-		listEditContacts = service.getAllContacts();
+		List<Contact> listEditContacts = new ArrayList<Contact>( service.getAllContacts());
 		view.setListEditContacts(listEditContacts);
 		request.setAttribute("listEditContacts", listEditContacts);
 

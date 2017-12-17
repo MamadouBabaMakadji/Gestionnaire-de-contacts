@@ -36,8 +36,8 @@ public class DAOSpringImplTest {
 		PhoneNumber phone1 = new PhoneNumber("0404040404");
 		PhoneNumber phone2 = new PhoneNumber("0505050505");
 		
-		Group group1 = new Group(11, "Info", 0);
-		Group group2 = new Group(9, "Miage", 0);
+		Group group1 = new Group(11, "Info", 4);
+		Group group2 = new Group(9, "Miage", 4);
 
 		// Contact
 		contact.setAdress(adress);
@@ -144,7 +144,7 @@ public class DAOSpringImplTest {
 		try {
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-			List<Contact> contacts = IContactDao.getAllContacts();
+			Set<Contact> contacts = IContactDao.getAllContacts();
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString());
 				

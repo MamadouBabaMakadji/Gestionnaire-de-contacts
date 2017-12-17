@@ -20,7 +20,9 @@ public interface IContactService {
 
 	public Contact getContact(long id);
 
-	public List<Contact> getAllContacts();
+	public Set<Contact> getAllContacts();
+	
+	public List<Contact> getTenLastContacts();
 	
 	public Set<Contact> getAllContactsLazy();
 	

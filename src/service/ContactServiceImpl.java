@@ -41,10 +41,14 @@ public class ContactServiceImpl implements IContactService {
 	}
 
 	@Override
-	public List<Contact> getAllContacts() {
+	public Set<Contact> getAllContacts() {
 		return cdao.getAllContacts();
 	}
 	
+	@Override
+	public List<Contact> getTenLastContacts() {
+		return cdao.getTenLastContacts();
+	}
 	
 	@Override
 	public Set<Contact> getAllContactsLazy() {

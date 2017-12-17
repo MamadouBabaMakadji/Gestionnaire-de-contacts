@@ -20,8 +20,10 @@ public interface IContactDao {
 	public Contact getContact(long contact_ID);
 
 	public Contact getContactHQL(long contactId);
+	
+	public List<Contact> getTenLastContacts();
 
-	public List<Contact> getAllContacts();
+	public Set<Contact> getAllContacts();
 	
 	public Set<Contact> getAllContactsWGroups();
 	
