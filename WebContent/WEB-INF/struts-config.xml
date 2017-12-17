@@ -44,7 +44,7 @@
 
 		<action path="/LoginForm" type="org.apache.struts.action.ActionLogin"
 			name="LoginForm" input="/Index.jsp" scope="request" validate="true">
-			<forward name="succes" path="/Main.jsp"></forward>
+			<forward name="succes" path="/main2.jsp"></forward>
 			<forward name="echec" path="/Index.jsp"></forward>
 		</action>
 		

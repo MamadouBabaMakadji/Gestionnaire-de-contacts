@@ -21,11 +21,13 @@ public interface IContactDao {
 
 	public Contact getContactHQL(long contactId);
 	
-	public List<Contact> getLastTenContacts();
+	public Set<Contact> getLastTenContacts();
 
 	public Set<Contact> getAllContacts();
 	
 	public Set<Contact> getAllContactsWGroups();
+	
+	public Set<Contact> getAllContactsLazy();
 	
 	public Set<Contact> getContactsByGroupId(long groupId);
 
@@ -45,7 +47,6 @@ public interface IContactDao {
 
 	public boolean deleteGroup(long group_ID);
 
-	public Set<Contact> getAllContactsLazy();
 
 
 }

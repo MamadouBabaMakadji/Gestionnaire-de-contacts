@@ -189,8 +189,8 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	 */
 	@Override
 	@SuppressWarnings({ "unchecked" })
-	public List<Contact> getLastTenContacts() {
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
+	public Set<Contact> getLastTenContacts() {
+		Set<Contact> contacts = new HashSet<Contact>();
 		try {
 			Iterator<Contact> listContacts = (Iterator<Contact>) getHibernateTemplate().find("from Contact").iterator();
 			while (listContacts

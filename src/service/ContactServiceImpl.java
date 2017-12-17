@@ -46,7 +46,7 @@ public class ContactServiceImpl implements IContactService {
 	}
 	
 	@Override
-	public List<Contact> getTenLastContacts() {
+	public Set<Contact> getTenLastContacts() {
 		return cdao.getLastTenContacts();
 	}
 	
@@ -99,4 +99,20 @@ public class ContactServiceImpl implements IContactService {
 	public boolean deleteGroup(long groupId) {
 		return cdao.deleteGroup(groupId);
 	}
+
+	
+	@Override
+	public double numberContacts() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double numberGroups() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+	
 }

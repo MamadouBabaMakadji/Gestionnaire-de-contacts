@@ -22,7 +22,7 @@ public interface IContactService {
 
 	public Set<Contact> getAllContacts();
 	
-	public List<Contact> getTenLastContacts();
+	public Set<Contact> getTenLastContacts();
 	
 	public Set<Contact> getAllContactsLazy();
 	
@@ -43,5 +43,9 @@ public interface IContactService {
 	public boolean deleteContact(long contact_ID);
 	
 	public boolean deleteGroup(long groupId);
+	
+	public double numberContacts();
+	
+	public double numberGroups();
 
 }
