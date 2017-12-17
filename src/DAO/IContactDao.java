@@ -21,7 +21,7 @@ public interface IContactDao {
 
 	public Contact getContactHQL(long contactId);
 	
-	public List<Contact> getTenLastContacts();
+	public List<Contact> getLastTenContacts();
 
 	public Set<Contact> getAllContacts();
 	

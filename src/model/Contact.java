@@ -130,10 +130,11 @@ public class Contact {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (contact_ID ^ (contact_ID >>> 32));
+		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
 		return result;
 	}
-
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -143,7 +144,10 @@ public class Contact {
 		if (getClass() != obj.getClass())
 			return false;
 		Contact other = (Contact) obj;
-		if (contact_ID != other.contact_ID)
+		if (mail == null) {
+			if (other.mail != null)
+				return false;
+		} else if (!mail.equals(other.mail))
 			return false;
 		return true;
 	}

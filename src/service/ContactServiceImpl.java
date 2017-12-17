@@ -47,7 +47,7 @@ public class ContactServiceImpl implements IContactService {
 	
 	@Override
 	public List<Contact> getTenLastContacts() {
-		return cdao.getTenLastContacts();
+		return cdao.getLastTenContacts();
 	}
 	
 	@Override

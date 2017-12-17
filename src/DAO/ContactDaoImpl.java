@@ -143,8 +143,7 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		Set<Contact> contacts = new HashSet<Contact>();
 		try {
 			Iterator<Contact> listContacts = (Iterator<Contact>) getHibernateTemplate().find("from Contact").iterator();
-			while (listContacts
-					.hasNext()) /* (Contact contact : listContacts) */ {
+			while (listContacts.hasNext()) {
 				Contact contact = listContacts.next();
 				Contact c = new Contact(contact);
 				c.setContact_ID(contact.getContact_ID());
@@ -190,7 +189,7 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	 */
 	@Override
 	@SuppressWarnings({ "unchecked" })
-	public List<Contact> getTenLastContacts() {
+	public List<Contact> getLastTenContacts() {
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
 		try {
 			Iterator<Contact> listContacts = (Iterator<Contact>) getHibernateTemplate().find("from Contact").iterator();

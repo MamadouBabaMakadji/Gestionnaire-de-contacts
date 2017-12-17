@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 
 import DAO.ContactDaoImpl;
 import DAO.IContactDao;
@@ -144,7 +143,7 @@ public class DAOSpringImplTest {
 		try {
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-			Set<Contact> contacts = IContactDao.getAllContacts();
+			Set<Contact> contacts = new HashSet<Contact>(IContactDao.getAllContacts());
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString());
 				
