@@ -36,8 +36,8 @@ public class DAOSpringImplTest {
 		PhoneNumber phone1 = new PhoneNumber("0404040404");
 		PhoneNumber phone2 = new PhoneNumber("0505050505");
 		
-		Group group1 = new Group(5, "Info", 3);
-		Group group2 = new Group(4, "Miage", 4);
+		Group group1 = new Group(11, "Info", 0);
+		Group group2 = new Group(9, "Miage", 0);
 
 		// Contact
 		contact.setAdress(adress);
@@ -93,8 +93,9 @@ public class DAOSpringImplTest {
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
 		try {
-/*			result = ContactDaoImpl.insertDB(group1);
-			result = ContactDaoImpl.insertDB(group2);*/
+			result = IContactDao.insertDB(group1);
+			result = IContactDao.insertDB(group2);
+			result = IContactDao.insertDB(group3);
 			result = IContactDao.insertDB(group4);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -317,22 +318,22 @@ public class DAOSpringImplTest {
 		boolean result = false;
 		try {
 
-			Contact contact = new Contact(2, 5, "toto", "baba", "mbm@hb.net");
-			Adress adress = new Adress(2, "80 rue mbm", "Paris", "55121", "DZ");
+			Contact contact = new Contact(6, 0, "toto", "baba", "mbm@hb.net");
+			Adress adress = new Adress(17, "80 rue mbm", "Paris", "55121", "DZ");
 			contact.setAdress(adress);
 			
-			PhoneNumber phone1 = new PhoneNumber(3, "0202020202", contact);
-/*			PhoneNumber phone2 = new PhoneNumber(4, "0303030303", contact);*/
+			PhoneNumber phone1 = new PhoneNumber(11, "0404040404", contact);
+			PhoneNumber phone2 = new PhoneNumber(12, "0505050505", contact);
 			
 /*			Group group1 = new Group(4, "Miage", 3);
 			Group group2 = new Group(3, "Paris X", 2);*/
-			Group group3 = new Group(5, "Info", 2);
+			Group group3 = new Group(8, "DZ", 0);
 
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
 			phone1.setContact(contact); 
-			/*phone2.setContact(contact);*/
+			phone2.setContact(contact);
 			phones.add(phone1);
-/*			phones.add(phone2);*/
+			phones.add(phone2);
 			contact.setPhones(phones);
 
 			Set<Group> groups = new HashSet<Group>();
@@ -385,7 +386,7 @@ public class DAOSpringImplTest {
 		try {
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-			IContactDao.deleteContact(1);
+			System.out.println(IContactDao.deleteContact(7));
 		} catch (BeansException e) {
 			e.printStackTrace();
 		}

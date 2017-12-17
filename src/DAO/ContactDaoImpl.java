@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
@@ -373,7 +374,7 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	}
 
 	@Override
-	// @Transactional
+	@Transactional
 	public boolean update(Contact contact) {
 		boolean result = false;
 		try {
@@ -416,12 +417,17 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		boolean result = false;
 		try {
 			HibernateTemplate ht = getHibernateTemplate();
-			Contact contact = new Contact(ht.get(Contact.class, contact_ID));
-			contact.setGroups(null);
+			Contact contact = ht.get(Contact.class, contact_ID);
 			System.out.println(contact.toString());
-			ht.delete(contact);
-/*			ht.delete(contact.getAdress());
-			ht.delete(contact.getPhones());*/
+			for (Group group : contact.getGroups()) {
+				group.getContacts().remove(contact);
+			}
+			try {
+				contact.setGroups(null);
+				ht.delete(contact);
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+			}
 			result = true;
 		} catch (HibernateException e) {
 			e.getMessage();
@@ -431,7 +437,6 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 			e.getMessage();
 			result = false;
 		}
-
 		return result;
 	}
 
@@ -447,8 +452,6 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		try {
 			HibernateTemplate ht = getHibernateTemplate();
 			Group group = ht.get(Group.class, group_ID);
-/*			SessionFactory sf = ht.getSessionFactory();
-			Session session = sf.openSession();*/
 			for (Contact contact : group.getContacts()) {
 				contact.getGroups().remove(group);
 				ht.update(contact);
