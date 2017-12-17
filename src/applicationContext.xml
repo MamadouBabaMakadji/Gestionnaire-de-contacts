@@ -39,6 +39,7 @@
 				<prop key="cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.use_query_cache">true</prop>
 				<prop key="net.sf.ehcache.configurationResourceName">/ehcache.xml</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
 			</props>
 		</property>
 	</bean>
@@ -63,7 +64,7 @@
 			<tx:method name="sav*" propagation="REQUIRED" read-only="false"/>
 			<tx:method name="add*" read-only="false" />
 			<tx:method name="create*" read-only="false" />
-			<tx:method name="update" read-only="false" />
+			<tx:method name="update" propagation="REQUIRED" read-only="false" />
 			<tx:method name="delete*" propagation="REQUIRED" read-only="false"/>
 			<tx:method name="*" />
 		</tx:attributes>

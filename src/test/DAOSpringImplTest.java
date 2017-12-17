@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -381,9 +382,17 @@ public class DAOSpringImplTest {
 	//@Ignore
 	@Test
 	public void deleteContactTest() {
-		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-		IContactDao.deleteContact(3);
+		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
+			IContactDao.deleteContact(1);
+		} catch (BeansException e) {
+			e.printStackTrace();
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//@Ignore
@@ -391,7 +400,7 @@ public class DAOSpringImplTest {
 	public void deleteGroupsTest() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-		IContactDao.deleteGroup(2);
+		IContactDao.deleteGroup(5);
 	}
 
 }

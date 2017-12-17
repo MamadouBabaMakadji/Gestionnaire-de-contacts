@@ -11,6 +11,7 @@ import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.HibernateTemplate;
@@ -414,9 +415,13 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	public boolean deleteContact(long contact_ID) {
 		boolean result = false;
 		try {
-			Contact contact = getHibernateTemplate().get(Contact.class, contact_ID);
+			HibernateTemplate ht = getHibernateTemplate();
+			Contact contact = new Contact(ht.get(Contact.class, contact_ID));
 			contact.setGroups(null);
-			getHibernateTemplate().delete(contact);
+			System.out.println(contact.toString());
+			ht.delete(contact);
+/*			ht.delete(contact.getAdress());
+			ht.delete(contact.getPhones());*/
 			result = true;
 		} catch (HibernateException e) {
 			e.getMessage();
@@ -436,11 +441,19 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	 * @param group_ID
 	 * @return true if the group was deleted ; otherwise false
 	 */
+	@Transactional(readOnly = false)
 	public boolean deleteGroup(long group_ID) {
 		boolean result = false;
 		try {
-			Group group = getHibernateTemplate().get(Group.class, group_ID);
-			getHibernateTemplate().delete(group);
+			HibernateTemplate ht = getHibernateTemplate();
+			Group group = ht.get(Group.class, group_ID);
+/*			SessionFactory sf = ht.getSessionFactory();
+			Session session = sf.openSession();*/
+			for (Contact contact : group.getContacts()) {
+				contact.getGroups().remove(group);
+				ht.update(contact);
+			}
+			ht.delete(group);
 			result = true;
 		} catch (HibernateException e) {
 			e.getMessage();
@@ -454,3 +467,5 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	}
 
 }
+
+

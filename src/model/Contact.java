@@ -52,13 +52,13 @@ public class Contact {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.mail = mail;
-		this.adress = new Adress(adress.getAdress_ID(), adress.getStreet(), adress.getCity(), adress.getZip(), adress.getCountry());
+		this.adress = new Adress(adress.getAdress_ID(), adress.getStreet(), adress.getCity(), adress.getZip(), adress.getCountry(), this);
 		this.phones.addAll(phones);
 		this.groups.addAll(groups);
 	}
 
 	public Contact(Contact c) {
-		this(c.contact_ID, c.version,c.prenom, c.nom, c.mail, c.adress, c.phones, c.groups);
+		this(c.contact_ID, c.version,c.nom, c.prenom, c.mail, c.adress, c.phones, c.groups);
 	}
 	
 
