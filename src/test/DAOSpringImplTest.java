@@ -400,7 +400,7 @@ public class DAOSpringImplTest {
 	public void deleteGroupsTest() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-		IContactDao.deleteGroup(5);
+		IContactDao.deleteGroup(11);
 	}
 
 }

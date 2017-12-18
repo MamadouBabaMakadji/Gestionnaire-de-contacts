@@ -177,27 +177,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th>Street</th>
                       <th>City</th>
                       <th>Country</th>
+                      <th></th>
+                      <th></th>
                     </tr>
                     
 					<logic:iterate id="contact" name="listContacts">
 						<tr>
-						<%-- <html:form action="ViewContactForm.do"> --%>
 							<td><bean:write name="contact" property="prenom" /></td>
 							<td><bean:write name="contact" property="nom" /></td>
 							<td><bean:write name="contact" property="mail" /></td>
 							<td><bean:write name="contact" property="adress.street" /></td>
 							<td><bean:write name="contact" property="adress.city" /></td>
 							<td><bean:write name="contact" property="adress.country" /></td>
-							<td><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">See</a></td>
-							<td><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">Delete</a></td>
-							
-							<%-- <td>
-								<html:hidden name="contact" property="contact" value="contact"/>
-								<input type="submit" class="btn btn-primary" value="See" />
-							</td> --%>
-							
-						<%-- </html:form> --%>
-							
+							<td><span class="label label-success"><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>" style="color:white">See</a></span></td>
+							<td><span class="label label-danger"><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>" style="color:white">Delete</a></span></td>
+							<td><span class="label label-warning"><a href="edit_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>" style="color:white">Update</a></span></td>
 						</tr>
 					</logic:iterate>
 					

@@ -37,6 +37,7 @@
 
 	<global-forwards>
 		<forward name="erreurAppli" path="erreur.jsp"></forward>
+		 
 	</global-forwards>
 
 

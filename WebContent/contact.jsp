@@ -39,7 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		request.setAttribute("zip", contact.getAdress().getZip());
 		request.setAttribute("groups", contact.getGroups());
 		request.setAttribute("phones", contact.getPhones());
-		
+		request.getSession().setAttribute("contact", contact);
 %>
 <head>
   <meta charset="utf-8">
@@ -220,7 +220,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <div class="form-group">
                             <label>Zip</label><h5 class="description-header">${zip}</h5>
-                        </div>
+               </div>
 
                         <div class="form-group">
                           <p>
@@ -258,7 +258,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </div>
                   <!-- /.box-body -->
                 </div>
-          </div>
+          	</div>
+          	
+          	
+          	<div class="col-xs-6">
+             	<div class="box box-primary">
+<%--               		<div class="box-body">
+              			<html:form action="">
+           					<button type="button" class="btn btn-block btn-primary">Edit contact</button>
+              			</html> --%>
+                  </div>
+            	</div>
+         	</div>
         </div>
     </section>
     <!-- /.content -->
