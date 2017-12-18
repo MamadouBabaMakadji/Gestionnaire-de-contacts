@@ -12,6 +12,7 @@ public class ViewForm extends ActionForm {
 	private List<Group> listGroups;
 	private String groupName;
 	private Group group;
+	private Contact contact;
 	
 	public List<Contact> getListContacts() {
 		return listContacts;
@@ -44,5 +45,15 @@ public class ViewForm extends ActionForm {
 	public void setGroup(Group group) {
 		this.group = group;
 	}
+
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+	
+	
 	
 }
