@@ -19,6 +19,28 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
+<%
+/* 		Contact contact = request.getAttribute("contact");
+		System.out.println("contact" + contact.toString()); */
+		String contactId = request.getParameter("contactId");
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactService service = (service.IContactService) context.getBean("service");
+		long contact_ID = Long.parseLong(contactId);
+		Contact contact = service.getContact(contact_ID);
+		request.setAttribute("contact_ID", contact_ID);
+		request.setAttribute("nom", contact.getNom());
+		request.setAttribute("prenom", contact.getPrenom());
+		request.setAttribute("mail", contact.getMail());
+		request.setAttribute("version", contact.getVersion());
+		request.setAttribute("adressId", contact.getAdress().getAdress_ID());
+		request.setAttribute("country", contact.getAdress().getCountry());
+		request.setAttribute("city", contact.getAdress().getCity());
+		request.setAttribute("street", contact.getAdress().getStreet());
+		request.setAttribute("zip", contact.getAdress().getZip());
+		request.setAttribute("groups", contact.getGroups());
+		request.setAttribute("phones", contact.getPhones());
+		
+%>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -134,32 +156,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </form>
       <!-- /.search form -->
 
-	<%
-/* 		Contact contact = request.getAttribute("contact");
-		System.out.println("contact" + contact.toString()); */
-		String contactId = request.getParameter("contactId");
-		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		IContactService service = (service.IContactService) context.getBean("service");
-		long contact_ID = Long.parseLong(contactId);
-		Contact contact = service.getContact(contact_ID);
-		request.setAttribute("contact_ID", contact_ID);
-		request.setAttribute("nom", contact.getNom());
-		request.setAttribute("prenom", contact.getPrenom());
-		request.setAttribute("mail", contact.getMail());
-		request.setAttribute("version", contact.getVersion());
-		request.setAttribute("adressId", contact.getAdress().getAdress_ID());
-		request.setAttribute("street", contact.getAdress().getStreet());
-		request.setAttribute("zip", contact.getAdress().getZip());
-		request.setAttribute("groups", contact.getGroups());
-		request.setAttribute("phones", contact.getPhones());
-		
-	%>
+
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
         <li><a href="main.html"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li class="active"><a href="contacts.html"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
+        <li class="active"><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
         <li><a href="groups.html"><i class="fa fa-group"></i> <span>Groups</span></a></li>
         <li><a href="contracts.html"><i class="fa fa-folder"></i> <span>Contracts</span></a></li>
     </ul>
@@ -201,18 +204,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <div class="form-group">
                             <label>Mail</label><h5 class="description-header">${mail}</h5>
                         </div>
+                        
+                        <div class="form-group">
+                            <label>Street</label><h5 class="description-header">${street}</h5>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>City</label><h5 class="description-header">${city}</h5>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Country</label><h5 class="description-header">${country}</h5>
+                        </div>
+                        
 
                         <div class="form-group">
-                            <label>Country</label><h5 class="description-header">Mali</h5>
+                            <label>Zip</label><h5 class="description-header">${zip}</h5>
                         </div>
 
                         <div class="form-group">
                           <p>
-                            <label>Phone number</label><h5 class="description-header">0202020202</h5>
-                            <label>Phone number kind</label><h5 class="description-header">work</h5>
-                            <logic:iterate id="group" name="groups">
-								<label>Phone number kind</label><h5 class="description-header"><bean:write name="group" property="groupName"/></h5>
-							</logic:iterate>
+	                        <table class="table table-hover">
+			                    <tr>
+			                      <th><label>Phone Number</label></th>
+			                      <th><label>Phone Kind</label></th>
+			                    </tr>
+			                    <logic:iterate id="phone" name="phones">
+			                    <tr>
+			                    	<td><h5 class="description-header"><bean:write name="phone" property="phoneNumber" /></h5></td>
+									<td><h5 class="description-header"><bean:write name="phone" property="phoneNumber" /></h5></td>
+								</tr>
+								</logic:iterate>
+		                    </table>
                       </div>
 
                     </div>
@@ -222,7 +245,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-xs-6">
               <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Groups contact</h3>
+                    <h3 class="box-title">Groups</h3>
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
