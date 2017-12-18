@@ -1,3 +1,7 @@
+<%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
+<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
+<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -7,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>Groups</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -123,10 +127,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu" data-widget="tree">
           <li class="header">Menu</li>
           <!-- Optionally, you can add icons to the links -->
-          <li><a href="main.html"><i class="fa fa-home"></i> <span>Home</span></a></li>
-          <li><a href="contacts.html"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-          <li class="active"><a href="groups.html"><i class="fa fa-group"></i> <span>Groups</span></a></li>
-          <li><a href="contracts.html"><i class="fa fa-folder"></i> <span>Contracts</span></a></li>
+          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
+          <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
+          <li><a href="#"><i class="fa fa-group"></i> <span>Groups</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -158,19 +161,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <table class="table table-hover">
                     <tr>
                       <th>Name</th>
-                      <th>Action</th>
-                      <th></th>
-                    </tr>
-                    <tr>
-                      <td>Miage</td>
-                      <td>See</td>
-                      <td>Delete</td>
-                    </tr>
-                    <tr>
-                      <td>Nanterre</td>
-                      <td>See</td>
-                      <td>Delete</td>
-                    </tr>
+                    <logic:iterate id="group" name="listGroups">
+						<tr>
+							<td><bean:write name="group" property="groupName" /></td>
+							<td>
+								<a href="group.jsp?id=<bean:write name="group" property="group_ID"/>" style="color:white">
+									<span class="label label-primary">See</span>
+								</a>
+							</td>
+							<td>
+								<html:form action="DeleteGroupForm.do" method="post">
+									<html:hidden property="group_ID" name="group" value="${group.group_ID}" />
+									<span class="label label-danger">
+									<html:submit>
+										Delete
+									</html:submit>
+									</span>
+<%-- 									<a href="deleteGroup.jsp?id=<bean:write name="group" property="group_ID"/>">Delete</a> --%>
+								</html:form>
+							</td>
+						</tr>
+					</logic:iterate>
                   </table>
                 </div>
                 <!-- /.box-body -->

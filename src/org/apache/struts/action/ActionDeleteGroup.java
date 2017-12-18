@@ -8,18 +8,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import service.IContactService;
 
-public class ActionSuppContact extends Action {
+public class ActionDeleteGroup extends Action {
+
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		SuppContactForm ncf = (SuppContactForm) form;
-		long contact_ID = ncf.getIdentifiant();
+		DeleteGroupForm ncf = (DeleteGroupForm) form;
+		long group_ID = ncf.getGroup_ID();
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService IContactService = (service.IContactService) context.getBean("service");
-		if (IContactService.deleteContact(contact_ID))
-			return mapping.findForward("SuppOK");
-		return mapping.findForward("EchecSupp");
+		if (IContactService.deleteGroup(group_ID))
+			return mapping.findForward("listGroupView");
+		return mapping.findForward("EchecDeleteGroup");
 	}
 
 }
