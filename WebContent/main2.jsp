@@ -131,8 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Optionally, you can add icons to the links -->
             <li class="active"><a href="#"><i class="fa fa-home"></i> <span>Home</span></a></li>
             <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-            <li><a href="groups.html"><i class="fa fa-group"></i> <span>Groups</span></a></li>
-            <li><a href="contracts.html"><i class="fa fa-folder"></i> <span>Contracts</span></a></li>
+            <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>
