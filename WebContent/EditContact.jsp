@@ -76,7 +76,7 @@
 				<html:hidden property="versionContact" value="${version}"/>
 				<html:hidden property="adressId" value="${adressId}"/>
 				<td><bean:message key="nom" /></td>
-				<td><br /> <html:text property="nom" value="${nom}" /><br />
+				<td><br/> <html:text property="nom" value="${nom}" /><br />
 					<br /></td>
 				<td><bean:message key="adresse" /></td>
 				<td><br /> <html:text property="adress" value="${street}" /><br />

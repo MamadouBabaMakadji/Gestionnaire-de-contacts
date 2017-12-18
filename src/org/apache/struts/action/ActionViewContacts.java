@@ -18,6 +18,7 @@ public class ActionViewContacts extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ViewForm view = (ViewForm) form;
+		
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService service = (IContactService) context.getBean("service");

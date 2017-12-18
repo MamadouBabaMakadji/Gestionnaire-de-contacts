@@ -1,13 +1,17 @@
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="org.hibernate.HibernateException"%>
-<%@page import="java.util.*"%>
+
+<%@page import="java.sql.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Set"%>
 <%@page import="model.*"%>
-<%@page import="service.*"%>
-<%@page import="DAO.*"%>
-<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
-<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
-<%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
+<%@ page import="service.*"%>
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
+
+<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
+<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
+<%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
 
 <!DOCTYPE html>
 <!--
@@ -177,6 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     
 					<logic:iterate id="contact" name="listContacts">
 						<tr>
+						<%-- <html:form action="ViewContactForm.do"> --%>
 							<td><bean:write name="contact" property="prenom" /></td>
 							<td><bean:write name="contact" property="nom" /></td>
 							<td><bean:write name="contact" property="mail" /></td>
@@ -185,6 +190,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<td><bean:write name="contact" property="adress.country" /></td>
 							<td><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">See</a></td>
 							<td><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">Delete</a></td>
+							
+							<%-- <td>
+								<html:hidden name="contact" property="contact" value="contact"/>
+								<input type="submit" class="btn btn-primary" value="See" />
+							</td> --%>
+							
+						<%-- </html:form> --%>
+							
 						</tr>
 					</logic:iterate>
 					
