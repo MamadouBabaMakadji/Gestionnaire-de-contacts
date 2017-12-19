@@ -18,10 +18,8 @@ public class CreateGroupForm extends ActionForm{
 	@Override
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		ActionErrors errors = new ActionErrors();
-		//java.util.regex.Pattern p = java.util.regex.Pattern.compile("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$");
-		//Matcher verif_mail=p.matcher(mail);
-		if( nom.length()<1){
-			errors .add("nom", new ActionMessage("erreur.nom"));
+		if (nom.length() < 1) {
+			errors.add("nom", new ActionMessage("erreur.nom"));
 		}
 		return errors;
 	}

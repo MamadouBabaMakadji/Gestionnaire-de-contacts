@@ -47,9 +47,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Logo -->
     <a href="main.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>CO</b></span>
+      <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Dashboard</span>
+      <span class="logo-lg">Contact Manager</span>
     </a>
 
     <!-- Header Navbar -->
@@ -71,23 +71,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       <li><!-- start message -->
-                        <a href="add_contact.html">
+                        <a href="FormNewContact2.jsp">
                           <div class="pull-left">
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add a contact
+                            Add Contact
                           </h4>
                         </a>
                       </li>
                       <!-- end message -->
                       <li>
-                        <a href="add_group.html">
+                        <a href="addNewGroup.jsp">
                             <div class="pull-left">
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add a group
+                              Add Group
                             </h4>
                           </a>
                       </li>
@@ -111,15 +111,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- Search contact or group -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-        </div>
-      </form>
+        <html:form action="SearchContactForm.do" method="post" styleClass="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="nom" class="form-control" placeholder="Search...">
+<!--             <input type="hidden" name="listResults" class="form-control" > -->
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+          </div>
+        </html:form>
 
       <!-- /.search form -->
 
@@ -127,7 +128,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu" data-widget="tree">
           <li class="header">Menu</li>
           <!-- Optionally, you can add icons to the links -->
-          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
+          <li class="active"><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
           <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
           <li><a href="#"><i class="fa fa-group"></i> <span>Groups</span></a></li>
       </ul>
@@ -165,8 +166,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<tr>
 							<td><bean:write name="group" property="groupName" /></td>
 							<td>
-								<a href="group.jsp?id=<bean:write name="group" property="group_ID"/>" style="color:white">
-									<span class="label label-primary">See</span>
+								<a href="group.jsp?id=<bean:write name="group" property="group_ID"/>&name=<bean:write name="group" property="groupName"/>" style="color:white">
+									<span class="label label-primary">View</span>
 								</a>
 							</td>
 							<td>
@@ -177,7 +178,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										Delete
 									</html:submit>
 									</span>
-<%-- 									<a href="deleteGroup.jsp?id=<bean:write name="group" property="group_ID"/>">Delete</a> --%>
 								</html:form>
 							</td>
 						</tr>

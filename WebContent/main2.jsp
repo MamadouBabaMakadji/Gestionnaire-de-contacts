@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
-<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
-
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
+<%@page import="java.sql.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Set"%>
+<%@page import="model.*"%>
+<%@ page import="service.*"%>
+<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
+<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
+<%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
 
 <!DOCTYPE html>
 <!--
@@ -13,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>Home</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -50,9 +58,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Logo -->
       <a href="main.html" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>DB</b></span>
+        <span class="logo-mini"><b>CM</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">Dashboard</span>
+        <span class="logo-lg">Contact Manager</span>
       </a>
 
       <!-- Header Navbar -->
@@ -74,23 +82,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       <li><!-- start message -->
-                        <a href="add_contact.html">
+                        <a href="FormNewContact2.jsp">
                           <div class="pull-left">
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add a contact
+                            Add Contact
                           </h4>
                         </a>
                       </li>
                       <!-- end message -->
                       <li>
-                        <a href="add_group.html">
+                        <a href="addNewGroup.jsp">
                             <div class="pull-left">
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add a group
+                              Add Group
                             </h4>
                           </a>
                       </li>
@@ -114,15 +122,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
         <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
+        <html:form action="SearchContactForm.do" method="post" styleClass="sidebar-form">
           <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <input type="text" name="nom" class="form-control" placeholder="Search...">
+<!--             <input type="hidden" name="listResults" class="form-control" > -->
             <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
               </span>
           </div>
-        </form>
+        </html:form>
         <!-- /.search form -->
 
         <!-- Sidebar Menu -->
@@ -149,6 +158,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </section>
 
       <!-- Main content -->
+      <%
+      	ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		IContactService service = (service.IContactService) context.getBean("service");
+		long nbContact = service.getNbContact();
+		long nbGroup = service.getNbGroup();
+		List<Contact> lastContacts = new ArrayList<Contact>(service.getLastContacts());
+		request.setAttribute("nbContact", nbContact);
+		request.setAttribute("nbGroup", nbGroup);
+		request.setAttribute("lastContacts", lastContacts);
+      %>
       <section class="content container-fluid">
           <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12 btn" >
@@ -157,7 +176,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <a href="contacts.html"></a>
                   <div class="info-box-content">
                     <span class="info-box-text">Contacts number</span>
-                    <span class="info-box-number">3000</span>
+                    <span class="info-box-number">${nbContact}</span>
                   </div>
                   <!-- /.info-box-content -->
                 </div>
@@ -170,7 +189,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <span class="info-box-icon bg-green"><i class="fa fa-group"></i></span>
                   <div class="info-box-content">
                     <span class="info-box-text">Groups number</span>
-                    <span class="info-box-number">20</span>
+                    <span class="info-box-number">${nbGroup}</span>
                     
                   </div>
                   <!-- /.info-box-content -->
@@ -190,50 +209,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="col-xs-12">
                 <div class="box">
                   <div class="box-header">
-                    <h3 class="box-title">Last 10 contacts</h3>
+                    <h3 class="box-title">Recently</h3>
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
-                      <tr >
-                        <th>Name</th>
+                    	<tr >
+                        <th>First Name</th>
                         <th>Last Name</th>
                         <th>Mail</th>
+                        <th>Street</th>
                         <th>City</th>
-                        <th>Reason</th>
+                        <th>Country</th>
                       </tr>
-                      <tr>
-                        <td>183</td>
-                        <td>John Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="label label-success">Approved</span></td>
-                        <td>Society</td>
-                        <td>Afficher</td>
-                      </tr>
-                      <tr>
-                        <td>219</td>
-                        <td>Alexander Pierce</td>
-                        <td>11-7-2014</td>
-                        <td><span class="label label-warning">Pending</span></td>
-                        <td>Person</td>
-                        <td>Afficher</td>
-                      </tr>
-                      <tr>
-                        <td>657</td>
-                        <td>Bob Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="label label-primary">Approved</span></td>
-                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                        <td>Afficher</td>
-                      </tr>
-                      <tr>
-                        <td>175</td>
-                        <td>Mike Doe</td>
-                        <td>11-7-2014</td>
-                        <td><span class="label label-danger">Denied</span></td>
-                        <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                        <td>Afficher</td>
-                      </tr>
+                    	<logic:iterate id="contact" name="lastContacts">
+						<tr>
+							<td><bean:write name="contact" property="prenom" /></td>
+							<td><bean:write name="contact" property="nom" /></td>
+							<td><bean:write name="contact" property="mail" /></td>
+							<td><bean:write name="contact" property="adress.street" /></td>
+							<td><bean:write name="contact" property="adress.city" /></td>
+							<td><bean:write name="contact" property="adress.country" /></td>
+						</tr>
+					</logic:iterate>
+                      
                     </table>
                   </div>
                   <!-- /.box-body -->
@@ -258,7 +257,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         Anything you want
       </div>
       <!-- Default to the left -->
-      <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+      <strong>By Mamadou Baba MAKADJI & Oussema OULHACI <a href="#">Master 2 MIAGE</a>.</strong>
     </footer>
 
     <!-- Control Sidebar -->

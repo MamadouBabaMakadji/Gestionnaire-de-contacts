@@ -1,8 +1,6 @@
 package DAO;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -184,37 +181,6 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 
 	
 	/**
-	 * 
-	 * @return
-	 */
-	@Override
-	@SuppressWarnings({ "unchecked" })
-	public Set<Contact> getLastTenContacts() {
-		Set<Contact> contacts = new HashSet<Contact>();
-		try {
-			Iterator<Contact> listContacts = (Iterator<Contact>) getHibernateTemplate().find("from Contact").iterator();
-			while (listContacts
-					.hasNext()) /* (Contact contact : listContacts) */ {
-				Contact contact = listContacts.next();
-				Contact c = new Contact(contact);
-				c.setContact_ID(contact.getContact_ID());
-				contacts.add(c);
-			}
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return contacts;
-	}
-	
-	
-	
-	
-	
-	
-	
-	/**
 	 * Get a set of all groups
 	 * 
 	 * @return an hashset of all groups
@@ -330,49 +296,11 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	public Set<Contact> searchContacts(String search) {
 		Set<Contact> contacts = null;
 		try {
-			String pattern = " ";
-			String[] wordsSearch = search.split(pattern);
-			String[] paramNames = { "c.nom", "c.prenom", "c.adress.country", "g.groupName" };
-			System.out.println("Length wordsSearch " + wordsSearch.length);
-
-			// Build query
-			StringBuilder sb = new StringBuilder();
-			sb.append(
-					"select c from Contact as c join c.groups as g where c.nom = :c.nom or c.prenom = :c.prenom or c.adress.country = :c.adress.country");
-			sb.append(" or g.groupName = :g.groupName");
-
-			/*
-			 * List<String> params = new ArrayList<>(); List<String> words = new
-			 * ArrayList<>(); for (int p = 0; p<paramNames.length; p++) { for
-			 * (int w = 0; w<wordsSearch.length; w++) {
-			 * params.add(paramNames[p]); words.add(wordsSearch[w]); } }
-			 */
-
-			List<String> listKey = Arrays.asList(wordsSearch);
-			Object[] keyWords = new Object[paramNames.length];
-			for (int i = 0; i < paramNames.length; i++) {
-				keyWords[i] = listKey;
-			}
-
-			/*
-			 * for (int i =0; i<keyWords.length; i++) { for (int j =0;
-			 * j<keyWords[i].length; j++) { System.out.println(); } }
-			 */
-
-			/*
-			 * String[] parameters = params.toArray(paramNames); //Object[]
-			 * keyWords = words.toArray();
-			 * 
-			 * System.out.println("Size params " + params.size());
-			 * System.out.println("Length paramaters " + parameters.length);
-			 * System.out.println("Size words " + words.size());
-			 * System.out.println("Length words " + parameters.length);
-			 */
-
+			String request = "from Contact where nom = ? or prenom = ?";
+			Object[] paramNames = { search, search };
 			// Execute query
 			@SuppressWarnings("unchecked")
-			List<Contact> list = (List<Contact>) getHibernateTemplate()
-					.findByNamedParam(sb.toString(), paramNames, keyWords).iterator();
+			List<Contact> list = (List<Contact>) getHibernateTemplate().find(request, paramNames);
 			contacts = new HashSet<>(list);
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
@@ -503,7 +431,54 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		}
 		return result;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public long getNbContact(){
+		long nb = 0;
+		String hql = "select count (contact_ID) from Contact";
+		List<Long> result = (List<Long>) getHibernateTemplate().find(hql);
+		nb = result.get(0);
+		
+		return nb;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public long getNbGroup(){
+		long nb = 0;
+		String hql = "select count (group_ID) from Group";
+		List<Long> result = (List<Long>) getHibernateTemplate().find(hql);
+		nb = result.get(0);
+		
+		return nb;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Set<Contact> getLastContacts(){
+		HibernateTemplate ht = getHibernateTemplate();
+		ht.setFetchSize(10);
+//		ht.setMaxResults(0);
+		String hql = "from Contact ORDER BY contact_ID desc"; //order by contact_ID DESC LIMIT 10";
+		List<Contact> list = (List<Contact>) ht.find(hql);
+		Set<Contact> contacts = new HashSet<>(list);
+		
+		return contacts;
+	}
+	
+	public boolean updateGroupName(long id, String newName){
+		boolean result = false;
+		Group group = null;
+		try {
+			group = getGroup(id);
+			group.setGroupName(newName);
+			getHibernateTemplate().update(group);
+			result = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
 }
 
 

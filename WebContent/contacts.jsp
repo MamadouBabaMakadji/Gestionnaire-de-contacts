@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>Contacts</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -60,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>CO</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Dashboard</span>
+      <span class="logo-lg">Contact Manager</span>
     </a>
 
     <!-- Header Navbar -->
@@ -82,12 +82,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       <li><!-- start message -->
-                        <a href="add_contact.html">
+                        <a href="FormNewContact2.jsp">
                           <div class="pull-left">
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add a contact
+                            Add Contact
                           </h4>
                         </a>
                       </li>
@@ -98,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add a group
+                              Add Group
                             </h4>
                           </a>
                       </li>
@@ -187,7 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<td><bean:write name="contact" property="adress.street" /></td>
 							<td><bean:write name="contact" property="adress.city" /></td>
 							<td><bean:write name="contact" property="adress.country" /></td>
-							<td><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">See</a></td>
+							<td><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">View</a></td>
 							<td><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">Delete</a></td>
 							
 							<%-- <td>

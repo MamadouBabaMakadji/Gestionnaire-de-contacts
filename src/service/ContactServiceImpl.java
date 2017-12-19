@@ -32,7 +32,7 @@ public class ContactServiceImpl implements IContactService {
 
 	@Override
 	public boolean insertDB(Object object) throws Exception {
-		return false;
+		return cdao.insertDB(object);
 	}
 	
 	@Override
@@ -43,11 +43,6 @@ public class ContactServiceImpl implements IContactService {
 	@Override
 	public Set<Contact> getAllContacts() {
 		return cdao.getAllContacts();
-	}
-	
-	@Override
-	public Set<Contact> getTenLastContacts() {
-		return cdao.getLastTenContacts();
 	}
 	
 	@Override
@@ -100,19 +95,24 @@ public class ContactServiceImpl implements IContactService {
 		return cdao.deleteGroup(groupId);
 	}
 
-	
 	@Override
-	public double numberContacts() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double numberGroups() {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getNbContact(){
+		return cdao.getNbContact();
 	}
 	
+	@Override
+	public long getNbGroup(){
+		return cdao.getNbGroup();
+	}
 	
+	@Override
+	public Set<Contact> getLastContacts(){
+		return cdao.getLastContacts();
+	}
+	
+	@Override
+	public boolean updateGroupName(long id, String newName){
+		return cdao.updateGroupName(id, newName);
+	}
 	
 }

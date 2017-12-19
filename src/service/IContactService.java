@@ -22,8 +22,6 @@ public interface IContactService {
 
 	public Set<Contact> getAllContacts();
 	
-	public Set<Contact> getTenLastContacts();
-	
 	public Set<Contact> getAllContactsLazy();
 	
 	public Set<Contact> getAllContactsWgroups();
@@ -44,8 +42,12 @@ public interface IContactService {
 	
 	public boolean deleteGroup(long groupId);
 	
-	public double numberContacts();
+	public long getNbContact();
 	
-	public double numberGroups();
+	public long getNbGroup();
+	
+	public Set<Contact> getLastContacts();
+	
+	public boolean updateGroupName(long id, String newName);
 
 }

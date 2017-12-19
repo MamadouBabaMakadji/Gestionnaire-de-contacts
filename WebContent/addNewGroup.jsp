@@ -1,18 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
-<%@page import="java.sql.*"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Set"%>
-<%@page import="model.*"%>
-<%@ page import="service.*"%>
-<%@ page import="org.springframework.context.ApplicationContext"%>
-<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
-
-<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
-<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
-<%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -22,7 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Search result</title>
+  <title>New Group</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -58,7 +45,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Logo -->
     <a href="main.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>CM</b></span>
+      <span class="logo-mini"><b>CO</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">Contact Manager</span>
     </a>
@@ -93,7 +80,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       </li>
                       <!-- end message -->
                       <li>
-                        <a href="addNewGroup.jsp">
+                        <a href="#">
                             <div class="pull-left">
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
@@ -109,11 +96,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
         </div>
       </nav>
-      <!-- Navbar Right Menu -->
-
-    </nav>
   </header>
-
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
@@ -123,86 +106,67 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- search form (Optional) -->
-        <html:form action="SearchContactForm.do" method="post" styleClass="sidebar-form">
-          <div class="input-group">
-            <input type="text" name="nom" class="form-control" placeholder="Search...">
-<!--             <input type="hidden" name="listResults" class="form-control" > -->
-            <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-          </div>
-        </html:form>
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+        </div>
+      </form>
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-          <li class="header">Menu</li>
-          <!-- Optionally, you can add icons to the links -->
-          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
-          <li class="active"><a href="#"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-          <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
-      </ul>
-
+        <li class="header">Menu</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li class="active"><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
+        <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
+        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+      </ul> 
+      <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Contacts
+       Add new group
       </h1>
     </section>
 
     <!-- Main content -->
-
     <section class="content">
         <div class="row">
+            <!-- left column -->
             <div class="col-xs-12">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Search result</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-                  <table class="table table-hover">
-                    <tr>
-                      <th>Name</th>
-                      <th>Last Name</th>
-                      <th>Mail</th>
-                      <th>Street</th>
-                      <th>City</th>
-                      <th>Country</th>
-                    </tr>
-                    
-					<logic:iterate id="contact" name="listResults">
-						<tr>
-							<td><bean:write name="contact" property="prenom" /></td>
-							<td><bean:write name="contact" property="nom" /></td>
-							<td><bean:write name="contact" property="mail" /></td>
-							<td><bean:write name="contact" property="adress.street" /></td>
-							<td><bean:write name="contact" property="adress.city" /></td>
-							<td><bean:write name="contact" property="adress.country" /></td>
-							<td><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">View</a></td>
-							<td><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">Delete</a></td>
-						</tr>
-					</logic:iterate>
-					
-                  </table>
-                </div>
-                <!-- /.box-body -->
-              </div>
-              <!-- /.box -->
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">General Elements</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                      <form role="form" action="CreateGroupForm.do">
+                        <!-- text input -->
+                        <div class="form-group">
+                          <label>Group name</label>
+                          <input type="text" name="nom" class="form-control" placeholder="Group name">
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+        
+                      </form>
+                    </div>
+                    <!-- /.box-body -->
+                  </div>
             </div>
-          </div>
+        </div>
     </section>
-
-
-
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -289,13 +253,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- /.tab-pane -->
     </div>
   </aside>
-
-
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
   immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-  </div>
+</div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->

@@ -126,6 +126,7 @@ public class Contact {
 		this.version = version;
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,8 +134,7 @@ public class Contact {
 		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
 		return result;
 	}
-	
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
