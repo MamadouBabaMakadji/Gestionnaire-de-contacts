@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import DAO.IContactDao;
 import model.Contact;
 import service.IContactService;
 
@@ -20,8 +21,9 @@ public class ActionViewEditContact extends Action {
 		ViewEditContactForm view = (ViewEditContactForm) form;
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		IContactService service = (IContactService) context.getBean("service");
-		List<Contact> listEditContacts = new ArrayList<Contact>( service.getAllContacts());
+		/*IContactService service = (IContactService) context.getBean("service");*/
+		IContactDao dao = (DAO.IContactDao) context.getBean("dao");
+		List<Contact> listEditContacts = new ArrayList<Contact>(dao.getAllContacts());
 		view.setListEditContacts(listEditContacts);
 		request.setAttribute("listEditContacts", listEditContacts);
 

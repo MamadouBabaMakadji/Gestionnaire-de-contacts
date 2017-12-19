@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
 <%@page import="java.sql.*"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.LinkedList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Set"%>
 <%@page import="model.*"%>
 <%@ page import="service.*"%>
+<%@ page import="DAO.*"%>
 <%@ page import="org.springframework.context.ApplicationContext"%>
 <%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
 
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
+<%@ taglib prefix="nested" uri="http://struts.apache.org/tags-nested" %>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
 <%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
 
@@ -22,16 +24,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <%
 /* 		Contact contact = request.getAttribute("contact");
 		System.out.println("contact" + contact.toString()); */
-		String contactId = request.getParameter("contactId");
+		String pContactId = request.getParameter("contactId");
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		IContactService service = (service.IContactService) context.getBean("service");
-		long contact_ID = Long.parseLong(contactId);
-		Contact contact = service.getContact(contact_ID);
-		request.setAttribute("contact_ID", contact_ID);
+		IContactDao dao = (DAO.IContactDao) context.getBean("dao");
+		long contactId = Long.parseLong(pContactId);
+		Contact contact = dao.getContact(contactId);
+		List<Group> allGroups = new LinkedList<Group>(dao.getAllGroups());
+		List<PhoneNumber> phones = new LinkedList<>(contact.getPhones());
+		if(!phones.isEmpty())request.setAttribute("phone1", phones.get(0));
+		if(phones.size()>1) request.setAttribute("phone2", phones.get(1));
+		request.setAttribute("contactId", contactId);
 		request.setAttribute("nom", contact.getNom());
 		request.setAttribute("prenom", contact.getPrenom());
 		request.setAttribute("mail", contact.getMail());
-		request.setAttribute("version", contact.getVersion());
+		request.setAttribute("versionContact", contact.getVersion());
 		request.setAttribute("adressId", contact.getAdress().getAdress_ID());
 		request.setAttribute("country", contact.getAdress().getCountry());
 		request.setAttribute("city", contact.getAdress().getCity());
@@ -39,7 +45,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		request.setAttribute("zip", contact.getAdress().getZip());
 		request.setAttribute("groups", contact.getGroups());
 		request.setAttribute("phones", contact.getPhones());
-		request.getSession().setAttribute("contact", contact);
+		request.setAttribute("allGroups", allGroups);
+		
+		//request.getSession().setAttribute("contact", contact);
 %>
 <head>
   <meta charset="utf-8">
@@ -177,12 +185,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-      ${nom} ${prenom} 
+      Update ${nom} ${prenom} 
       </h1>
     </section>
 
     <!-- Main content -->
-    <section class="content">
+     <section class="content">
         <div class="row">
             <!-- left column -->
             <div class="col-xs-6">
@@ -193,54 +201,65 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- /.box-header -->
                     <div class="box-body">
                         <!-- text input -->
+                     <html:form action="EditContactForm.do" method="post">
                         <div class="form-group">
-                          <label>First name</label> <h5 class="description-header">${prenom}</h5>
+                          <label>First name</label><html:text value="${prenom}" property="prenom" styleClass="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Last name</label><h5 class="description-header">${nom}</h5>
+                            <label>Last name</label><html:text value="${nom}" property="nom" styleClass="form-control"/>
                         </div>
 
                         <div class="form-group">
-                            <label>Mail</label><h5 class="description-header">${mail}</h5>
+                            <label>Mail</label><html:text value="${mail}" property="mail" styleClass="form-control"/>
                         </div>
                         
                         <div class="form-group">
-                            <label>Street</label><h5 class="description-header">${street}</h5>
+                            <label>Street</label><html:text value="${street}" property="street" styleClass="form-control"/>
                         </div>
                         
                         <div class="form-group">
-                            <label>City</label><h5 class="description-header">${city}</h5>
+                            <label>City</label><html:text value="${city}" property="city" styleClass="form-control"/>
                         </div>
                         
                         <div class="form-group">
-                            <label>Country</label><h5 class="description-header">${country}</h5>
+                            <label>Country</label><html:text value="${country}" property="country" styleClass="form-control"/>
                         </div>
                         
 
                         <div class="form-group">
-                            <label>Zip</label><h5 class="description-header">${zip}</h5>
-               </div>
+                            <label>Zip</label><html:text value="${zip}" property="zip" styleClass="form-control"/>
+                        </div>
 
                         <div class="form-group">
                           <p>
 	                        <table class="table table-hover">
-			                    <tr>
-			                      <th><label>Phone Number</label></th>
-			                      <th><label>Phone Kind</label></th>
-			                    </tr>
-			                    <logic:iterate id="phone" name="phones">
-			                    <tr>
-			                    	<td><h5 class="description-header"><bean:write name="phone" property="phoneNumber" /></h5></td>
-									<td><h5 class="description-header"><bean:write name="phone" property="phoneNumber" /></h5></td>
-								</tr>
-								</logic:iterate>
+	                            <tr>
+	                              <th><label>Phone Number</label></th>
+	                              <th><label>Phone Kind</label></th>
+	                            </tr>
+	                            <tr>
+	                            	<html:hidden value="${phone1.phone_ID}" property="phoneNumber1Id" styleClass="form-control"/>
+                            	  	<td><html:text value="${phone1.phoneNumber}" property="phoneNumber1" styleClass="form-control"/></td>
+	                              	<td><html:text value="${phone1.phoneNumber}" property="phoneKind1" styleClass="form-control"/></td>
+	                            </tr>
+	                            <tr>
+                           			<html:hidden value="${phone2.phone_ID}" property="phoneNumber2Id" styleClass="form-control"/>
+                              		<td><html:text value="${phone2.phoneNumber}" property="phoneNumber2" styleClass="form-control"/></td>
+	                              	<td><html:text value="${phone2.phoneNumber}" property="phoneKind2" styleClass="form-control"/></td>
+	                            </tr>
 		                    </table>
+		                    <html:hidden property="adressId" value="${adressId}"/>
+							<html:hidden property="contactId" value="${contactId}"/>
+							<html:hidden property="versionContact" value="${versionContact}"/>
+							<button type="submit" class="btn btn-success btn-xs">Update</button>
+						</div>
+					</html:form>
                       </div>
 
                     </div>
                     <!-- /.box-body -->
-                  </div>
+                  
             </div>
             <div class="col-xs-6">
               <div class="box box-primary">
@@ -250,29 +269,64 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <!-- /.box-header -->
                   <div class="box-body">
                       <!-- text input -->
-                      <div class="form-group">
-                      	<logic:iterate id="group" name="groups">
-							<h5 class="description-header"><bean:write name="group" property="groupName"/></h5>
-						</logic:iterate>	
-                      </div>
+                      <table class="table table-hover">
+	                      <logic:iterate id="group" name="groups">
+	                      <tr>
+		                        <td><h5 class="description-header"><bean:write name="group" property="groupName"/></h5></td>
+		                        <td>
+		                        <div class="form-group">
+		                        	<html:form action="DeleteContactFromGroupForm.do" method="post">
+										<html:hidden property="group_ID" name="group" value="${group.group_ID}"/>
+										<html:hidden property="contact_ID" value="${contactId}"/>
+											<button type="submit" class="btn btn-danger btn-xs">Delete</button>
+									</html:form>
+									</div>
+		                      	</td>
+	                      </tr>
+	                      </logic:iterate>	
+                      </table>
+                      
                   </div>
                   <!-- /.box-body -->
                 </div>
           	</div>
           	
-          	
-          	<div class="col-xs-6">
-             	<div class="box box-primary">
-<%--               		<div class="box-body">
-              			<html:form action="">
-           					<button type="button" class="btn btn-block btn-primary">Edit contact</button>
-              			</html> --%>
+          	            <div class="col-xs-6">
+              <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Others groups</h3>
                   </div>
-            	</div>
-         	</div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                      <!-- text input -->
+                      <table class="table table-hover">
+                       <th>Name</th>
+                       <th></th>
+	                      <logic:iterate id="group" name="allGroups">
+		                      <tr>
+		                        <td>
+		                        	<h5 class="description-header"><bean:write name="group" property="groupName"/></h5>
+		                        </td>
+		                        <td>
+			                        <div class="form-group">
+			                        	<html:form action="AddContactToGroupForm.do" method="post">
+											<html:hidden property="group_ID" name="group" value="${group.group_ID}"/>
+											<html:hidden property="contact_ID" value="${contactId}"/>
+											<button type="submit" class="btn btn-success btn-xs">Add contact to this group</button>
+										</html:form>
+									</div>
+		                      	</td>
+		                      </tr>
+	                      </logic:iterate>	
+                      </table>
+                      
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+          	</div>
+          
         </div>
-    </section>
-    <!-- /.content -->
+    </section>    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 

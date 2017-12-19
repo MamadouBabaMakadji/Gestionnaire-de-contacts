@@ -1,7 +1,6 @@
 package DAO;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,7 +10,6 @@ import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
@@ -99,15 +97,11 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 	 * @param contact_ID
 	 * @return an object Contact
 	 */
-	@Transactional
 	public Contact getContact(long contact_ID) {
 		Contact contact = null;
 		try {
-			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Contact.class)
-					.add(Restrictions.like("contact_ID", contact_ID));
-			@SuppressWarnings("unchecked")
-			List<Contact> list = (List<Contact>) getHibernateTemplate().findByCriteria(detachedCriteria);
-			contact = list.get(0);
+			contact = getHibernateTemplate().get(Contact.class, contact_ID);
+			return contact;
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -146,7 +140,7 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 			while (listContacts.hasNext()) {
 				Contact contact = listContacts.next();
 				Contact c = new Contact(contact);
-				c.setContact_ID(contact.getContact_ID());
+				//c.setContact_ID(contact.getContact_ID());
 				contacts.add(c);
 			}
 		} catch (HibernateException e) {
@@ -414,6 +408,9 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		boolean result = false;
 		try {
 			getHibernateTemplate().update(contact);
+			for (PhoneNumber pn : contact.getPhones()) {
+				getHibernateTemplate().saveOrUpdate(pn);
+			}
 			result = true;
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -434,7 +431,6 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		boolean result = false;
 		try {
 			HibernateTemplate ht = getHibernateTemplate();
-			ht.setCheckWriteOperations(false);
 			ht.update(group);
 			result = true;
 		} catch (HibernateException e) {
@@ -503,6 +499,38 @@ public class ContactDaoImpl extends HibernateDaoSupport implements IContactDao {
 		}
 		return result;
 	}
+	
+	/**
+	 * Method to delete phone number
+	 * 
+	 * @param phone
+	 * @return true if the phone was deleted ; otherwise false
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public boolean deletePhone(long phoneId, long contactId) {
+		boolean result = false;
+		try {
+			HibernateTemplate ht = getHibernateTemplate();
+			Contact contact = ht.get(Contact.class, contactId);
+			PhoneNumber phone = ht.get(PhoneNumber.class, phoneId);
+			System.out.println(phone.toString());
+			phone.setContact(null);
+			contact.getPhones().remove(phone);
+			/*ht.update(contact);*/
+			ht.delete(phone);
+			result = true;
+		} catch (HibernateException e) {
+			e.getMessage();
+			e.printStackTrace();
+			result = false;
+		} catch (Exception e) {
+			e.getMessage();
+			result = false;
+		}
+		return result;
+	}
+
 
 }
 

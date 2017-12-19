@@ -1,5 +1,6 @@
 package service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public class ContactServiceImpl implements IContactService {
 
 	@Override
 	public Set<Contact> getAllContacts() {
-		return cdao.getAllContacts();
+		return new HashSet<Contact>(cdao.getAllContacts());
 	}
 	
 	@Override
@@ -85,6 +86,11 @@ public class ContactServiceImpl implements IContactService {
 		return cdao.saveUpdate(contact);
 	}
 	
+	@Override
+	public boolean update(Contact contact) {
+		return cdao.update(contact);
+	}
+
 	@Override
 	public boolean update(Group group) {
 		return cdao.update(group);

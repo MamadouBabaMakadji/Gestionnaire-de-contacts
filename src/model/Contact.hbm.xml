@@ -28,7 +28,7 @@
 		<many-to-one name="adress" column="adress_ID" unique="true" not-null="false" cascade="all" lazy="false"/>
 
 		<!-- Un contact possède 0, 1 ou n numéros -->
-		<set name="phones" inverse="true" cascade="all" table="phonenumber" lazy="false">
+		<set name="phones" inverse="true" cascade="all" table="phonenumber" lazy="false" optimistic-lock="false">
 			<key column="contact_ID" not-null="true"></key>
 			<one-to-many class="PhoneNumber" />
 		</set>

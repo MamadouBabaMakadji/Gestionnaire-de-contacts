@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import model.Contact;
 import model.Group;
+import model.PhoneNumber;
 
 public interface IContactDao {
 
@@ -46,6 +47,8 @@ public interface IContactDao {
 	public boolean deleteContact(long contact_ID);
 
 	public boolean deleteGroup(long group_ID);
+
+	public boolean deletePhone(long phoneId, long contactId);
 
 
 

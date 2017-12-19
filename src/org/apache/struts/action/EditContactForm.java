@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import model.PhoneNumber;
+
 public class EditContactForm extends ActionForm {
 
 	private static final long serialVersionUID = 1L;
@@ -14,61 +16,38 @@ public class EditContactForm extends ActionForm {
 	private String prenom;
 	private String mail;
 	private long adressId;
-	private String adress;
-	private String ville;
-	private String code_postal;
-	private String pays;
-	private List<Long> phonesId = new ArrayList<>();
-	private List<String> phonesNumber = new ArrayList<>();
-	//private Long[] phonesId = new Long[20];
-	//private String[] phonesNumber = new String[20];
+	private String street;
+	private String city;
+	private String zip;
+	private String country;
+	private long phoneNumber1Id;
+	private String phoneNumber1;
+	private String phoneKind1;
+	private long phoneNumber2Id;
+	private String phoneNumber2;
+	private String phoneKind2;
 	
+
 	
-	/*
-	//private Long[] groupsId = new Long[20];
-	//private Integer[] versionGroup = new Integer[20];
-	private List<String> groupsName = new LinkedList<String>();
-	private List<Long> groupsId = new LinkedList<Long>();
-	private List<Integer> groupsVersion = new LinkedList<Integer>();
-	*/
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	
-	
+	public long getContactId() {
+		return contactId;
+	}
 
 	public void setContactId(long contactId) {
 		this.contactId = contactId;
 	}
 
-
-
-	public void setPhonesId(List<Long> phonesId) {
-		this.phonesId = phonesId;
-	}
-
-
-
-	public void setPhonesNumber(List<String> phonesNumber) {
-		this.phonesNumber = phonesNumber;
-	}
-
-
-
-	public long getContactId() {
-		return contactId;
-	}
-
-	public void setContactId(int identifiant) {
-		this.contactId = identifiant;
-	}
 	
 	public int getVersionContact() {
 		return versionContact;
 	}
 	
-	public void setVersionContact(int version) {
-		this.versionContact = version;
+	public void setVersionContact(int versionContact) {
+		this.versionContact = versionContact;
 	}
 
 	public String getNom() {
@@ -103,93 +82,97 @@ public class EditContactForm extends ActionForm {
 		this.adressId = adressId;
 	}
 
-	public String getAdress() {
-		return adress;
+	public String getStreet() {
+		return street;
 	}
 
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
-	public String getVille() {
-		return ville;
+	public String getCity() {
+		return city;
 	}
 
-	public void setVille(String ville) {
-		this.ville = ville;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getCode_postal() {
-		return code_postal;
+	public String getZip() {
+		return zip;
 	}
 
-	public void setCode_postal(String code_postal) {
-		this.code_postal = code_postal;
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
-	public String getPays() {
-		return pays;
+	public String getCountry() {
+		return country;
 	}
 
-	public void setPays(String pays) {
-		this.pays = pays;
-	}
-
-	public List<Long> getPhonesId() {
-		return phonesId;
-	}
-
-	public void setPhonesId(Long phonesId) {
-		System.out.println("PhoneId =" +phonesId);
-		this.phonesId.add(phonesId);
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 
-	public List<String> getPhonesNumber() {
-		return phonesNumber;
+	public String getPhoneNumber1() {
+		return phoneNumber1;
 	}
 
-	public void setPhonesNumber(String phonesNumber) {
-		System.out.println("PhoneNumber =" +phonesNumber);
-		this.phonesNumber.add(phonesNumber);
+	public void setPhoneNumber1(String phoneNumber1) {
+		this.phoneNumber1 = phoneNumber1;
+	}
+
+	public String getPhoneKind1() {
+		return phoneKind1;
+	}
+
+	public void setPhoneKind1(String phoneKind1) {
+		this.phoneKind1 = phoneKind1;
+	}
+
+	public String getPhoneNumber2() {
+		return phoneNumber2;
+	}
+
+	public void setPhoneNumber2(String phoneNumber2) {
+		this.phoneNumber2 = phoneNumber2;
+	}
+
+	public String getPhoneKind2() {
+		return phoneKind2;
+	}
+
+	public void setPhoneKind2(String phoneKind2) {
+		this.phoneKind2 = phoneKind2;
 	}
 	
-/*
-	public List<String> getGroupsName() {
-		return groupsName;
+	public long getPhoneNumber1Id() {
+		return phoneNumber1Id;
 	}
 
-	public void setGroupsName(List<String> groupsName) {
-		this.groupsName = groupsName;
+	public void setPhoneNumber1Id(long phoneNumber1Id) {
+		this.phoneNumber1Id = phoneNumber1Id;
 	}
 
-	public List<Long> getGroupsId() {
-		return groupsId;
+	public long getPhoneNumber2Id() {
+		return phoneNumber2Id;
 	}
 
-	public void setGroupsId(List<Long> groupsId) {
-		this.groupsId = groupsId;
+	public void setPhoneNumber2Id(long phoneNumber2Id) {
+		this.phoneNumber2Id = phoneNumber2Id;
 	}
 
-	public List<Integer> getGroupsVersion() {
-		return groupsVersion;
-	}
-
-	public void setGroupsVersion(List<Integer> groupsVersion) {
-		this.groupsVersion = groupsVersion;
-	}
-*/
-	
 	@Override
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		ActionErrors errors = new ActionErrors();
 		System.out.println("Passage EditActionForm");
 		System.out.println("Version contact = " + versionContact);
 
-		System.out.println("Size phonesId = " + phonesId.size());
+/*		System.out.println("Size phonesId = " + phonesId.size());
 		for (long id : phonesId) {
 			System.out.println("Tel Id = " + id);
-		}
+		}*/
 
 		if (nom == null || nom.length() < 1) {
 			errors.add("nom", new ActionMessage("erreur.nom"));
@@ -208,8 +191,8 @@ public class EditContactForm extends ActionForm {
 		 * errors.add("tel", new ActionMessage("erreur.tel")); } }
 		 */
 
-		if (code_postal.length() != 5) {
-			errors.add("code_postal", new ActionMessage("erreur.code_postal"));
+		if (zip.length() != 5) {
+			errors.add("zip", new ActionMessage("erreur.zip"));
 		}
 
 		return errors;

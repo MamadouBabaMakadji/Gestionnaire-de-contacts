@@ -12,7 +12,7 @@
 <body>
 	<center>
 		<h1>
-			<bean:message key="erreur.application" />
+			<bean:message key="erreur.updateContact"/>
 		</h1>
 	</center>
 	<hr>

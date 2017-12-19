@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import DAO.IContactDao;
 import service.IContactService;
 
 public class ActionSuppContact extends Action {
@@ -16,8 +17,8 @@ public class ActionSuppContact extends Action {
 		long contact_ID = ncf.getIdentifiant();
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		IContactService IContactService = (service.IContactService) context.getBean("service");
-		if (IContactService.deleteContact(contact_ID))
+		IContactDao dao = (DAO.IContactDao) context.getBean("dao");
+		if (dao.deleteContact(contact_ID))
 			return mapping.findForward("SuppOK");
 		return mapping.findForward("EchecSupp");
 	}

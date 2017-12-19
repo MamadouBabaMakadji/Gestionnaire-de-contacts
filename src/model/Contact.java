@@ -107,7 +107,7 @@ public class Contact {
 	}
 
 	public void setPhones(Set<PhoneNumber> phones) {
-		this.phones = phones;
+		this.phones = (phones);
 	}
 
 	public Set<Group> getGroups() {

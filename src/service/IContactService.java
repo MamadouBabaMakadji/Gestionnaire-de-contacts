@@ -37,6 +37,8 @@ public interface IContactService {
 	public Set<Contact> searchContacts(String keywords);
 	
 	public boolean saveUpdate(Contact contact);
+
+	public boolean update(Contact contact);
 	
 	public boolean update(Group group);
 	

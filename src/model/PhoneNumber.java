@@ -12,22 +12,23 @@ public class PhoneNumber {
 		this.phoneNumber = phoneNumber;
 	}
 	
-	
-	
 	public PhoneNumber(long phone_ID, String phoneNumber) {
 		this.phone_ID = phone_ID;
 		this.phoneNumber = phoneNumber;
 	}
-
-	public PhoneNumber(long phone_ID, String phoneNumber, Contact contact) {
-		this.phone_ID = phone_ID;
+	
+	public PhoneNumber(String phoneNumber, Contact contact) {
 		this.phoneNumber = phoneNumber;
 		this.contact = contact;
 	}
-	
-	
 
+	public PhoneNumber(long phone_ID, String phoneNumber, Contact contact) {
+		this(phone_ID, phoneNumber);
+		this.contact = contact;
+	}
+	
 	public long getPhone_ID() {
+		if(this.phone_ID==0) return -1;
 		return phone_ID;
 	}
 
@@ -52,6 +53,15 @@ public class PhoneNumber {
 	}
 
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -61,22 +71,17 @@ public class PhoneNumber {
 		if (getClass() != obj.getClass())
 			return false;
 		PhoneNumber other = (PhoneNumber) obj;
-		if (phone_ID != other.phone_ID)
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
+				return false;
+		} else if (!phoneNumber.equals(other.phoneNumber))
 			return false;
 		return true;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (phone_ID ^ (phone_ID >>> 32));
-		return result;
-	}
-
-	@Override
 	public String toString() {
-		return "PhoneNumber {id=" + this.phone_ID + ", phoneNumber=" + phoneNumber + ", contact=" + contact.getContact_ID() + "}";
+		return "PhoneNumber {id=" + getPhone_ID() + ", phoneNumber=" + phoneNumber + ", contact=" + contact.getContact_ID() + "}";
 	}
 
 	

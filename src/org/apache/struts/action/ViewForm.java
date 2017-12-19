@@ -13,6 +13,8 @@ public class ViewForm extends ActionForm {
 	private String groupName;
 	private Group group;
 	private Contact contact;
+	private String contactId;
+	private String groupId;
 	
 	public List<Contact> getListContacts() {
 		return listContacts;
@@ -53,7 +55,22 @@ public class ViewForm extends ActionForm {
 	public void setContact(Contact contact) {
 		this.contact = contact;
 	}
-	
+
+	public String getContactId() {
+		return contactId;
+	}
+
+	public void setContactId(String contactId) {
+		this.contactId = contactId;
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
 	
 	
 }

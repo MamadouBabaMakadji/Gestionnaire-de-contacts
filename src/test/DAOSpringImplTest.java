@@ -19,6 +19,7 @@ import model.Adress;
 import model.Contact;
 import model.Group;
 import model.PhoneNumber;
+import service.IContactService;
 
 public class DAOSpringImplTest {
 
@@ -35,8 +36,8 @@ public class DAOSpringImplTest {
 		PhoneNumber phone1 = new PhoneNumber("0404040404");
 		PhoneNumber phone2 = new PhoneNumber("0505050505");
 		
-		Group group1 = new Group(11, "Info", 4);
-		Group group2 = new Group(9, "Miage", 4);
+		Group group1 = new Group(10, "Paris X", 1);
+		Group group2 = new Group(15, "Info", 0);
 
 		// Contact
 		contact.setAdress(adress);
@@ -119,7 +120,7 @@ public class DAOSpringImplTest {
 		try {
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-			Contact contact = IContactDao.getContact(1);
+			Contact contact = IContactDao.getContact(12);
 			//Contact contact = ContactDaoImpl.getContact2(2);
 
 			System.out.println("Contact : " + contact.toString());
@@ -139,11 +140,13 @@ public class DAOSpringImplTest {
 	
 	//@Ignore
 	@Test
-	public void getAllContactTest() {
+	public void getAllContactsTest() {
 		try {
 			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
-			Set<Contact> contacts = new HashSet<Contact>(IContactDao.getAllContacts());
+			IContactDao dao = (DAO.IContactDao) context.getBean("dao");
+			IContactService service = (IContactService) context.getBean("service");
+			
+			Set<Contact> contacts = new HashSet<Contact>(service.getAllContacts());
 			for(Contact contact : contacts) {
 				System.out.println("Contact : " + contact.toString());
 				
@@ -316,16 +319,18 @@ public class DAOSpringImplTest {
 	public void updateContact() {
 		boolean result = false;
 		try {
+			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
 
-			Contact contact = new Contact(6, 0, "toto", "baba", "mbm@hb.net");
+/*			Contact contact = new Contact(6, 0, "toto", "baba", "mbm@hb.net");
 			Adress adress = new Adress(17, "80 rue mbm", "Paris", "55121", "DZ");
 			contact.setAdress(adress);
 			
 			PhoneNumber phone1 = new PhoneNumber(11, "0404040404", contact);
 			PhoneNumber phone2 = new PhoneNumber(12, "0505050505", contact);
 			
-/*			Group group1 = new Group(4, "Miage", 3);
-			Group group2 = new Group(3, "Paris X", 2);*/
+			Group group1 = new Group(4, "Miage", 3);
+			Group group2 = new Group(3, "Paris X", 2);
 			Group group3 = new Group(8, "DZ", 0);
 
 			Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
@@ -336,20 +341,40 @@ public class DAOSpringImplTest {
 			contact.setPhones(phones);
 
 			Set<Group> groups = new HashSet<Group>();
-/*			groups.add(group1);
-			groups.add(group2);*/
+			groups.add(group1);
+			groups.add(group2);
 			groups.add(group3);
-			/*group2.getContacts().add(contact);
-			group1.getContacts().add(contact);*/
+			group2.getContacts().add(contact);
+			group1.getContacts().add(contact);
 			group3.getContacts().add(contact);
 			
-			contact.setGroups(groups);
+			contact.setGroups(groups);*/
 			
-			ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-			IContactDao IContactDao = (DAO.IContactDao) context.getBean("dao");
 			
-			IContactDao.update(contact);
+
 			
+			// Delete one group update
+			/*
+			contact = IContactDao.getContact(12);
+			Group group = IContactDao.getGroup(10);
+			contact.getGroups().remove(group);*/
+			// END UDPATE GROUP
+			
+			// Add or delete phones to update
+			Contact contact = IContactDao.getContact(12);
+			Set<PhoneNumber> phones = new HashSet<>();
+			/*PhoneNumber phone1 = new PhoneNumber(23, "0202020202", contact);*/
+			PhoneNumber phone2 = new PhoneNumber(65, "0909090909", contact);
+			
+			IContactDao.deletePhone(67, 12);
+/*			contact.setPhones(phones);*/
+			System.out.println(contact.toString());
+			System.out.println("Size = " +contact.getPhones().size());
+			for(PhoneNumber pn : contact.getPhones()) {
+				System.out.println(pn.toString());
+			}
+			// END UPDATE PHONE
+/*			IContactDao.update(contact);*/
 			result = true;
 		} catch (Exception e) {
 			e.printStackTrace();

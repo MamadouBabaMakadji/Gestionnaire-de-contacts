@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import DAO.IContactDao;
 import model.Group;
 import service.IContactService;
 
@@ -20,8 +21,9 @@ public class ActionViewGroups extends Action {
 		ViewForm view = (ViewForm) form;
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		IContactService service = (IContactService) context.getBean("service");
-		List<Group> listGroups = new LinkedList<Group>(service.getAllGroups());
+		/*IContactService service = (IContactService) context.getBean("service");*/
+		IContactDao dao = (DAO.IContactDao) context.getBean("dao");
+		List<Group> listGroups = new LinkedList<Group>(dao.getAllGroups());
 		
 		view.setListGroups(listGroups);
 		request.setAttribute("listGroups", listGroups);

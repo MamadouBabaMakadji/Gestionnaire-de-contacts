@@ -1,7 +1,8 @@
 <%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
-
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -166,18 +167,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<td><bean:write name="group" property="groupName" /></td>
 							<td>
 								<a href="group.jsp?id=<bean:write name="group" property="group_ID"/>" style="color:white">
-									<span class="label label-primary">See</span>
+									<span class="label label-success">View</span>
 								</a>
 							</td>
 							<td>
 								<html:form action="DeleteGroupForm.do" method="post">
 									<html:hidden property="group_ID" name="group" value="${group.group_ID}" />
-									<span class="label label-danger">
-									<html:submit>
-										Delete
-									</html:submit>
-									</span>
-<%-- 									<a href="deleteGroup.jsp?id=<bean:write name="group" property="group_ID"/>">Delete</a> --%>
+										<button type="submit" class="btn btn-danger btn-xs">Delete</button>
 								</html:form>
 							</td>
 						</tr>

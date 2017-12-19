@@ -18,6 +18,8 @@
 		<form-bean name="ViewGroupsForm" type="org.apache.struts.action.ViewForm" />
 		<form-bean name="CreateGroupForm" type="org.apache.struts.action.CreateGroupForm" />
 		<form-bean name="DeleteGroupForm" type="org.apache.struts.action.DeleteGroupForm" />
+		<form-bean name="DeleteContactFromGroupForm" type="org.apache.struts.action.DeleteContactFromGroupForm" />
+		<form-bean name="AddContactToGroupForm" type="org.apache.struts.action.AddContactToGroupForm" />
 	</form-beans>
 
 
@@ -40,8 +42,6 @@
 		 
 	</global-forwards>
 
-
-
 	<action-mappings>
 
 		<action path="/LoginForm" type="org.apache.struts.action.ActionLogin"
@@ -51,14 +51,14 @@
 		</action>
 		
 		<action path="/ViewContactsForm" type="org.apache.struts.action.ActionViewContacts"
-			name="ViewContactsForm" input="/contacts.jsp" scope="request" validate="true">
+			name="ViewContactsForm" input="/main2.jsp" scope="request" validate="true">
 			<forward name="view" path="/contacts.jsp"></forward>
 		</action>
 		
-<!-- 		<action path="/ViewContactForm" type="org.apache.struts.action.ActionViewContact"
+		<action path="/ViewContactForm" type="org.apache.struts.action.ActionViewContact"
 			name="ViewContactForm" input="/contacts.jsp" scope="request" validate="true">
 			<forward name="view" path="/contact.jsp"></forward>
-		</action> -->
+		</action>
 		
 		<action path="/SearchForm" type="org.apache.struts.action.ActionSearch"
 			name="SearchForm" input="/Main.jsp" scope="request" validate="true">
@@ -76,8 +76,8 @@
 		<action path="/EditContactForm" type="org.apache.struts.action.ActionEditContact"
 			name="EditContactForm" input="/EditContact.jsp" scope="request"
 			validate="true">
-			<forward name="EditOK" path="/modif_ok.jsp"></forward>
-			<forward name="EchecAjout" path="/FormEditContact.jsp"></forward>
+			<forward name="EditOK" path="/ViewContactsForm.do"></forward>
+			<forward name="EchecEdit" path="/error_edit.jsp"></forward>
 		</action>
 
 		<action path="/SuppContactForm" type="org.apache.struts.action.ActionSuppContact"
@@ -115,6 +115,20 @@
 			name="DeleteGroupForm" input="/groups2.jsp" scope="request"
 			validate="true">
 			<forward name="listGroupView" path="/ViewGroupsForm.do"></forward>
+			<forward name="EchecDeleteGroup" path="/erreur.jsp"></forward>
+		</action>
+		
+		<action path="/DeleteContactFromGroupForm" type="org.apache.struts.action.ActionDeleteContactFromGroup"
+			name="DeleteContactFromGroupForm" input="/edit_contact.jsp" scope="request"
+			validate="true">
+			<forward name="view" path="/ViewContactsForm.do"></forward>
+			<forward name="EchecDeleteGroup" path="/erreur.jsp"></forward>
+		</action>
+		
+		<action path="/AddContactToGroupForm" type="org.apache.struts.action.ActionAddContactToGroup"
+			name="AddContactToGroupForm" input="/contacts.jsp" scope="request"
+			validate="true">
+			<forward name="view" path="/ViewContactsForm.do"></forward>
 			<forward name="EchecDeleteGroup" path="/erreur.jsp"></forward>
 		</action>
 

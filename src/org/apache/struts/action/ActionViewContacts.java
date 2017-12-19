@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import DAO.IContactDao;
 import model.Contact;
 import service.IContactService;
 
@@ -21,9 +22,10 @@ public class ActionViewContacts extends Action {
 		
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
-		IContactService service = (IContactService) context.getBean("service");
-
-		List<Contact> listContacts = new ArrayList<Contact>(service.getAllContacts());
+		/*IContactDao service = (IContactDao) context.getBean("dao");*/
+		IContactDao dao = (DAO.IContactDao) context.getBean("dao");
+		
+		List<Contact> listContacts = new ArrayList<Contact>(dao.getAllContacts());
 		view.setListContacts(listContacts);
 		request.setAttribute("listContacts", listContacts);
 
