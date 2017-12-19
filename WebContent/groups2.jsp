@@ -129,9 +129,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu" data-widget="tree">
           <li class="header">Menu</li>
           <!-- Optionally, you can add icons to the links -->
-          <li class="active"><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
+          <li ><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
           <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-          <li><a href="#"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+          <li class="active"><a href="#"><i class="fa fa-group"></i> <span>Groups</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

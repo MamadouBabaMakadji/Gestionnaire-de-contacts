@@ -89,9 +89,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Logo -->
     <a href="main.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>CO</b></span>
+      <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Dashboard</span>
+      <span class="logo-lg">Contact Manager</span>
     </a>
 
     <!-- Header Navbar -->
@@ -113,7 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       <li><!-- start message -->
-                        <a href="add_contact.html">
+                        <a href="FormNewContact2.jsp">
                           <div class="pull-left">
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
@@ -124,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       </li>
                       <!-- end message -->
                       <li>
-                        <a href="add_group.html">
+                        <a href="addNewGroup.jsp">
                             <div class="pull-left">
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
@@ -169,10 +169,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="main.html"><i class="fa fa-home"></i> <span>Home</span></a></li>
+        <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
         <li class="active"><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-        <li><a href="groups.html"><i class="fa fa-group"></i> <span>Groups</span></a></li>
-        <li><a href="contracts.html"><i class="fa fa-folder"></i> <span>Contracts</span></a></li>
+        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
     </ul>
       <!-- /.sidebar-menu -->
     </section>

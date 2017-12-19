@@ -58,7 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Logo -->
     <a href="main.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>CO</b></span>
+      <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">Contact Manager</span>
     </a>
@@ -93,7 +93,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       </li>
                       <!-- end message -->
                       <li>
-                        <a href="add_group.html">
+                        <a href="addNewGroup.jsp">
                             <div class="pull-left">
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
