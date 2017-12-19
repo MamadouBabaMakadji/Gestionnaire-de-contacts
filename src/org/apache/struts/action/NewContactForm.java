@@ -117,6 +117,36 @@ public class NewContactForm extends ActionForm {
 		this.tel2 = tel2;
 	}
 
+	public boolean isCorrectNum(String num) {
+		boolean result = false;
+		try {
+			long longFormat = Long.parseLong(num);
+			if (longFormat < 100000000) {
+				result = false;
+			} else {
+				result = true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
+	public boolean isCorrectZip(String zip) {
+		boolean result = false;
+		try {
+			long longFormat = Long.parseLong(zip);
+			if (longFormat < 9999) {
+				result = false;
+			} else {
+				result = true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+
 	@Override
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		ActionErrors errors = new ActionErrors();
@@ -126,15 +156,24 @@ public class NewContactForm extends ActionForm {
 		if ("Personne".equals(typeContact) && prenom.length() < 1) {
 			errors.add("prenom", new ActionMessage("erreur.prenom"));
 		}
+
+		if ("Entreprise".equals(typeContact) && siretEtp.length() < 5) {
+			errors.add("siret", new ActionMessage("erreur.siret"));
+		}
+
 		if (!mail.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$")) {
 			errors.add("mail", new ActionMessage("erreur.mail"));
 		}
 
-		if (tel.length() != 10) {
+		if (tel.length() != 10 || (!isCorrectNum(tel))) {
 			errors.add("tel", new ActionMessage("erreur.tel"));
 		}
 
-		if (code_postal.length() != 5) {
+		if ((!("".equals(tel2)) && tel2.length() != 10) || (!"".equals(tel2) && (!isCorrectNum(tel2)))) {
+			errors.add("tel", new ActionMessage("erreur.tel"));
+		}
+
+		if (code_postal.length() != 5 || !isCorrectZip(code_postal)) {
 			errors.add("code_postal", new ActionMessage("erreur.code_postal"));
 		}
 		return errors;

@@ -22,8 +22,6 @@ public interface IContactDao {
 
 	public Contact getContactHQL(long contactId);
 	
-	public Set<Contact> getLastTenContacts();
-
 	public Set<Contact> getAllContacts();
 	
 	public Set<Contact> getAllContactsWGroups();
@@ -50,6 +48,12 @@ public interface IContactDao {
 
 	public boolean deletePhone(long phoneId, long contactId);
 
-
-
+	public long getNbContact();
+	
+	public long getNbGroup();
+	
+	public Set<Contact> getLastContacts();
+	
+	public boolean updateGroupName(long id, String newName);
+	
 }

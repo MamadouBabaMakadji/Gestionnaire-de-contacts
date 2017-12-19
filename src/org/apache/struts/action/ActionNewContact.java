@@ -12,7 +12,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import model.Adress;
 import model.Contact;
 import model.Entreprise;
-import model.Group;
 import model.PhoneNumber;
 import service.IContactService;
 
@@ -22,35 +21,29 @@ public class ActionNewContact extends Action {
 			HttpServletResponse response) throws Exception {
 
 		NewContactForm ncf = (NewContactForm) form;
+		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService IContactService = (service.IContactService) context.getBean("service");
 		Adress adress = new Adress(ncf.getAdresse(), ncf.getVille(), ncf.getCode_postal(), ncf.getPays());
 		PhoneNumber phone = new PhoneNumber(ncf.getTel());
 		Set<PhoneNumber> phones = new HashSet<PhoneNumber>();
-		Set<Group> groups = new HashSet<Group>();
+		phones.add(phone);
 		if ("Personne".equals(ncf.getTypeContact())) {
-			phones.add(phone);
 			Contact contact = new Contact(ncf.getNom(), ncf.getPrenom(), ncf.getMail());
-			Set<Contact> contacts = new HashSet<Contact>();
 			// PHONE
 			phone.setContact(contact);
 			if (!"".equals(ncf.getTel2())) {
-				PhoneNumber phone2 = new PhoneNumber();
-				phone2.setPhoneNumber(ncf.getTel2());
+				PhoneNumber phone2 = new PhoneNumber(ncf.getTel2());
 				phone2.setContact(contact);
 				phones.add(phone2);
+				System.out.println("Tel2 --> "+ncf.getTel2());
+				System.out.println("Taille --> "+phones.size());
 			}
-			if (ncf.getGroup() != "" && ncf.getGroup() != null) {
-				// GROUP
-				Group group = new Group(ncf.getGroup());
-				contacts.add(contact);
-				group.setContacts(contacts);
-				groups.add(group);
-			}
+			System.out.println("Taille --> "+phones.size());
 			// CONTACT
+			adress.setContact(contact);
 			contact.setAdress(adress);
 			contact.setPhones(phones);
-			contact.setGroups(groups);
 			// Ajout contact
 			if (IContactService.createContact(contact)) {
 				return mapping.findForward("AjoutOK");
@@ -60,22 +53,15 @@ public class ActionNewContact extends Action {
 		} else {
 			// ENTREPRISE
 			Entreprise etp = new Entreprise(ncf.getNom(), ncf.getMail(), adress, phones, ncf.getSiretEtp());
+			adress.setContact(etp);
+			etp.setAdress(adress);
 			phone.setContact(etp);
-			phones.add(phone);
-			if (!"".equals(ncf.getTel2())) {
-				PhoneNumber phone2 = new PhoneNumber();
-				phone2.setPhoneNumber(ncf.getTel2());
+			if (!("".equals(ncf.getTel2()))) {
+				PhoneNumber phone2 = new PhoneNumber(ncf.getTel2());
 				phone2.setContact(etp);
 				phones.add(phone2);
-
 			}
 			etp.setPhones(phones);
-			if (ncf.getGroup() != "" && ncf.getGroup() != null) {
-				// GROUP
-				Group group = new Group(ncf.getGroup());
-				groups.add(group);
-				etp.setGroups(groups);
-			}
 			if (IContactService.addEntreprise(etp))
 				return mapping.findForward("AjoutOK");
 			return mapping.findForward("EchecAjout");

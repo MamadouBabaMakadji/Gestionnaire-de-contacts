@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>Contact Manager - Group</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -58,9 +58,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Logo -->
     <a href="main.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>CO</b></span>
+      <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Dashboard</span>
+      <span class="logo-lg">Contact Manager</span>
     </a>
 
     <!-- Header Navbar -->
@@ -82,12 +82,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       <li><!-- start message -->
-                        <a href="add_contact.html">
+                        <a href="FormNewContact2.jsp">
                           <div class="pull-left">
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add a contact
+                            Add Contact
                           </h4>
                         </a>
                       </li>
@@ -98,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add a group
+                              Add Group
                             </h4>
                           </a>
                       </li>
@@ -122,15 +122,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-        </div>
-      </form>
+        <html:form action="SearchContactForm.do" method="post" styleClass="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="nom" class="form-control" placeholder="Search...">
+<!--             <input type="hidden" name="listResults" class="form-control" > -->
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+          </div>
+        </html:form>
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
@@ -147,10 +148,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
         <% 
 		long groupId = Long.parseLong(request.getParameter("id"));
+        String name = request.getParameter("name");
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
 		IContactService service = (IContactService) context.getBean("service");
 		List<Contact> contacts = new ArrayList<Contact>(service.getContactsByGroupId(groupId));
 		request.setAttribute("contacts", contacts);
+		request.setAttribute("groupName", name);
+		request.setAttribute("groupId", groupId);
 		%>
 
   <!-- Content Wrapper. Contains page content -->
@@ -158,21 +162,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Group 
+        Group ${groupName}
       </h1>
     </section>
 
     <!-- Main content -->
 
     <section class="content">
-        <form role="form">
+        <form role="form" action="EditGroupForm.do">
         <div class="input-group margin col-xs-6">
             <div class="input-group-btn">
-              <button type="button" class="btn btn-block btn-success">Change the group name</button>
+              <button type="submit" class="btn btn-block btn-success">Update group name</button>
             </div>
             <!-- /btn-group -->
-            <input type="text" class="form-control">
+            <input type="hidden" name="groupID" class="form-control" value="${groupId}">
+            <input type="text" name="groupName" class="form-control">
         </div>
+        </form>
         <div class="row">
             <div class="col-xs-12">
               <div class="box">
