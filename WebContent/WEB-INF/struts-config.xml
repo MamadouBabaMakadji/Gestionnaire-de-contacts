@@ -21,6 +21,7 @@
 		<form-bean name="AddContactToGroupForm" type="org.apache.struts.action.AddContactToGroupForm" />
 		<form-bean name="SearchContactForm" type="org.apache.struts.action.SearchContactForm" />
 		<form-bean name="EditGroupForm" type="org.apache.struts.action.EditGroupForm" />
+		<form-bean name="DeleteContactForm" type="org.apache.struts.action.DeleteContactForm" />
 	</form-beans>
 
 
@@ -144,6 +145,13 @@
 			validate="true">
 			<forward name="editGroupOK" path="/ViewGroupsForm.do"></forward>
 			<forward name="editGroupNo" path="/group.jsp"></forward>
+		</action>
+		
+		<action path="/DeleteContactForm" type="org.apache.struts.action.ActionDeleteContact"
+			name="DeleteContactForm" input="/contacts.jsp" scope="request"
+			validate="true">
+			<forward name="listContactsView" path="/ViewContactsForm.do"></forward>
+			<forward name="EchecDeleteContact" path="/erreur.jsp"></forward>
 		</action>
 
 	</action-mappings>

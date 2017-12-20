@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+ <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean"%>
+ <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,7 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>New Group</title>
+  <title><bean:message key="add.group" /></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -45,9 +47,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Logo -->
     <a href="main.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>CO</b></span>
+      <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Contact Manager</span>
+      <span class="logo-lg"><bean:message key="contact.manager" /></span>
     </a>
 
     <!-- Header Navbar -->
@@ -74,7 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add Contact
+                            <bean:message key="add.contact" />
                           </h4>
                         </a>
                       </li>
@@ -85,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add Group
+                              <bean:message key="add.group" />
                             </h4>
                           </a>
                       </li>
@@ -106,24 +108,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-        </div>
-      </form>
+        <html:form action="SearchContactForm.do" method="post" styleClass="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="nom" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+          </div>
+        </html:form>
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">Menu</li>
+        <li class="header"><bean:message key="main.menu" /></li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+        <li class="active"><a href="main2.jsp"><i class="fa fa-home"></i> <span><bean:message key="main.home" /></span></a></li>
+        <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span><bean:message key="main.contacts" /></span></a></li>
+        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span><bean:message key="main.groups" /></span></a></li>
       </ul> 
       <!-- /.sidebar-menu -->
     </section>
@@ -135,7 +137,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Add new group
+       <bean:message key="add.group" />
       </h1>
     </section>
 
@@ -146,18 +148,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title">General Elements</h3>
+                      <h3 class="box-title"><html:errors /></h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                       <form role="form" action="CreateGroupForm.do">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>Group name</label>
+                          <label><bean:message key="group.name" /></label>
                           <input type="text" name="nom" class="form-control" placeholder="Group name">
                         </div>
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary"><bean:message key="submit" /></button>
                         </div>
         
                       </form>
@@ -178,7 +180,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong><bean:message key="footer" /></strong>
   </footer>
 
   <!-- Control Sidebar -->

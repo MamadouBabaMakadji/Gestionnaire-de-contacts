@@ -44,7 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Contact</title>
+  <title><bean:message key="contact" /></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -83,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Contact Manager</span>
+      <span class="logo-lg"><bean:message key="contact.manager" /></span>
     </a>
 
     <!-- Header Navbar -->
@@ -110,7 +110,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add Contact
+                            <bean:message key="add.contact" />
                           </h4>
                         </a>
                       </li>
@@ -121,7 +121,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add Group
+                              <bean:message key="add.group" />
                             </h4>
                           </a>
                       </li>
@@ -148,7 +148,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <html:form action="SearchContactForm.do" method="post" styleClass="sidebar-form">
           <div class="input-group">
             <input type="text" name="nom" class="form-control" placeholder="Search...">
-<!--             <input type="hidden" name="listResults" class="form-control" > -->
             <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
@@ -160,11 +159,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">Menu</li>
+        <li class="header"><bean:message key="main.menu" /></li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+        <li><a href="main2.jsp"><i class="fa fa-home"></i> <span><bean:message key="main.home" /></span></a></li>
+        <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span><bean:message key="main.contacts" /></span></a></li>
+        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span><bean:message key="main.groups" /></span></a></li>
     </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -194,32 +193,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="box-body">
                         <!-- text input -->
                         <div class="form-group">
-                          <label>First name</label> <h5 class="description-header">${prenom}</h5>
+                          <label><bean:message key="first.name" /></label> <h5 class="description-header">${prenom}</h5>
                         </div>
 
                         <div class="form-group">
-                            <label>Last name</label><h5 class="description-header">${nom}</h5>
+                            <label><bean:message key="last.name" /></label><h5 class="description-header">${nom}</h5>
                         </div>
 
                         <div class="form-group">
-                            <label>Mail</label><h5 class="description-header">${mail}</h5>
+                            <label><bean:message key="mail" /></label><h5 class="description-header">${mail}</h5>
                         </div>
                         
                         <div class="form-group">
-                            <label>Street</label><h5 class="description-header">${street}</h5>
+                            <label><bean:message key="street" /></label><h5 class="description-header">${street}</h5>
                         </div>
                         
                         <div class="form-group">
-                            <label>City</label><h5 class="description-header">${city}</h5>
+                            <label><bean:message key="city" /></label><h5 class="description-header">${city}</h5>
                         </div>
                         
                         <div class="form-group">
-                            <label>Country</label><h5 class="description-header">${country}</h5>
+                            <label><bean:message key="country" /></label><h5 class="description-header">${country}</h5>
                         </div>
                         
 
                         <div class="form-group">
-                            <label>Zip</label><h5 class="description-header">${zip}</h5>
+                            <label><bean:message key="zip" /></label><h5 class="description-header">${zip}</h5>
                </div>
 
                         <div class="form-group">
@@ -245,7 +244,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-xs-6">
               <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Groups</h3>
+                    <h3 class="box-title"><bean:message key="main.groups" /></h3>
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
@@ -263,10 +262,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
           	
           	<div class="col-xs-6">
              	<div class="box box-primary">
-<%--               		<div class="box-body">
-              			<html:form action="">
-           					<button type="button" class="btn btn-block btn-primary">Edit contact</button>
-              			</html> --%>
                   </div>
             	</div>
          	</div>
@@ -283,7 +278,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong><bean:message key="footer" /></strong>
   </footer>
 
   <!-- Control Sidebar -->

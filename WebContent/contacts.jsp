@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Contacts</title>
+  <title><bean:message key="main.contacts" /></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -60,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Contact Manager</span>
+      <span class="logo-lg"><bean:message key="contact.manager" /></span>
     </a>
 
     <!-- Header Navbar -->
@@ -87,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add Contact
+                            <bean:message key="add.contact" />
                           </h4>
                         </a>
                       </li>
@@ -98,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add Group
+                              <bean:message key="add.group" />
                             </h4>
                           </a>
                       </li>
@@ -123,24 +123,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-        </div>
-      </form>
+        <html:form action="SearchContactForm.do" method="post" styleClass="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="nom" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+          </div>
+        </html:form>
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-          <li class="header">Menu</li>
+          <li class="header"><bean:message key="main.menu" /></li>
           <!-- Optionally, you can add icons to the links -->
-          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
-          <li class="active"><a href="#"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-          <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span><bean:message key="main.home" /></span></a></li>
+          <li class="active"><a href="#"><i class="fa fa-user"></i> <span><bean:message key="main.contacts" /></span></a></li>
+          <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span><bean:message key="main.groups" /></span></a></li>
       </ul>
 
     </section>
@@ -153,7 +153,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Contacts
+        <bean:message key="main.contacts" />
       </h1>
     </section>
 
@@ -164,18 +164,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">All Contacts</h3>
+                  <h3 class="box-title"><bean:message key="all.contacts" /></h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
-                      <th>Name</th>
-                      <th>Last Name</th>
-                      <th>Mail</th>
-                      <th>Street</th>
-                      <th>City</th>
-                      <th>Country</th>
+                      <th><bean:message key="first.name" /></th>
+                      <th><bean:message key="last.name" /></th>
+                      <th><bean:message key="mail" /></th>
+                      <th><bean:message key="street" /></th>
+                      <th><bean:message key="city" /></th>
+                      <th><bean:message key="country" /></th>
                       <th></th>
                       <th></th>
                     </tr>
@@ -188,8 +188,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<td><bean:write name="contact" property="adress.street" /></td>
 							<td><bean:write name="contact" property="adress.city" /></td>
 							<td><bean:write name="contact" property="adress.country" /></td>
-							<td><span class="label label-success"><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>" style="color:white">See</a></span></td>
-							<td><span class="label label-danger"><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>" style="color:white">Delete</a></span></td>
+							<td><span class="label label-success"><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>" style="color:white">View</a></span></td>
+							<td><html:form action="DeleteContactForm.do" method="post">
+									<html:hidden property="contact_ID" name="contact" value="${contact.contact_ID}" />
+									<html:submit styleClass="btn btn-danger btn-xs">
+										Delete
+									</html:submit>
+								</html:form>
+							</td>
 							<td><span class="label label-warning"><a href="edit_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>" style="color:white">Update</a></span></td>
 						</tr>
 					</logic:iterate>
@@ -216,7 +222,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong><bean:message key="footer" /></strong>
   </footer>
 
   <!-- Control Sidebar -->

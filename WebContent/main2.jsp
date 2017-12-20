@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Home</title>
+  <title><bean:message key="main.home" /></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -60,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>CM</b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg">Contact Manager</span>
+        <span class="logo-lg"><bean:message key="contact.manager" /></span>
       </a>
 
       <!-- Header Navbar -->
@@ -87,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add Contact
+                            <bean:message key="add.contact" />
                           </h4>
                         </a>
                       </li>
@@ -98,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add Group
+                              <bean:message key="add.group" />
                             </h4>
                           </a>
                       </li>
@@ -138,9 +138,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">Menu</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-home"></i> <span>Home</span></a></li>
-            <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-            <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+            <li class="active"><a href="#"><i class="fa fa-home"></i> <span><bean:message key="main.home" /></span></a></li>
+            <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span><bean:message key="main.contacts" /></span></a></li>
+            <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span><bean:message key="main.groups" /></span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
       </section>
@@ -153,7 +153,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <section class="content-header">
         <h1>
           Home
-          <small>dashboard contacts</small>
+          <small>Dashboard contacts</small>
         </h1>
       </section>
 
@@ -215,12 +215,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                     	<tr >
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Mail</th>
-                        <th>Street</th>
-                        <th>City</th>
-                        <th>Country</th>
+                        <th><bean:message key="first.name" /></th>
+                        <th><bean:message key="last.name" /></th>
+                        <th><bean:message key="mail" /></th>
+                        <th><bean:message key="street" /></th>
+                        <th><bean:message key="city" /></th>
+                        <th><bean:message key="country" /></th>
                       </tr>
                     	<logic:iterate id="contact" name="lastContacts">
 						<tr>

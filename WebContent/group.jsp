@@ -60,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>CM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg">Contact Manager</span>
+      <span class="logo-lg"><bean:message key="contact.manager" /></span>
     </a>
 
     <!-- Header Navbar -->
@@ -87,18 +87,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add Contact
+                            <bean:message key="add.contact" />
                           </h4>
                         </a>
                       </li>
                       <!-- end message -->
                       <li>
-                        <a href="add_group.html">
+                        <a href="#">
                             <div class="pull-left">
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add Group
+                              <bean:message key="add.group" />
                             </h4>
                           </a>
                       </li>
@@ -138,9 +138,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+        <li><a href="main2.jsp"><i class="fa fa-home"></i> <span><bean:message key="main.home" /></span></a></li>
+        <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span><bean:message key="main.contacts" /></span></a></li>
+        <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span><bean:message key="main.groups" /></span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -189,13 +189,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
                     <tr>
-                      <th>Name</th>
-                      <th>Last Name</th>
-                      <th>Mail</th>
-                      <th>City</th>
-                      <th>Street</th>
-                      <th>Zip</th>
-                      <th>Country</th>
+                      <th><bean:message key="first.name" /></th>
+                      <th><bean:message key="last.name" /></th>
+                      <th><bean:message key="mail" /></th>
+                      <th><bean:message key="city" /></th>
+                      <th><bean:message key="street" /></th>
+                      <th><bean:message key="zip" /></th>
+                      <th><bean:message key="country" /></th>
                     </tr>
                     <logic:iterate id="contact" name="contacts">
 					<tr>
@@ -230,7 +230,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong><bean:message key="footer" /></strong>
   </footer>
 
   <!-- Control Sidebar -->

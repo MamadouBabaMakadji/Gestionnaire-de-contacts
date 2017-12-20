@@ -87,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-user"></i></medium>
                           </div>
                           <h4>
-                            Add Contact
+                            <bean:message key="add.contact" />
                           </h4>
                         </a>
                       </li>
@@ -98,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <medium><i class="fa fa-group"></i></medium>
                             </div>
                             <h4>
-                              Add Group
+                              <bean:message key="add.group" />
                             </h4>
                           </a>
                       </li>
@@ -139,9 +139,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu" data-widget="tree">
           <li class="header">Menu</li>
           <!-- Optionally, you can add icons to the links -->
-          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span>Home</span></a></li>
-          <li class="active"><a href="#"><i class="fa fa-user"></i> <span>Contacts</span></a></li>
-          <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span>Groups</span></a></li>
+          <li><a href="main2.jsp"><i class="fa fa-home"></i> <span><bean:message key="main.home" /></span></a></li>
+          <li><a href="ViewContactsForm.do"><i class="fa fa-user"></i> <span><bean:message key="main.contacts" /></span></a></li>
+          <li><a href="ViewGroupsForm.do"><i class="fa fa-group"></i> <span><bean:message key="main.groups" /></span></a></li>
       </ul>
 
     </section>
@@ -154,7 +154,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Contacts
+        <bean:message key="main.contacts" />
       </h1>
     </section>
 
@@ -170,14 +170,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                   <table class="table table-hover">
-                    <tr>
-                      <th>Name</th>
-                      <th>Last Name</th>
-                      <th>Mail</th>
-                      <th>Street</th>
-                      <th>City</th>
-                      <th>Country</th>
-                    </tr>
+                 	<tr >
+                        <th><bean:message key="first.name" /></th>
+                        <th><bean:message key="last.name" /></th>
+                        <th><bean:message key="mail" /></th>
+                        <th><bean:message key="street" /></th>
+                        <th><bean:message key="city" /></th>
+                        <th><bean:message key="country" /></th>
+                      </tr>
                     
 					<logic:iterate id="contact" name="listResults">
 						<tr>
@@ -187,8 +187,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<td><bean:write name="contact" property="adress.street" /></td>
 							<td><bean:write name="contact" property="adress.city" /></td>
 							<td><bean:write name="contact" property="adress.country" /></td>
-							<td><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">View</a></td>
-							<td><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>">Delete</a></td>
+							<td><span class="label label-success"><a href="contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>"style="color:white">View</a></span></td>
+							<td><span class="label label-danger"><a href="delete_contact.jsp?contactId=<bean:write name="contact" property="contact_ID"/>"style="color:white">Delete</a></span></td>
 						</tr>
 					</logic:iterate>
 					
@@ -214,7 +214,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong><bean:message key="footer" /></strong>
   </footer>
 
   <!-- Control Sidebar -->
