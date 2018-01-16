@@ -1,2 +1,2 @@
-# Gestionnaire-de-contacts
-Application JEE pour la gestion des contacts
+Application de gestion de contacts.
+Environnement technique : JEE - Hibernate - Spring - Struts 1.3

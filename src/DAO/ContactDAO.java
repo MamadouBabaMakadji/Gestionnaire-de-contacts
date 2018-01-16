@@ -1,816 +1,415 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-import model.Adress;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.FetchMode;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import model.Contact;
-import model.GroupeContact;
+import model.Group;
 import model.PhoneNumber;
+import util.HibernateUtil;
 
 
 public class ContactDAO {
-	
 	public ContactDAO() {
-		
 	}
 
-	public boolean ajouter(Contact contact)
-	{
+	// ****************************** Create ********************************
+	/**
+	 * Insert an object in database
+	 * 
+	 * @param object
+	 * @return a boolean if instructions have finished without errors
+	 * @throws HibernateException
+	 */
+	public boolean insertDB(Object object) throws Exception {
 		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		
-		
-		String requete = "insert into contact (nom,prenom,mail) values('"+contact.getNom()+ "',"
-				+ "'" +contact.getPrenom()+ "','" +contact.getMail()+ "')";
-		
-		//System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			stmt.executeUpdate(requete); // Exécute la requête
-			result = true;
-			
-			//Test for me
-			//System.out.println("Le contact d'Id : " +contact.getId()+ ",de nom : " 
-				//+contact.getNom()+ ", de prénom : " +contact.getPrenom()+ ", et de mail :" +contact.getMail());
-			//System.out.println("Requete pour l'ajout : exécuté");
-			
-			result = true;
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
+		if (object == null)
+			return result;
+		else {
+			try {
+				Session session = HibernateUtil.getSessionFactory().openSession();
+				session.beginTransaction();
+				session.save(object);
+				session.getTransaction().commit();
+				session.close();
+				result = true;
+			} catch (HibernateException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		
 		return result;
 	}
 	
-	public boolean ajouterAdress(Adress a)
-	{
+	/**
+	 * Insert objects in database
+	 * 
+	 * @param object
+	 * @return a boolean if instructions have finished without errors
+	 * @throws HibernateException
+	 */
+	public boolean insertDBObjects(List<Object> objects) throws Exception {
 		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete = "insert into adress values('"+a.getId()+"','" 
-				+a.getStreet()+ "','" +a.getCity()+ "','" +a.getZip()+"','" +a.getCountry()+ "')";
-		
-		System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			stmt.executeUpdate(requete); // Exécute la requête
-			result = true;
-
-			//System.out.println("Requete pour l'ajout : exécuté");
-			
-			result = true;
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-
-				if(stmt !=null){
-					stmt.close();
+		if (objects == null)
+			return result;
+		else {
+			try {
+				Session session = HibernateUtil.getSessionFactory().openSession();
+				session.beginTransaction();
+				
+				for(Object o : objects){
+					session.save(o);
 				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
+				
+				session.getTransaction().commit();
+				session.close();
+				result = true;
+			} catch (HibernateException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		
-		return result;
-	}
-
-	
-	
-	public boolean delete(String idContact)
-	{
-		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete = "DELETE from contact where id = '" +idContact+"'";
-		
-		System.out.println("La requete suppression = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			// Exécute la requête
-			stmt.executeUpdate(requete); 
-			result = true;
-			
-			//Test for me
-			//System.out.println("Passage Supression");
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}
-		
 		return result;
 	}
 	
-	
-	public boolean edit(Contact contact)
-	{
-		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete1 = "UPDATE contact set nom = '" 
-						+contact.getNom()+ "', prenom = '" +contact.getPrenom()+ "', mail ='" +contact.getMail()+ "' "
-						+ "where id='"	+ contact.getId()+"'";
-		//System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			stmt.executeUpdate(requete1); // Exécute la requête
-			result = true;
-			
-			//Test for me
-			/*System.out.println("Le contact d'Id : " +contact.getId()+ ",de nom : " 
-				+contact.getNom()+ ", de prénom : " +contact.getPrenom()+ ", et de mail :" +contact.getMail());			
-			System.out.println("Update effectué");*/
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
 
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}	
-		return result;
-	}
-	
-	public boolean edit_a(Adress a) // Pour modifier la partie Adresse 
-	{
-		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete1 = "UPDATE adress set street = '" 
-				+a.getStreet()+ "', city = '" +a.getCity()+ "', zip ='" +a.getZip()+ "',country= '"+a.getCountry()+"'"
-						+ "where id='"	+ a.getId()+"'";
-		//System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			stmt.executeUpdate(requete1); // Exécute la requête
-			result = true;
-			
-			//Test for me
-			/*System.out.println("Le contact d'Id : " +contact.getId()+ ",de nom : " 
-				+contact.getNom()+ ", de prénom : " +contact.getPrenom()+ ", et de mail :" +contact.getMail());			
-			System.out.println("Update effectué");*/
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
+	@SuppressWarnings("unchecked")
+	public List<Object[]> executerRequete(String requete) throws SQLException {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}	
-		return result;
-	}
-		
-	public boolean edit_p(PhoneNumber p) // Pour modifier la partie PhoneNumber
-	{
-		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete1 = "UPDATE phonenumber set phoneNumber = '" +p.getPhoneNumber()+ "' where id='"+ p.getId()+"'";
-		//System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			stmt.executeUpdate(requete1); // Exécute la requête
-			result = true;
-			
-			//Test for me
-			/*System.out.println("Le contact d'Id : " +contact.getId()+ ",de nom : " 
-				+contact.getNom()+ ", de prénom : " +contact.getPrenom()+ ", et de mail :" +contact.getMail());			
-			System.out.println("Update effectué");*/
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}	
+		List<Object[]> result = session.createQuery(requete).list();
+		session.getTransaction().commit();
+		session.close();
 		return result;
 	}
 
-	public boolean edit_group(GroupeContact gp) // Pour modifier la partie PhoneNumber
-	{
-		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete1 = "UPDATE list_group_contact "
-						+ "set id_groupContact= '" +gp.getGroupId()+ "', nameGroup='"+gp.getGroupName()+"' "
-								+ "where id_contact='"+gp.getIdContact()+"'";
-		//System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			stmt.executeUpdate(requete1); // Exécute la requête
-			result = true;
-			
-			//Test for me
-			/*System.out.println("Le contact d'Id : " +contact.getId()+ ",de nom : " 
-				+contact.getNom()+ ", de prénom : " +contact.getPrenom()+ ", et de mail :" +contact.getMail());			
-			System.out.println("Update effectué");*/
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}	
-		return result;
-	}
-	
-	/*
-	public Contact search(String pId)
-	{
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
+	// ****************************** Read ********************************
+	/**
+	 *  
+	 * @param contact_ID
+	 * @return an object Contact
+	 */
+	public Contact getContact(long contact_ID) {
 		Contact contact = null;
-		
-		Statement stmt = null;
-		Connection connect = null;
-		String requete = "Select * from Contact where id='" +pId+"'";
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			
-			//Exécution de la requête
-			ResultSet rs = stmt.executeQuery(requete);
-			
-			contact = new Contact(rs.getString("Id"), rs.getString("Nom"), rs.getString("Prenom"), 
-							rs.getString("Mail"));
-			
-			//Test for me
-			//System.out.println("List passage 1");
-		}catch(Exception e)
-		{
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			contact = new Contact((Contact) session.createCriteria(Contact.class).add(Restrictions.like("contact_ID", contact_ID)).uniqueResult());
+			//session.flush();
+			session.evict(contact);
+			session.clear();
+			session.close();
+		} catch (HibernateException e) {
 			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return contact;
 	}
-	*/
 	
-	public List<Contact> getContact(){
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
+	public Contact getContact2(long contact_ID) {
+		Contact contact = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			contact = new Contact((Contact) session.get(Contact.class, contact_ID));
+			session.evict(contact);
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		List <Contact> listContact = new ArrayList<Contact>();
-		
-		Contact contact;
-		Statement stmt = null;
-		Connection connect = null;
-		String requete = "Select * from Contact";
-		
-		
-		System.out.println("La requete = " +requete);
+		return contact;
+	}
+	
+	
+	
+	
+	public Set<Contact> getAllContactsLazy() {
+		Set<Contact> contacts = new HashSet<Contact>();
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
 
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			
-			// Exécute la requête
-			ResultSet rs = stmt.executeQuery(requete);
-			
-			
-			while(rs.next())
-			{
-				/*contact = new Contact(rs.getString("Id"), rs.getString("Nom"), rs.getString("Prenom"), 
-						rs.getString("Mail"));*/
-				
-				listContact.add(
-						new Contact(rs.getString("Nom"), rs.getString("Prenom"), 
-								rs.getString("Mail")));
-				
-				//****** test
-				//System.out.println("L'id est : " +contact.getId());
-			}
-			
-			//Test for me
-			//System.out.println("List passage 1");
-		}catch(Exception e)
-		{
+			// Build query
+			StringBuilder sb = new StringBuilder();
+			sb.append("from Contact");
+
+			// Execute query
+			Query query = session.createQuery(sb.toString());
+
+			@SuppressWarnings("unchecked")
+			List<Contact> list = (List<Contact>) query.list();
+			for (Contact contact : list) {
+				Contact c = new Contact(contact.getNom(), contact.getPrenom(), contact.getMail());
+				c.setContact_ID(contact.getContact_ID());
+				contacts.add(c);
+			}	
+
+			session.close();
+		} catch (HibernateException e) {
 			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}
-		return listContact;
-		
-	}
-		
-	public List<GroupeContact> getNameGroup()
-	{
-		ArrayList<GroupeContact> listNameGroup= null;
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete ="select * from contact_group";
-		Statement stmt = null;
-		Connection connect = null;
-		GroupeContact gc = null;
-		try
-		{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			ResultSet rs=stmt.executeQuery(requete);
-			listNameGroup = new ArrayList<GroupeContact>();
-			
-			
-			while(rs.next())
-			{
-				gc = new GroupeContact(rs.getInt("id"),rs.getString("name"));
-				listNameGroup.add(gc);
-			}
-			
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			
 		}
-		
-		return listNameGroup;
+		return contacts;
 	}
 	
-	public boolean deleteContact(Contact c,Adress a,PhoneNumber p){
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings({ "unchecked" })
+	public Set<Contact> getAllContacts() {
+		List<Contact> contacts = new LinkedList<Contact>();
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			//List<Contact> listContacts = session.createQuery("from Contact").list();
+			List<Contact> listContacts = session.createCriteria(Contact.class).setFetchMode("groups", FetchMode.SELECT).list();
+			for(Contact contact : listContacts) {
+				Contact c = new Contact(contact);
+				c.setContact_ID(contact.getContact_ID());
+				contacts.add(c);
+			}
+			
+
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return new HashSet<Contact>(contacts);
+	}
+	
+
+	/**
+	 * Get a set of all groups
+	 * 
+	 * @return an hashset of all groups
+	 */
+	@SuppressWarnings("unchecked")
+	public Set<Group> getAllGroups() {
+		List<Group> listGroups = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			listGroups = session.createCriteria(Group.class).list();
+			session.close();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new HashSet<Group>(listGroups);
+	}
+	
+	
+	
+	/**
+	 * Get a group by an id
+	 * @param groupId : long
+	 * @return an object Group
+	 */
+	public Group getGroup(long groupId) {
+		Group group = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			group = (Group) session.createCriteria(Group.class).add(Restrictions.like("group_ID", groupId)).uniqueResult();
+			session.close();
+			return group;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return group;
+	}
+	
+	
+	
+	public Set<Contact> getContactsByGroupId(long groupId) {
+		Set<Contact> contacts = null;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+
+			// Build query
+			StringBuilder sb = new StringBuilder();
+			sb.append("select c from Contact as c join c.groups as g where g.group_ID = :groupId");
+
+			// Execute query
+			Query query = session.createQuery(sb.toString());
+			query.setParameter("groupId", groupId);
+			@SuppressWarnings("unchecked")
+			List<Contact> list = (List<Contact>) query.list();
+			contacts = new HashSet<>(list);
+			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return contacts;
+	}
+
+	/**
+	 * Seach a Contact by : firstname, lastname, country, group name
+	 * 
+	 * @param keywords
+	 * @return contacts : a set of Contact
+	 */
+	public Set<Contact> searchContacts(String search) {
+		Set<Contact> contacts = null;
+		try {
+			String[] words = search.split(" ");
+			List<String> setKeyWords = new ArrayList<String>(Arrays.asList(words));
+			Session session = HibernateUtil.getSessionFactory().openSession();
+
+			// Build query
+			StringBuilder sb = new StringBuilder();
+			sb.append("select c from Contact as c join c.groups as g where c.nom in (:keyWords) or c.prenom in (:keyWords) or c.adress.country in (:keyWords)");
+			sb.append(" or g.groupName in (:keyWords)");
+
+			// Execute query
+			Query query = session.createQuery(sb.toString());
+			query.setParameterList("keyWords", setKeyWords);
+			@SuppressWarnings("unchecked")
+			List<Contact> list = (List<Contact>) query.list();
+			contacts = new HashSet<>(list);
+			session.close();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return contacts;
+	}
+
+	// ****************************** Update ********************************
+
+	/**
+	 * Save and update a contact
+	 * @param contact
+	 * @return
+	 */
+	public boolean update(Contact contact) {
 		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete1 = "delete from contact where id='"+ c.getId()+"'";
-		String requete2 = "delete from adress where adress.id='"+ a.getId()+"'";
-		String requete3 = "delete from phonenumber where id='"+ p.getId()+"'";
-		//System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			stmt.executeUpdate(requete1); // Exécute la requête
-			//stmt.executeUpdate(requete2);
-			//stmt.executeUpdate(requete3);
-			result = true;
-			
-			//Test for me
-			/*System.out.println("Le contact d'Id : " +contact.getId()+ ",de nom : " 
-				+contact.getNom()+ ", de prénom : " +contact.getPrenom()+ ", et de mail :" +contact.getMail());			
-			System.out.println("Update effectué");*/
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-	
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-		}	
-		return result;
-	}
-
-	public boolean ajouterPhone(PhoneNumber p)
-	{
-		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete = "insert into phonenumber values('"+p.getId()+"',null,'" 
-				 +p.getPhoneNumber()+ "')";
-		
-		System.out.println("id tel :"  +p.getId());
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			// Exécute la requête
-			stmt.executeUpdate(requete); 
-			result = true;
-	
-			//System.out.println("Requete pour l'ajout : exécuté");
-			
-			result = true;
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-	
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.update(contact);
+			for (PhoneNumber pn : contact.getPhones()) {
+				session.update(pn);
 			}
 			
+			session.getTransaction().commit();
+			session.close();
+			
+			result = true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			e.getMessage();
 		}
-		
-		return result;
-		
-	}
-
-	public List<Contact> searchContact(String searchName)
-	{			
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete = "select c.nom, c.prenom, c.mail, a.street, a.city, a.zip,a.country, p.phoneNumber"
-						+ " from contact c, adress a, phonenumber p"
-						+ " where (c.nom = '"+searchName+"' or c.prenom='"+searchName+"') and c.id=a.id and c.id =p.id ";
-		
-		Statement stmt = null;
-		Connection connect = null;
-		ResultSet rs = null;
-		ArrayList<Contact> listContact = null;
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			
-			//Récupération de la recherche dans la variable rs
-			// Sera envoyé dans le return de la méthode
-			listContact = new ArrayList<Contact>();
-			rs = stmt.executeQuery(requete);
-			while(rs.next())
-			{
-				listContact.add(new Contact(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getString(7), rs.getInt(8)));
-				
-			}
-	
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion : " +e.getMessage());
-		}finally{
-			try{
-	
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-				if(rs !=null){
-					rs.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return listContact;
-	}
-
-	public boolean createGroup(String nom)
-	{
-		boolean result = false;
-		
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete = "insert into contact_group(name) values('"+nom+"')"; 
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			// Exécute la requête
-			stmt.executeUpdate(requete); 
-			result = true;
-	
-			//System.out.println("Requete pour l'ajout : exécuté");
-			
-			result = true;
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-	
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}
-		
 		return result;
 	}
 	
-	public List<Contact> listContactOfGroup(String idGroup)
-	{
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		String requete = "select c.nom, c.prenom, c.mail, ph.phoneNumber, a.street, a.city, a.zip, "
-						+ "a.country, lgc.nameGroup "
-						+ "from contact c, phonenumber ph, adress a,list_group_contact lgc "
-						+ "where (c.id=ph.id and c.id=a.id and c.id = lgc.id_contact and lgc.id_groupContact = '"+idGroup+"') ";
-		System.out.println(requete);
-		Statement stmt = null;
-		Connection connect = null;
-		ResultSet rs = null;
-		List<Contact> listContact = null;
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			
-			//Récupération de la recherche dans la variable rs
-			//On ajoute les résultat à la list qu'on envoie dans le return
-			listContact = new ArrayList<Contact>();
-			rs = stmt.executeQuery(requete);
-			while(rs.next())
-			{
-				listContact.add(new Contact(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(5), 
-						rs.getString(6),rs.getString(7), rs.getString(8), rs.getInt(4)));
-			}
-	
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-			System.out.println("Echec de la connexion : " +e.getMessage());
-		}finally{
-			try{
-	
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-				if(rs !=null){
-					rs.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return listContact;
-	}
-
-
-	public boolean ajouterContactInGroup(GroupeContact gc, int id_contact)
-	{
+	/**
+	 * Save and update a group
+	 * 
+	 * @param contact
+	 * @return
+	 */
+	public boolean update(Group group) {
 		boolean result = false;
-		String driver= "com.mysql.jdbc.Driver";
-		String url="jdbc:mysql://localhost/contact_db";
-		String login="root";
-		String mdp="root";
-		
-		
-		//System.out.println("La requete = " +requete);
-		
-		Statement stmt = null;
-		Connection connect = null;
-		
-		try{
-			Class.forName(driver);
-			connect= DriverManager.getConnection(url,login,mdp);
-			stmt=connect.createStatement();
-			String requete = "insert into list_group_contact (id_contact, id_groupContact,nameGroup) values('"+id_contact+"',"
-					+ "'"+gc.getGroupId()+"','"+gc.getGroupName()+ "')";
-			System.out.println(requete);
-			stmt.executeUpdate(requete); 
-			
-			//Test for me
-			//System.out.println("Le contact d'Id : " +contact.getId()+ ",de nom : " 
-				//+contact.getNom()+ ", de prénom : " +contact.getPrenom()+ ", et de mail :" +contact.getMail());
-			//System.out.println("Requete pour l'ajout : exécuté");
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.update(group);
+			session.getTransaction().commit();
+			session.close();
 			
 			result = true;
-		}catch(Exception e)
-		{
+		} catch (HibernateException e) {
 			e.printStackTrace();
-			System.out.println("Echec de la connexion");
-		}finally{
-			try{
-	
-				if(stmt !=null){
-					stmt.close();
-				}
-				if(connect !=null){
-					connect.close();
-				}
-			}catch(SQLException e){
-				e.printStackTrace();
-			}
-			
+			e.getMessage();
 		}
-		
 		return result;
 	}
 	
 	
+
+
+	
+	
+	// ****************************** Delete ********************************
+	
+	public boolean deleteContact(long contactId) {
+		boolean result = false;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			Contact contact = (Contact)session.get(Contact.class, contactId);
+			contact.setGroups(null);
+			session.delete(contact);
+			session.getTransaction().commit();
+			result = true;
+			session.close();
+		} catch (HibernateException e) {
+			e.getMessage();
+			e.printStackTrace();
+			result = false;
+		} catch(Exception e) {
+			e.getMessage();
+			result = false;
+		}
+		
+		System.out.println("Result = " + result);
+		return result;
+	}
+	
+	/**
+	 * Method to delete a group
+	 * @param group_ID
+	 * @return true if the group was deleted ; otherwise false
+	 */
+	public boolean deleteGroup(long group_ID) {
+		boolean result = false;
+		try {
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			Group group = (Group) session.get(Group.class, group_ID);
+			for (Contact contact : group.getContacts()) {
+				contact.getGroups().remove(group);
+				session.update(contact);
+			}
+			session.delete(group);
+			session.getTransaction().commit();
+			session.close();
+			result = true;
+		} catch (HibernateException e) {
+			e.getMessage();
+			e.printStackTrace();
+			result = false;
+		} catch(Exception e) {
+			e.getMessage();
+			result = false;
+		}
+		
+		System.out.println("Result = " + result);
+		return result;
+	}
+
+
+
 }
